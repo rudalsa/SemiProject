@@ -98,3 +98,18 @@ replay_pid*
 ##### commit 제외파일 #####
 .DS_STORE
 /SemiProject/src/main/webapp/WEB-INF/web.xml
+/SemiProject/src/main/java/common/controller
+/SemiProject/src/main/java/my/filter
+/SemiProject/src/main/java/my/util
+/SemiProject/src/main/java/util/security
+/SemiProject/src/main/webapp/bootstrap-4.6.2-dist
+/SemiProject/src/main/webapp/img
+/SemiProject/src/main/webapp/jce_policy-8
+/SemiProject/src/main/webapp/jquery-ui-1.13.1.custom
+/SemiProject/src/main/webapp/js/jquery-3.7.1.js
+/SemiProject/src/main/webapp/js/jquery-3.7.1.min.js
+/SemiProject/src/main/webapp/WEB-INF/lib
+/SemiProject/src/main/webapp/WEB-INF/Command.properties
+/SemiProject/src/main/java/login/controller/GoogleMail.java
+/SemiProject/src/main/java/login/controller/MySMTPAuthenticator.java
+/SemiProject/src/main/webapp/WEB-INF/shop/paymentGateway.jsp
