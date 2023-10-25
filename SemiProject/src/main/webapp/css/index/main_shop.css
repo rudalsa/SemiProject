@@ -1,0 +1,108 @@
+@charset "UTF-8";
+@charset "UTF-8";
+
+
+.navbar{
+	height: 80px;
+}
+
+.navbar-brand{
+	color: white;
+}
+
+.fa-phoenix-framework:hover{
+	color : red;
+}
+
+.menufont_size {
+	font-size:14pt;
+	font-weight: bold;
+	color: white;
+}
+
+.menufont_size:hover {
+    color : #007bff;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-menu{ 
+	background-size: cover; 
+	background-position: center 5%; 
+	background-repeat: no-repeat;
+}
+
+.dropdown-item{
+	font-size:12pt;
+	font-weight: bold;
+	color: #ccc;
+}
+
+.dropdown-item:hover{
+	color : #007bff;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn_text:hover {
+    text-decoration: none;
+}
+
+
+body > section.mt-5 > div:nth-child(3) > div:nth-child(1) > img {
+	background-image: url(../img/diablo4.jpg);
+}
+
+div#carouselExampleIndicators {
+	margin: 7% auto;
+}
+
+.img-container {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+}
+
+.img-container img {
+    width: 100%;
+}
+
+.img-container ul {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: translateY(0);
+    transition: transform 0.2s ease-in-out;
+    padding: 10px;
+}
+
+body > section.mt-5 > div.mt-5 > div:nth-child(1) > div ,
+#hover {
+	border: solid 0px red
+}
+body > section.mt-5 > div.mt-5 > div:nth-child(1) > div:hover ,
+#hover:hover {
+	transform: scale(1.025); /* 확대 비율을 조절할 수 있습니다. */
+	transition: transform 0.2s ease; /* 확대 애니메이션 지속 시간을 조절할 수 있습니다. */
+}
+
+.img-container:hover ul {
+    transform: translateY(-10px);
+}
+
+#carouselExampleIndicators {
+    margin: 0 auto; /* This centers the carousel horizontally on the screen */
+    /* You can also set a max-width if you want to limit its width */
+    max-width: 90%; /* Adjust this value to your desired maximum width */
+  }
+  
+.img:hover {
+	transform: scale(1.025); /* 확대 비율을 조절할 수 있습니다. */
+	transition: transform 0.2s ease; /* 확대 애니메이션 지속 시간을 조절할 수 있습니다. */
+}
+
+div.img-container {
+	height: 400px;
+}
+
+

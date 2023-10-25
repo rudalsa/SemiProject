@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+.video:hover {
+    transform: scale(1.2); /* 1.1배 확대 (원래 크기보다 약간 크게 보임) */
+    transition: transform 0.5s; /* 변환을 부드럽게 만듭니다. */
+    animation: playGif 1s steps(1) forwards; /* GIF 재생을 시작하고 호버가 끝날 때까지 크기를 유지합니다. */
+}
