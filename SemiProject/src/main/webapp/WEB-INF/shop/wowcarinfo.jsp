@@ -7,11 +7,11 @@
 
 <jsp:include page="../header_suc.jsp" />
 
-<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/shop/carinfo.css"/>
+<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/shop/wowcarinfo.css"/>
 
 	<div class="video-container">
 		<video autoplay loop muted>
-			<source src="<%= ctxPath%>/img/JTHQGPVE1AOZ1694023148831.mp4" type="video/mp4">
+			<source src="<%= ctxPath%>/img/wowcarinfo_img/wowcarinfo_bgvideo.mp4" type="video/mp4">
 		</video>
 		<div class="content">
 			<div class="content-1">
@@ -27,7 +27,7 @@
 				<span>최신 소식 & 업데이트</span> <span>새소식 모두 보기</span>
 			</div>
 			<div class="row mb-4">
-				<div class="col-md-3 img" style="background-image: url('<%= ctxPath %>/img/wftgacard1.jpg'); background-size: cover; background-position: center;"  >
+				<div class="col-md-3 img" style="background-image: url('<%= ctxPath %>/img/wowcarinfo_img/wowcarinfo_card1.jpg'); background-size: cover; background-position: center;"  >
 					
 					<ul class="list-unstyled text-white text-left pl-2">
 						<li>2023년 10월 10일</li>
@@ -35,7 +35,7 @@
 					</ul>
 				</div>
 	
-				<div class="col-md-3 img" style="background-image: url('<%= ctxPath %>/img/wftgacard2.jpg'); background-size: cover; background-position: center; ">
+				<div class="col-md-3 img" style="background-image: url('<%= ctxPath %>/img/wowcarinfo_img/wowcarinfo_card2.jpg'); background-size: cover; background-position: center; ">
 					
 					<ul class="list-unstyled text-white text-left pl-2">
 						<li>2023년 10월 10일</li>
@@ -43,7 +43,7 @@
 					</ul>
 				</div>
 	
-				<div class="col-md-3 img" style="background-image: url('<%= ctxPath %>/img/wftgacard3.jpg'); background-size: cover; background-position: center; ">
+				<div class="col-md-3 img" style="background-image: url('<%= ctxPath %>/img/wowcarinfo_img/wowcarinfo_card3.jpg'); background-size: cover; background-position: center; ">
 										
 					<ul class="list-unstyled text-white text-left pl-2">
 						<li>2023년 10월 10일</li>
@@ -52,7 +52,7 @@
 					</ul>
 				</div>
 	
-				<div class="col-md-3 img" style="background-image: url('<%= ctxPath %>/img/wftgacard4.jpg'); background-size: cover; background-position: center; ">
+				<div class="col-md-3 img" style="background-image: url('<%= ctxPath %>/img/wowcarinfo_img/wowcarinfo_card4.jpg'); background-size: cover; background-position: center; ">
 					
 					
 					<ul class="list-unstyled text-white text-left pl-2">
@@ -66,7 +66,7 @@
 	
 	
 	<div>
-		<div class="sex" style="height:350px; background-image: url('<%= ctxPath %>/img/YOH7MXKZQ6D31696897339623.jpg'); background-size: cover;">
+		<div style="height:350px; background-image: url('<%= ctxPath %>/img/wowcarinfo_img/wowcarinfo_bg1.jpg'); background-size: cover;">
 			<br><br>
 			<p style="color: #ebdbc2; font-size: 10pt;">BLIZZCON 2023</p>
 			<h1 style="font-weight: bold; color:white;">블리즈컨® 컬렉션 판매 개시!</h1>
@@ -80,7 +80,7 @@
 	</div>
 	
 	<div>
-		<div class="text-right" style="height:350px; background-image: url('<%= ctxPath %>/img/4PK7L1YLXWI11694133146808.jpg'); background-size: cover;">		
+		<div class="text-right" style="height:350px; background-image: url('<%= ctxPath %>/img/wowcarinfo_img/wowcarinfo_bg2.jpg'); background-size: cover;">		
 			<br><br>
 			<p style="color: #ebdbc2; font-size: 10pt;">WOW 클래식 하드코어</p>
 			<h1 style="font-weight: bold; color:white;">부활도, 후회도 없습니다!</h1>
@@ -94,7 +94,7 @@
 	</div>
 	
 	<div>
-		<div style="height:350px; background-image: url('<%= ctxPath %>/img/JB5GXZ6HNGN21695945301785.jpg'); background-size: cover;">
+		<div style="height:350px; background-image: url('<%= ctxPath %>/img/wowcarinfo_img/wowcarinfo_bg3.jpg'); background-size: cover;">
 			<br><br>
 			<p style="color: #ebdbc2; font-size: 10pt;">블리즈컨 2023</p>
 			<h1 style="font-weight: bold; color:white;">입장권 추가 판매 실시</h1>
@@ -109,7 +109,7 @@
 	<div style="background-color: black; text-align: center; color: #ebdec2;">
 		
 		<div class="in1" style="display: inline-block; width: 49.8%;">
-			<img class="inimg" src="<%= ctxPath %>/img/BDMOXH9OQ6B31594740408177.jpg" width="100%" style="background-image: url('<%= ctxPath %>/img/QS8QDZEEPAJZ1591728956978.jpg'); background-size: cover;" />
+			<img class="inimg" src="<%= ctxPath %>/img/wowcarinfo_img/wowcarinfo_bg4.jpg" width="100%" style="background-image: url('<%= ctxPath %>/img/QS8QDZEEPAJZ1591728956978.jpg'); background-size: cover;" />
 			<div class="inner">
 				<h5>wow 신규 플레이어</h5>
 				<h2 style="color: #f8b700; font-size:25pt; font-weight:bold;">모험을 시작하세요</h2>
@@ -118,7 +118,7 @@
 		</div>
 		
 		<div class="in2" style="display: inline-block; width: 49.9%">			
-			<img class="inimg" class="out" src="<%= ctxPath %>/img/ETA7LQVBODH61594740917046.jpg" width="100%" style="background-image: url('<%= ctxPath %>/img/ATDGB78UR6T41594224494516.jpg'); background-size: cover;" />
+			<img class="inimg" class="out" src="<%= ctxPath %>/img/wowcarinfo_img/wowcarinfo_bg5.jpg" width="100%" style="background-image: url('<%= ctxPath %>/img/ATDGB78UR6T41594224494516.jpg'); background-size: cover;" />
 			<div class="inner">
 				<h5>wow 신규 플레이어</h5>
 				<h2 style="color: #f8b700; font-size:25pt; font-weight:bold;">모험을 시작하세요</h2>
@@ -128,7 +128,7 @@
 	</div>
 
 	<div>
-		<div style="height:350px; background-image: url('<%= ctxPath %>/img/H6GWXOA8HKEV1675219826785.jpg'); background-size: cover;">
+		<div style="height:350px; background-image: url('<%= ctxPath %>/img/wowcarinfo_img/wowcarinfo_bg6.jpg'); background-size: cover;">
 			<br><br><br>
 			<h1 style="font-weight: bold; color:white;">교역소 영업 개시!</h1>
 			<p style="color: #ebdbc2; font-size: 10pt;">
@@ -141,7 +141,7 @@
 	</div>
 	
 	<div>
-		<div class="text-right" style="height:350px; background-image: url('<%= ctxPath %>/img/6YJWMXMMDD9T1689012612063.jpg'); background-size: cover;">			
+		<div class="text-right" style="height:350px; background-image: url('<%= ctxPath %>/img/wowcarinfo_img/wowcarinfo_bg7.jpg'); background-size: cover;">			
 			<br><br>
 			<p style="color: #ebdbc2; font-size: 10pt;">180일 게임 시간 묶음 상품</p>
 			<h1 style="font-weight: bold; color:white;">신나는 모험을 즐기세요!</h1>
@@ -155,7 +155,7 @@
 	</div>
 	
 	<div>
-		<div style="height:350px; background-image: url('<%= ctxPath %>/img/X7MSA0VYMJ5C1649781770293.jpg'); background-size: cover;">
+		<div style="height:350px; background-image: url('<%= ctxPath %>/img/wowcarinfo_img/wowcarinfo_bg8.jpg'); background-size: cover;">
 			<br><br>
 			<p style="color: #ebdbc2; font-size: 10pt;">리치 왕의 분노 클래식</p>
 			<h1 style="font-weight: bold; color:white;">리치 왕이 돌아왔습니다</h1>
