@@ -72,7 +72,7 @@
                                         <div>
                                         
                                         	<a href="gameoption.bz?imgsetno=${sdvo.ms_img_no}" id="purchasepage" class="btn btn-info">구매하기</a>
-                                        	<a href="wowgamecarinfo.bz?imgsetno=${sdvo.ms_img_no}" id="car_info" class="btn btn-danger">자세히보기</a>
+                                        	<a href="wowcarinfo.bz?imgsetno=${sdvo.ms_img_no}" id="car_info" class="btn btn-danger">자세히보기</a>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
                                     	<div>
                                         
                                         	<a href="gameoption.bz?imgsetno=${sdvo.ms_img_no}" id="purchasepage" class="btn btn-info">구매하기</a>
-                                        	<a href="wowgamecarinfo.bz?imgsetno=${sdvo.ms_img_no}" id="car_info" class="btn btn-danger">자세히보기</a>
+                                        	<a href="wowcarinfo.bz?imgsetno=${sdvo.ms_img_no}" id="car_info" class="btn btn-danger">자세히보기</a>
                                         </div>
                                     
                                     </div>
