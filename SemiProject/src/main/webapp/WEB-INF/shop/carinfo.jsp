@@ -7,7 +7,7 @@
 
 <jsp:include page="../header_suc.jsp" />
 
-<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/db.css"/>
+<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/shop/carinfo.css"/>
 
 	<div class="video-container">
 		<video autoplay loop muted>
