@@ -28,6 +28,8 @@ public class MemberEditEndAction extends AbstractController {
 			
 		}
 		else {
+			
+			System.out.println("POST 방식으로 넘오");
            // **** POST 방식으로 넘어온 것이라면 **** //
 		
 		   String user_id = request.getParameter("user_id");	

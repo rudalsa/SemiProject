@@ -44,10 +44,15 @@ public interface MemberDAO {
 	// email 중복검사 (tbl_member 테이블에서 email 이 존재하면 true 를 리턴해주고, email 이 존재하지 않으면 false 를 리턴한다)
 	boolean emailDuplicateCheck(String user_email) throws SQLException;	
 
+	// 회원정보 수정시 email 중복검사 (tbl_member 테이블에서 다른 사용자가 email 이 존재하면 true 를 리턴해주고, email 이 존재하지 않으면 false 를 리턴한다)  
+	boolean emailDuplicateCheck2(Map<String, String> paraMap) throws SQLException;
 
+	// 비밀번호 변경시 현재 사용중인 비밀번호인지 아닌지 알아오기(현재 사용중인 비밀번호 이라면 true, 새로운 비밀번호이라면 false) 
+	boolean duplicatePwdCheck(Map<String, String> paraMap) throws SQLException;		
 		
-		
-		
+	// 회원상태 탈퇴시키기, DB에는 남아있지만 Status = 0 으로 변경
+	public int deleteUser(String user_id) throws SQLException ;
+
 		
 		
 		

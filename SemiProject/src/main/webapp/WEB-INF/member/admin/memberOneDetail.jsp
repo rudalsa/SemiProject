@@ -162,7 +162,7 @@
 		      <td>${requestScope.mvo.user_registerday}</td>
 		   </tr>
 		   	<tr>
-		      <td colspan="2" class="deborder"><a class="btn btn-sm btn-danger" href="#">회원 탈퇴 시키기</a></td>
+		      <td colspan="2" class=""><a class="btn btn-sm btn-danger" href="#">회원 탈퇴 시키기</a></td>
 		   </tr>
 		   
 		</table>
