@@ -23,7 +23,7 @@ public class MainShopAction extends AbstractController {
 	         request.setAttribute("gameList", gameList);
 	         
 	         super.setRedirect(false);
-	         super.setViewPage("/WEB-INF/shop/b_mainShop.jsp");
+	         super.setViewPage("/WEB-INF/shop/mainShop.jsp");
 	         
 	      } catch(SQLException e) {
 	         e.printStackTrace();
