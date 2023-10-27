@@ -1,9 +1,9 @@
-package b_shop.model;
+package shop.model;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import b_shop.domain.*;
+import shop.domain.*;
 
 
 public interface MainShopDAO  {

@@ -19,7 +19,6 @@ public class GameVO {
 	
 	private CategoryVO categvo; // 카테고리VO 
 	private SpecVO spvo;        // 스펙VO 
-	
 	/*
 	    제품판매가와 포인트점수 컬럼의 값은 관리자에 의해서 변경(update)될 수 있으므로
 	    해당 제품의 판매총액과 포인트부여 총액은 판매당시의 제품판매가와 포인트 점수로 구해와야 한다.  

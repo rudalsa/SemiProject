@@ -597,6 +597,34 @@ public class MemberDAO_imple implements MemberDAO {
 		
 		return isExists;
 	}// end of public boolean emailDuplicateCheck(String user_email) throws SQLException------
+
+	// 사용자의 포인트 및 결제 누적 금액을 업데이트 해준다.
+	@Override
+	public int BuyUpdateUser(Map<String, String> paraMap) throws SQLException {
+int result = 0;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " UPDATE tbl_user "
+					+ " SET user_payment = user_payment + ? , user_coin = user_coin + ? "
+					+ " WHERE user_id = ? ";
+						
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, Integer.parseInt(paraMap.get("coinmoney")));
+			pstmt.setInt(2, (int) (Integer.parseInt(paraMap.get("coinmoney")) * 0.01) );  // 300000 * 0.01 ==> 3000.0  ==> (int)3000.0  ==> 3000  
+			pstmt.setString(3, paraMap.get("user_id"));  
+						
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close();
+		}
+		
+		
+		return result;
+	}
 	
 	
 	

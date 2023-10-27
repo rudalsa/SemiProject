@@ -42,7 +42,10 @@ public interface MemberDAO {
 	boolean idDuplicateCheck(String user_id) throws SQLException;
 
 	// email 중복검사 (tbl_member 테이블에서 email 이 존재하면 true 를 리턴해주고, email 이 존재하지 않으면 false 를 리턴한다)
-	boolean emailDuplicateCheck(String user_email) throws SQLException;	
+	boolean emailDuplicateCheck(String user_email) throws SQLException;
+	
+	// 사용자의 포인트 및 결제 누적 금액을 업데이트 해준다.
+	int BuyUpdateUser(Map<String, String> paraMap) throws SQLException;	
 
 
 		

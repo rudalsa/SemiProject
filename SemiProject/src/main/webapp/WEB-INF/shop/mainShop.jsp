@@ -16,40 +16,33 @@
     
     
 <%-- 추천게임 시작 --%> 
+<h2 class="mt-5 mb-5 text-white" style="font-weight: bold; margin-left: 6%;">추천상품</h2>
 <div class="mt-5" style="">
-	<div>
-	    <h2 class="mt-5 mb-5 text-white" style="font-weight: bold; font-size: 27pt; margin-left: 6%;">추천 게임</h2>
-    </div>
-    <div class="row mb-5 pl-1" style="margin: 5px 5%;">
-  		<c:if test="${not empty requestScope.imgProductList}">
-  			<c:forEach var="imgProductvo" items="${requestScope.imgProductList}" varStatus="status">
-  				<c:if test="${status.index >= 0}">
-			         <div class="col-md-3 img"> <a href="gameoption.bz?imgsetno=${imgProductvo.product_no}" >
-			        	<div class="img-container">
-			        		<img src="<%= ctxPath %>/img/tbl_list_image/${imgProductvo.img_file_name}" alt="이미지 5" class="img-fluid" style="width: 100%; height: 200px;">
-				            <ul class="list-unstyled text-white text-left">
-				                <li style="font-size: 8pt;">${imgProductvo.product_name}</li>
-				                <li style="font-weight: bold;">${imgProductvo.product_event_name}</li>
-				                <li style="font-size: 8pt; color:orange;">${imgProductvo.gamegenre}</li>
-				                <br><br><br>
-				                <li><fmt:formatNumber value="${imgProductvo.product_price}" pattern="#,###" />&nbsp;원 <div style="margin-left: 50%; pointer-events: none;" class="btn btn-success btn-sm" >-${imgProductvo.product_sale_percent}%</div></li>
-				            </ul>
-			        	</div>
-			        	</a>
-			        </div>
-			 	</c:if>	
-			  <c:if test="${status.index % 4 == 3}">
-			 	</div>
-			
-			 	
-			 	<div class="row mb-5 pl-1" style="margin: 5px 5%;">  
-		     </c:if>
-	
+   <div class="row mb-5 pl-1" style="margin: 5px 5%;">
+  		<c:if test="${not empty requestScope.gameList}">
+  		
+  			<c:forEach var="gamevo" items="${requestScope.gameList}" varStatus="status">
+  			
+			         <c:if test="${gamevo.fk_s_code eq '100'}">
+				         <div class="col-md-3 img"> 
+				         	<a href="gameoption.bz?imgsetno=${gamevo.g_no}" ></a>
+				     	   	<div class="img-container">
+				        		<img src="<%= ctxPath %>/img/tbl_game_product_image/${gamevo.g_img_1}" alt="이미지 5" class="img-fluid" style="width: 100%; height: 200px;">
+					            <ul class="list-unstyled text-white text-left" style="font-weight:bold; ">
+					                <li style="font-size: 8pt;"><span>${gamevo.g_name}</span></li>
+					                <li style="font-weight: bold; color:orange;"><span>${gamevo.g_content}</span></li>
+					                <br><br><br>
+					                <li><span style="color: gray; text-decoration: line-through;"><fmt:formatNumber value="${gamevo.g_price}" pattern="#,###" /> 원</span></li>
+					                <li><span style="font-size: 14pt;"><fmt:formatNumber value="${gamevo.g_sale_price}" pattern="#,###" /> 원</span></li>
+					            </ul>
+				        	</div>
+				        </div>
+			        </c:if>
+			        
        	    </c:forEach>
-      	
+       	    
       	</c:if>
     </div>
-
 </div>
 <%-- 추천게임 끝 --%>
 
@@ -58,42 +51,67 @@
 <%-- ================ 실시간 인기상품 시작 ================ --%>
 <h2 class="mt-5 mb-5 text-white" style="font-weight: bold; margin-left: 6%;">실시간 인기상품</h2>
 <div class="mt-5" style="">
-	<div>
-	    <h2 class="mt-5 mb-5 text-white" style="font-weight: bold; font-size: 27pt; margin-left: 6%;">추천 게임</h2>
-    </div>
-    <div class="row mb-5 pl-1" style="margin: 5px 5%;">
-  		<c:if test="${not empty requestScope.popProductList}">
-  			<c:forEach var="imgProductvo" items="${requestScope.popProductList}" varStatus="status">
-  				<c:if test="${status.index >= 0}">
-			         <div class="col-md-3 img"> <a href="gameoption.bz?imgsetno=${imgProductvo.product_no}" >
-			        	<div class="img-container">
-			        		<img src="<%= ctxPath %>/img/tbl_list_image/${imgProductvo.img_file_name}" alt="이미지 5" class="img-fluid" style="width: 100%; height: 200px;">
-				            <ul class="list-unstyled text-white text-left">
-				                <li style="font-size: 8pt;">${imgProductvo.product_name}</li>
-				                <li style="font-weight: bold;">${imgProductvo.product_event_name}</li>
-				                <li style="font-size: 8pt; color:orange;">${imgProductvo.gamegenre}</li>
-				                <br><br><br>
-				                <li><fmt:formatNumber value="${imgProductvo.product_price}" pattern="#,###" />&nbsp;원 <div style="margin-left: 50%; pointer-events: none;" class="btn btn-success btn-sm" >-${imgProductvo.product_sale_percent}%</div></li>
-				            </ul>
-			        	</div>
-			        	</a>
-			        </div>
-			 	</c:if>	
-			  <c:if test="${status.index % 4 == 3}">
-			 	</div>
-			
-			 	
-			 	<div class="row mb-5 pl-1" style="margin: 5px 5%;">  
-		     </c:if>
-	
+   <div class="row mb-5 pl-1" style="margin: 5px 5%;">
+  		<c:if test="${not empty requestScope.gameList}">
+  		
+  			<c:forEach var="gamevo" items="${requestScope.gameList}" varStatus="status">
+  			
+			         <c:if test="${gamevo.fk_s_code eq '101'}">
+				         <div class="col-md-3 img"> 
+				         	<a href="gameoption.bz?imgsetno=${gamevo.g_no}" ></a>
+				     	   	<div class="img-container">
+				        		<img src="<%= ctxPath %>/img/tbl_game_product_image/${gamevo.g_img_1}" alt="이미지 5" class="img-fluid" style="width: 100%; height: 200px;">
+					            <ul class="list-unstyled text-white text-left" style="font-weight:bold; ">
+					                <li style="font-size: 8pt;"><span>${gamevo.g_name}</span></li>
+					                <li style="font-weight: bold; color:orange;"><span>${gamevo.g_content}</span></li>
+					                <br><br><br>
+					                <li><span style="color: gray; text-decoration: line-through;"><fmt:formatNumber value="${gamevo.g_price}" pattern="#,###" /> 원</span></li>
+					                <li><span style="font-size: 14pt;"><fmt:formatNumber value="${gamevo.g_sale_price}" pattern="#,###" /> 원</span></li>
+					            </ul>
+				        	</div>
+				        </div>
+			        </c:if>
+			        
        	    </c:forEach>
-      	
+       	    
       	</c:if>
     </div>
-
 </div>
    
 <%-- ================ 실시간 인기상품 끝 ================ --%>
+
+
+<%-- ================ 새로운 상품 시작 ================ --%>
+<h2 class="mt-5 mb-5 text-white" style="font-weight: bold; margin-left: 6%;">새로운 상품</h2>
+<div class="mt-5" style="">
+   <div class="row mb-5 pl-1" style="margin: 5px 5%;">
+  		<c:if test="${not empty requestScope.gameList}">
+  		
+  			<c:forEach var="gamevo" items="${requestScope.gameList}" varStatus="status">
+  			
+			         <c:if test="${gamevo.fk_s_code eq '102'}">
+				         <div class="col-md-3 img"> 
+				         	<a href="gameoption.bz?imgsetno=${gamevo.g_no}" ></a>
+				     	   	<div class="img-container">
+				        		<img src="<%= ctxPath %>/img/tbl_game_product_image/${gamevo.g_img_1}" alt="이미지 5" class="img-fluid" style="width: 100%; height: 200px;">
+					            <ul class="list-unstyled text-white text-left" style="font-weight:bold; ">
+					                <li style="font-size: 8pt;">${gamevo.g_name}</li>
+					                <li style="font-weight: bold; color:orange;">${gamevo.g_content}</li>
+					                <br><br><br>
+					                <li><span style="color: gray; text-decoration: line-through;"><fmt:formatNumber value="${gamevo.g_price}" pattern="#,###" /> 원</span></li>
+					                <li><span style="font-size: 14pt;"><fmt:formatNumber value="${gamevo.g_sale_price}" pattern="#,###" /> 원</span></li>
+					            </ul>
+				        	</div>
+				        </div>
+			        </c:if>
+			        
+       	    </c:forEach>
+       	    
+      	</c:if>
+    </div>
+</div>
+   
+<%-- ================ 새로운 상품 끝 ================ --%>
 
 
 
@@ -114,7 +132,7 @@
 
     <script>
         // 2023년 10월 15일까지의 초 계산
-        var targetDate = new Date("2023-10-26T00:00:00").getTime();
+        var targetDate = new Date("2023-11-20T00:00:00").getTime();
         var currentDate = new Date().getTime();
         var countdown = Math.max(0, Math.floor((targetDate - currentDate) / 1000));
 

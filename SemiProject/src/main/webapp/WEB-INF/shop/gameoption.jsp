@@ -368,6 +368,15 @@ td#error {
 	        </li>
 	    
 	    </ul>
+	  
+	   <%-- PG(Payment Gateway 결제대행)에 코인금액을 카드(카카오페이등)로 결제후 DB상에 사용자의 코인액을 update 를 해주는 폼이다. --%>
+		   
+		   <form name="coin_DB_Update_Frm">
+			   	<input type="hidden" name="user_id" />
+			   	<input type="hidden" name="coinmoney" />	
+		   </form>
+	  
+	    
 	 </div>
 	<ul class="text-white">
      	<li>플레이하려면 인터넷 연결, Battle.net® 계정, Battle.net® 데스크톱 앱이 필요합니다.
