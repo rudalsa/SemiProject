@@ -297,7 +297,7 @@ td#error {
 			  			<tr class="price custom-radio">
 						    <td>
 							    <label class="btn custom-transparent-button">
-							    <input type="radio" id="${optvo.opt_name}" name="coinmoney" value="${optvo.opt_name}"/>
+							    <input type="radio" id="${optvo.opt_name}" name="coinmoney" value="${optvo.opt_sale_price}"/>
 							    <span class="opttitle">${optvo.opt_name}</span>
 							    <br>
 							    <span class="panmaeprice">${optvo.opt_sale_price}</span>
