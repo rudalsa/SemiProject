@@ -159,6 +159,7 @@ td#error {
    </div>
 --%>
 
+
 <jsp:include page="header_shop.jsp" />
 <%-- 전체 --%>
 
@@ -173,8 +174,6 @@ td#error {
   });
 </script>
 
-
-
 <c:if test="${not empty requestScope.gameOptionVO}">
 
 <div class="row mx-auto" style="width:95%; margin: 6% 0 0 0">
@@ -186,22 +185,24 @@ td#error {
 	<%-- Bootstrap 그리드 시스템 클래스는 기본적으로 패딩과 간격을 포함하는데, 이로 인해 캐러셀이 왼쪽 끝에 붙이지 않을 수 있습니다. 또한, margin: 0을 명시적으로 지정하면서 간격을 줄여버릴 수도 있습니다. 
 	
 	--%>
-		
-		
+	
 		<%-- 캐러셀 시작 --%>
 		
 		<div id="carousel_slide" class="carousel slide carousel-fade" data-ride="carousel" style="width:95%; margin:0 0 0 0">
 	 		
 	 		<%-- Bootstrap 캐러셀(Carousel)의 인디케이터(Indicator) --%>
 	 		<%-- 현재 표시되는 슬라이드와 그 개수를 나타내며, 사용자가 특정 슬라이드로 직접 이동할 수 있도록 돕는 역할을 합니다. --%>
+	 		
 	 		<ol class="carousel-indicators">
 	            <li data-target="#carousel_slide" data-slide-to="0" class="active"></li>
 	            <li data-target="#carousel_slide" data-slide-to="1"></li>
 				<li data-target="#carousel_slide" data-slide-to="2"></li>
 				<li data-target="#carousel_slide" data-slide-to="3"></li>
 			</ol>
+			
 			<%-- Bootstrap 캐러셀(Carousel)의 인디케이터(Indicator) --%>
 			<%-- 캐러셀 이너 --%>
+			
 			<div class="carousel-inner">
 	
 				<div class="carousel-item active">
@@ -220,9 +221,8 @@ td#error {
 		    		<img src="<%= ctxPath%>/img/tbl_game_option/${requestScope.gameOptionVO.imgslidefilename_4}" class="img-fluid">
 				</div>
 				
-
-
-			</div>   
+			</div>
+			   
 			<%-- 캐러셀 이너 끝 --%>
 			
 			<%--캐러셀(Carousel)의 화살표 컨트롤--%>	

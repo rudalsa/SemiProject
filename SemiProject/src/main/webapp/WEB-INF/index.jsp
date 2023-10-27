@@ -71,7 +71,7 @@
                                         <img src="<%= ctxPath%>/img/${sdvo.ms_logo_file}" class="d-flex img-fluid" style="width: 25%; height: auto; margin-right: 20px;" alt="하...">
                                         <div>
                                         
-                                        	<a href="gameoption.bz?imgsetno=${sdvo.ms_img_no}" id="purchasepage" class="btn btn-info">구매하기</a>
+                                        	<a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage" class="btn btn-info">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
                                         	<a href="wowcarinfo.bz?imgsetno=${sdvo.ms_img_no}" id="car_info" class="btn btn-danger">자세히보기</a>
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                                         <img src="<%= ctxPath%>/img/${sdvo.ms_logo_file}" class="d-flex img-fluid" style="width: 25%; height: auto; margin-right: 20px;" alt="...">
                                     	<div>
                                         
-                                        	<a href="gameoption.bz?imgsetno=${sdvo.ms_img_no}" id="purchasepage" class="btn btn-info">구매하기</a>
+                                        	<a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage" class="btn btn-info">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
                                         	<a href="wowcarinfo.bz?imgsetno=${sdvo.ms_img_no}" id="car_info" class="btn btn-danger">자세히보기</a>
                                         </div>
                                     

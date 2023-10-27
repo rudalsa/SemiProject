@@ -12,4 +12,5 @@ public interface GameOptionDAO {
 	boolean isExist_imgsetno(String imgsetno) throws SQLException;
 
 
+
 }
