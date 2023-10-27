@@ -1,4 +1,4 @@
-package shop.model;
+package b_shop.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import shop.domain.*;
+import b_shop.domain.*;
 
 public class MainPage_imple implements MainpageDAO {
 	

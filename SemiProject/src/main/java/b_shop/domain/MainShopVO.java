@@ -1,4 +1,4 @@
-package shop.domain;
+package b_shop.domain;
 
 public class MainShopVO {
 	
