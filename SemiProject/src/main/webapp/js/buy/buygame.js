@@ -25,7 +25,7 @@
  
  
  // "충전결제하기" 를 클릭했을 때 이벤트 처리하기 
- function goCoinPayment(ctx_Path , user_id){
+ function buygame(ctx_Path , user_id){
 	 
 	 	 const checked_cnt = $("input:radio[name='coinmoney']:checked").length;
 	 	
@@ -37,16 +37,12 @@
 		 }
 		 
 		 else{
-		   // 결제하러 들어간다.
-		   // alert(`${coinmoney}원 결제한다`);
-		   
-		   alert(`확인용 부모창의 함수 호출함\n결제금액 : ${coinmoney}원, 사용자id : ${user_id} 상품이름 : ${optname}`);
-			
-			
+		   // alert(`${coinmoney}원 결제한다`); 
+		   // alert(`확인용 부모창의 함수 호출함\n결제금액 : ${coinmoney}원, 사용자id : ${user_id} 상품이름 : ${optname}`);
 			
 		   // 포트원(아임포트) 결제 팝업창 띄우기
 		   // 코인충전 결제금액 선택하기 팝업창 띄우기
-		   const url = `${ctx_Path}/coinPurchaseEnd.bz?coinmoney=${coinmoney}&user_id=${user_id}`;  
+		   const url = `${ctx_Path}/buysuccess.bz?coinmoney=${coinmoney}&user_id=${user_id}`;  
 		
 		   //너비 100, 높이 600 인 팝업창을 화면 가운데 위치시키기
 		   const width = 1000;
