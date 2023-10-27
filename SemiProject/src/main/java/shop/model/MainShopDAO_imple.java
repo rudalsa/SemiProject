@@ -1,4 +1,4 @@
-package b_shop.model;
+package shop.model;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.List;
 import javax.naming.*;
 import javax.sql.DataSource;
 
-import b_shop.domain.*;
+import shop.domain.*;
 
 public class MainShopDAO_imple implements MainShopDAO {
 	

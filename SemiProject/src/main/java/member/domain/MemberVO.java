@@ -21,7 +21,10 @@ public class MemberVO {
 	private int user_idle;			 	//USER_IDLE 		NUMBER(1,0)
 	private int user_status;			//USER_STATUS 		NUMBER(1,0)
 	private String user_lastpwddate;	//USER_LASTPWDDATE  DATE
+	private int user_payment;
 	
+
+
 	private boolean requirePwdChange = false;
 	// 마지막으로 암호를 변경한 날짜가 현재시각으로 부터 3개월이 지났으면 true
 	// 마지막으로 암호를 변경한 날짜가 현재시각으로 부터 3개월이 지나지 않았으면 false
@@ -225,6 +228,14 @@ public class MemberVO {
 
 	public void setUser_coin(int user_coin) {
 		this.user_coin = user_coin;
+	}
+	
+	public int getUser_payment() {
+		return user_payment;
+	}
+
+	public void setUser_payment(int user_payment) {
+		this.user_payment = user_payment;
 	}
 	
 

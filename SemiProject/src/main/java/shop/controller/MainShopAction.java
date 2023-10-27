@@ -1,4 +1,4 @@
-package b_shop.controller;
+package shop.controller;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import b_shop.domain.*;
-import b_shop.model.*;
+import shop.domain.*;
 import common.controller.AbstractController;
+import shop.model.*;
 
 public class MainShopAction extends AbstractController {
 
@@ -23,7 +23,7 @@ public class MainShopAction extends AbstractController {
 	         request.setAttribute("gameList", gameList);
 	         
 	         super.setRedirect(false);
-	         super.setViewPage("/WEB-INF/shop/b_mainShop.jsp");
+	         super.setViewPage("/WEB-INF/shop/mainShop.jsp");
 	         
 	      } catch(SQLException e) {
 	         e.printStackTrace();

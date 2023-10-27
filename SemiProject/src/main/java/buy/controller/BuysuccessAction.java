@@ -25,9 +25,11 @@ public class BuysuccessAction extends AbstractController {
 	        	 // 로그인한 사용자가 자신의 코인을 수정하는 경우
 	     		
 	        	String coinmoney = request.getParameter("coinmoney");
-	     		
-	        	String productName = "코인충전"; // :"새우깡"; 등등 으로 변경가능 받아와야함
-	     		int productPrice = 100;	// 가격 변경가능
+	        	String opt_name = request.getParameter("opt_name");
+	        	
+	        	String productName = opt_name; // :"새우깡"; 등등 으로 변경가능 받아와야함
+	     		int productPrice = 100; 
+	     		Integer.parseInt(coinmoney);	// 가격 변경가능
 	     		
 	     		//Integer.parseInt(coinmoney)
 	     		
@@ -36,13 +38,14 @@ public class BuysuccessAction extends AbstractController {
 	     		request.setAttribute("email", loginuser.getUser_email());
 	     		request.setAttribute("name", loginuser.getUser_name());
 	     		request.setAttribute("mobile", loginuser.getUser_phone());
-	     		
 	     		request.setAttribute("user_id", user_id);
-	     		request.setAttribute("coinmoney", coinmoney);
+	     		
+	     		request.setAttribute("coinmoney", coinmoney); // db 업데이트용 
 	     		
 				super.setRedirect(false);
+				
 				super.setViewPage("/WEB-INF/shop/paymentGateway.jsp");
-	         }
+	        }
 			else {
 				// 로그인한 사용자가 다른 사용자의 코인충전 결제를 시도하는 경우
 	
@@ -69,6 +72,7 @@ public class BuysuccessAction extends AbstractController {
 			
 			super.setRedirect(false);
 			super.setViewPage("/WEB-INF/msg.jsp");
+		
 		}
 		
 		
