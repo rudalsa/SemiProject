@@ -6,7 +6,7 @@
 <%
     String ctxPath = request.getContextPath(); // tempSemi
 %>
-<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/index/main_shop.css"> 
+<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/shop/main_shop.css"> 
 
 <jsp:include page="header_shop.jsp" />
 

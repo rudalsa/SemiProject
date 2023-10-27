@@ -1,4 +1,4 @@
-package shop.controller;
+package b_shop.controller;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -6,26 +6,24 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import b_shop.domain.*;
+import b_shop.model.*;
 import common.controller.AbstractController;
-import shop.domain.*;
-import shop.model.*;
 
 public class MainShopAction extends AbstractController {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		MainShopDAO msdao = new MainShopDAO_imple();
+		MainShopDAO sdao = new MainShopDAO_imple();
 		
 		try {
-	         List<MainShopVO> imgProductList = msdao.ShopListSelectAll();
-	         List<ShopPopProductVO> popProductList = msdao.PopListSelectAll();
+	         List<GameVO> gameList = sdao.ShopListSelectAll();
 	         
-	         request.setAttribute("imgProductList", imgProductList);
-	         request.setAttribute("popProductList", popProductList);
+	         request.setAttribute("gameList", gameList);
 	         
 	         super.setRedirect(false);
-	         super.setViewPage("/WEB-INF/shop/mainShop.jsp");
+	         super.setViewPage("/WEB-INF/shop/b_mainShop.jsp");
 	         
 	      } catch(SQLException e) {
 	         e.printStackTrace();
