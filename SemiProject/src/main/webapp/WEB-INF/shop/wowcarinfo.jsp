@@ -150,7 +150,7 @@
 				<div>
 					<div class="text-right" style="height:350px; background-image: url('<%= ctxPath %>/img/wowcarinfo_img/${wcivo.carinfo_bg_img5}'); background-size: cover;">			
 						<br><br>
-						<p style="color: #ebdbc2; font-size: 10pt;">180일 게임 시간 묶음 상품</p>
+						<p style="color: #ebdbc2; font-size: 10pt;">180일 게임 시간 묶ㅇㅇ음 상품</p>
 						<h1 style="font-weight: bold; color:white;">신나는 모험을 즐기세요!</h1>
 						<p style="color: #ebdbc2; font-size: 10pt;">
 						멋진 지느러미를 뽐내는 경이로운 파도수염 탈것을 탈것 수집품에 추가하세요!<br>
