@@ -171,7 +171,9 @@ public class MemberDAO_imple implements MemberDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " update tbl_user set user_pwd = ? "+" lastpwddate = sysdate " + " where user_id = ? ";
+			String sql = " UPDATE tbl_user "
+					+ " SET user_pwd = ? , user_lastpwddate = sysdate "
+					+ " WHERE user_id = ? ";
 			
 			pstmt = conn.prepareStatement(sql);
 			

@@ -14,14 +14,13 @@ public class PwdUpdateEndAction extends AbstractController {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		String user_id = request.getParameter("user_id");
-		
 		String method = request.getMethod(); // "GET" 또는 "POST" 
 		
 		if("POST".equalsIgnoreCase(method)) {
 			// "암호변경하기" 버튼을 클릭했을 경우 
 			
 			String new_pwd = request.getParameter("pwd");
+			String user_id = request.getParameter("user_id");	
 			
 			MemberDAO mdao = new MemberDAO_imple();
 			
@@ -41,7 +40,6 @@ public class PwdUpdateEndAction extends AbstractController {
  			
 		}// end of if("POST".equalsIgnoreCase(method))-------
 		
-		request.setAttribute("userid", user_id);
 		request.setAttribute("method", method);
 		
 	//	super.setRedirect(false);

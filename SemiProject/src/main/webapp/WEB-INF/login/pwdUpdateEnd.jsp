@@ -62,7 +62,7 @@
 			  else {
 				   // 암호가 정규표현식에 맞는 경우
 				   const frm = document.pwdUpdateEndFrm;
-				   frm.action = "<%= ctxPath%>/login/pwdUpdateEnd.bz";
+				   frm.action = "<%= ctxPath%>/member/pwdUpdateEnd.bz";
 				   frm.method = "post";
 				   frm.submit();
 			  }
@@ -94,7 +94,7 @@
 	   </div>
 	
 	   
-	   <input type="hidden" name="userid" value="${requestScope.user_id}">
+	   <input type="hidden" name="user_id" value="${loginuser.user_id}">
 	   
 	   <div style="text-align: center;">
 	      <button type="button" class="btn btn-success">암호변경하기</button>

@@ -20,77 +20,7 @@ function goResignation(){
 
 <body style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 <!-- background-repeat: no-repeat;를 적용하면 배경 이미지가 한 번만 표시됩니다: -->
-
-<nav class="navbar navbar-expand-lg mx-auto mt-3 bg-dark" id="scrollNavbar" style=" width: 80%;  background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 70px">
-<!-- navbar-expand-lg: 네비게이션 바의 크기를 화면 너비에 따라 조절하는 클래스입니다. navbar-expand-lg 클래스는 화면 너비가 대형(Large) 이상일 때 네비게이션 바가 확장되도록 합니다. 작은 화면에서는 기본적으로 접혀 있는 상태가 됩니다. -->
-    
-    <!-- Brand/logo -->
-    <a class="navbar-brand" href="<%= ctxPath %>/index.bz">
-       	<i class="fa-brands fa-phoenix-framework fa-2xl" style="color: white;"></i>
-    </a>
-    
-    <!-- 아코디언 같은 Navigation Bar 만들기 -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    
-    <!-- 네비게이션 메뉴들... -->
-    <ul class="navbar-nav mr-auto">
-    	<li class="nav-item dropdown">
-	        <a class="nav-link dropdown-toggle menufont_size text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-	        	게임
-	        </a>
-            
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
-    <!-- 네비게이션 메뉴들... -->
-
-	            <a class="dropdown-item text-white" href="#">워크레프트</a>
-	            <a class="dropdown-item text-white" href="#">디아블로</a>
-	            <a class="dropdown-item text-white" href="#">오버워치</a>
-	            <a class="dropdown-item text-white" href="#">스타크래프트</a>
-	            <a class="dropdown-item text-white" href="#">젤다의 전설</a>
-	            
-            </div>
-   		</li>
-		     
-     	<li class="nav-item dropdown ml-2">
-        	
-        	<a class="nav-link menufont_size text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-            	상점 바로가기
-        	</a>
-        	
-
-	        
-    	</li>
-   
-	</ul>
-	
-	
-    <ul class="navbar-nav ml-auto">
-
-    <li class="nav-item active ml-2">
-		<a class="nav-link menufont_size text-white" href="#">
-		<i class="fa-solid fa-circle-info"></i>&nbsp;&nbsp;고객지원
-		</a>
-	</li>
-		
-	<li class="nav-item dropdown ml-2">
-		<a class="nav-link dropdown-toggle menufont_size" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-	    	<i class="fa-solid fa-gear"></i>&nbsp;&nbsp;계정 관리
-	    </a>
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
-		    <a class="dropdown-item text-white" href="<%= ctxPath%>/member/pwdUpdateEnd.bz">비밀번호 변경</a>
-		    <a class="dropdown-item text-white" href="#">구매내역</a>
-		    <a class="dropdown-item text-white" href="#">장바구니</a>
-		    <a class="dropdown-item text-white" href="<%= ctxPath%>/login/logout.bz">로그아웃</a>
-		</div>
-    </li>
-    
- 	</ul>
-	</div>
-</nav>
+<div class="mt-5"></div>
 <!-- <hr style="background-color: gold; height: 1.2px;"> -->
         <hr style="background-color: gray; height: 1.2px; position: relative; top:20px; margin: 0 1.7%;"> 
 
@@ -196,86 +126,21 @@ function goResignation(){
 				
             </div>
             
-                           <div class="col-lg-12 mt-6" >
-            	<div>
-            		<h2 style="color:white;">계정 상세 정보(정보 변경 --- 더보기 배우고 처리)</h2>
-				</div>
-				<div class="row">
-					<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
+            			<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
 					  <thead>
 					    <tr>
-					      <th style="width:150px">내 정보</th>
-					      <td class="text-right"><a href="#">변경하기</a></td>
+					      <th style="width:150px">회원 비밀번호 변경</th>
+					      <td class="text-right"><a type="button" class="btn btn-sm btn-info text-right" href="<%= ctxPath%>/member/pwdUpdateEnd.bz">비밀번호 변경하기</a></td>
 					    </tr>
 					  </thead>
 					  <tbody>
 					    <tr>
-					      <td >아이디</td>
-					      <td>${loginuser.user_id}</td>
+					      <td colspan="3">회원에서 탈퇴하려면 탈퇴하기 버튼을 눌러주세요</td>
+					      
 					    </tr>
 					  </tbody>
 					</table>
-					
-					<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
-					  <thead>
-					    <tr>
-					      <th style="width:150px">성명</th>
-					      <td class="text-right"><a href="#">변경하기</a></td>
-					    </tr>
-					  </thead>
-					  <tbody>
-					    <tr>
-					      <td >이름</td>
-					      <td>${loginuser.user_name}</td>
-					    </tr>
-					  </tbody>
-					</table>
-					
-					<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
-					  <thead>
-					    <tr>
-					      <th style="width:150px">이메일</th>
-					      <td class="text-right"><a href="#">변경하기</a></td>
-					    </tr>
-					  </thead>
-					  <tbody>
-					    <tr>
-					      <td >이메일</td>
-					      <td >${loginuser.user_email}</td>
-					    </tr>
-					  </tbody>
-					</table>
-					
-					<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
-					  <thead>
-					    <tr>
-					      <th style="width:150px">주소</th>
-					      <td class="text-right"><a href="#">변경하기</a></td>
-					    </tr>
-					  </thead>
-					  <tbody>
-					    <tr>
-					      <td >주소</td>
-					      <td >${loginuser.user_address}, ${loginuser.user_detail_address} ${loginuser.user_extraaddress}</td>
-					    </tr>
-					  </tbody>
-					</table>
-					
-					<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
-					  <thead>
-					    <tr>
-					      <th style="width:150px">연락처</th>
-					      <td class="text-right"><a href="#">변경하기</a></td>
-					    </tr>
-					  </thead>
-					  <tbody>
-					    <tr>
-					      <td >연락처</td>
-					      <td >${loginuser.user_phone}</td>
-					    </tr>
-					  </tbody>
-					</table>
-					
+			
 						<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
 					  <thead>
 					    <tr>
@@ -294,8 +159,7 @@ function goResignation(){
 				
             </div>
         </div>
-    </div>
-</div>
+    
 <br>
 <br><br>
 <br>
