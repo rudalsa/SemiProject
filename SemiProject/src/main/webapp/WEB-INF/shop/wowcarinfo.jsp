@@ -116,7 +116,7 @@
 				<div style="background-color: black; text-align: center; color: #ebdec2;">
 					
 					<div class="in1" style="display: inline-block; width: 49.8%;">
-						<img class="inimg" src="<%= ctxPath %>/img/wowcarinfo_img/${wcivo.carinfo_fr_img1}" width="100%" style="background-image: url('<%= ctxPath %>/img/wowcarinfo_img/${wcivo.carinfo_bg_img4}'); background-size: cover;" />
+						<img class="inimg" src="<%= ctxPath %>/img/wowcarinfo_img/${wcivo.carinfo_fr_img1}" width="100%" />
 						<div class="inner">
 							<h5>wow 신규 플레이어</h5>
 							<h2 style="color: #f8b700; font-size:25pt; font-weight:bold;">모험을 시작하세요</h2>
@@ -150,7 +150,7 @@
 				<div>
 					<div class="text-right" style="height:350px; background-image: url('<%= ctxPath %>/img/wowcarinfo_img/${wcivo.carinfo_bg_img5}'); background-size: cover;">			
 						<br><br>
-						<p style="color: #ebdbc2; font-size: 10pt;">180일 게임 시간 묶ㅇㅇ음 상품</p>
+						<p style="color: #ebdbc2; font-size: 10pt;">180일 게임 시간 묶음 상품</p>
 						<h1 style="font-weight: bold; color:white;">신나는 모험을 즐기세요!</h1>
 						<p style="color: #ebdbc2; font-size: 10pt;">
 						멋진 지느러미를 뽐내는 경이로운 파도수염 탈것을 탈것 수집품에 추가하세요!<br>
