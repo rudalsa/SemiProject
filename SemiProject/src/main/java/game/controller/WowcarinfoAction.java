@@ -28,7 +28,7 @@ public class WowcarinfoAction extends AbstractController {
 		
 		} catch (SQLException e) { 
 			e.printStackTrace(); 
-		//super.setRedirect(true);
+		super.setRedirect(true);
 		super.setViewPage(request.getContextPath()+"/error.bz"); }
 		
 
