@@ -417,9 +417,9 @@ function goEdit(){
 	const user_zipcode = $("input#user_zipcode").val().trim();
 	const user_address = $("input#user_address").val().trim();
 	const user_detail_address = $("input#user_detail_address").val().trim();
-	const user_extraAddress = $("input#user_extraaddress").val().trim();
+	const user_extraaddress = $("input#user_extraaddress").val().trim();
 	
-	if(user_zipcode == "" || user_address == "" || user_detail_address == "" || user_extraAddress == "") {
+	if(user_zipcode == "" || user_address == "" || user_detail_address == "" || user_extraaddress == "") {
 		alert("우편번호 및 주소를 입력하셔야 합니다.");
 		return; // goRegister() 함수를 종료한다.
 	}
