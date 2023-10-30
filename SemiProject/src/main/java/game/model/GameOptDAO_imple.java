@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -164,6 +165,79 @@ public class GameOptDAO_imple implements GameOptDAO {
 		}
 		
 		return OptiList;
+		
+		
+	}
+
+	// 장바구니에 기존 제품이 없을경우 insert 하고 // 장바구니에 기존 제품이 있을경우 update 한다.
+	@Override
+	public int addCart(Map<String, String> paraMap) throws SQLException {
+		
+		
+		  int n = 0;
+	      
+	      try {
+	         conn = ds.getConnection();
+	         
+	      /*
+	            먼저 장바구니 테이블(tbl_cart)에 어떤 회원이 새로운 제품을 넣는 것인지,
+	            아니면 또 다시 제품을 추가로 더 구매하는 것인지를 알아야 한다.
+	            이것을 알기 위해서 어떤 회원이 어떤 제품을 장바구니 테이블(tbl_cart) 넣을때
+	            그 제품이 이미 존재하는지 select 를 통해서 알아와야 한다.
+	            
+	            -------------------------------------------
+	            cartno   fk_userid     fk_pnum   oqty  
+	            -------------------------------------------
+	              1      kimkm          7         2     
+	              2      seoyh          6         3     
+	              3      leess          7         5     
+	        */
+	         
+	         String sql = " select cartno "
+	                  + " from tbl_game_cart "
+	                  + " where fk_userid = ? and fk_g_code = ? "; 
+	                  
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setString(1, paraMap.get("user_id"));
+	         pstmt.setString(2, paraMap.get("g_code"));
+	         
+	         rs = pstmt.executeQuery();
+	         
+	         if(rs.next()) {
+	            // 어떤 제품을 추가로 장바구니에 넣고자 하는 경우
+	            
+	            sql = " update tbl_game_cart set oqty = oqty + ? "
+	                + " where cartno = ? ";
+	            
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setInt(1, Integer.parseInt(paraMap.get("oqty")));
+	            pstmt.setInt(2, rs.getInt("CARTNO"));
+	            
+	            n = pstmt.executeUpdate();
+	            
+	         }
+	         
+	         else {
+	            // 장바구니에 존재하지 않는 새로운 제품을 넣고자 하는 경우
+	            
+	            sql = " insert into tbl_game_cart(cartno, fk_userid, fk_g_code, oqty, registerday)  "
+	               + " values(seq_tbl_cart_cartno.nextval, ?, ?, ?, default) ";
+	               
+	               pstmt = conn.prepareStatement(sql);
+	               pstmt.setString(1, paraMap.get("user_id"));
+	               pstmt.setInt(2, Integer.parseInt(paraMap.get("g_code")));
+	               pstmt.setInt(3, Integer.parseInt(paraMap.get("oqty")));
+	               
+	               n = pstmt.executeUpdate();
+	            
+	         }
+	         
+	      } finally {
+	         close();
+	      }
+
+	      return n;
+		
 		
 		
 	}
