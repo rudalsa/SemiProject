@@ -398,8 +398,8 @@ function goEdit(){
 	}// end of for-----------------------------
      	
 	
-	if(b_requiredInfo) {
-		return; // goRegister() 함수를 종료한다.
+	if(!b_requiredInfo) {
+		return; // goEdit() 함수를 종료한다.
 	}
 	// *** 필수입력사항에 모두 입력이 되었는지 검사하기 끝 *** //
 	
@@ -470,6 +470,7 @@ function goEdit(){
 	}
 	
 }// end of function goEdit()-----------------------
+
 
 
 

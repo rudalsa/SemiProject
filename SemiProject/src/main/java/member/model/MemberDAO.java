@@ -53,6 +53,7 @@ public interface MemberDAO {
 	// 회원상태 탈퇴시키기, DB에는 남아있지만 Status = 0 으로 변경
 	public int deleteUser(String user_id) throws SQLException ;
 
+
 		
 		
 		

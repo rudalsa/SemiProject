@@ -101,8 +101,8 @@
 	                
 	                <tr>
 	                    <td colspan="2" class="text-center" style="padding: 30px 0 10px 0;">
-	                       <input type="button" class="btn btn-success mr-5" value="수정하기" onclick="goEdit()" />
-	                       <input type="reset"  class="btn btn-danger" value="취소하기" onclick="self.close()" />
+	                       <button type="button" class="btn btn-success mr-5" onclick="goEdit()">수정하기</button>
+	                       <button type="reset"  class="btn btn-danger" onclick="self.close()">취소하기</button>
 	                    </td>
 	                </tr>
 	                 

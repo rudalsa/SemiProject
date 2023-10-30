@@ -266,7 +266,7 @@ public class MemberDAO_imple implements MemberDAO {
 			
 			String sql = " select user_id, user_name, user_email, user_gender "
 			           + " from tbl_user "
-			           + " where user_id != 'admin' ";
+			           + " where user_id != 'admin' and user_status = 1 ";
 			
 			String colname = paraMap.get("searchType");
 			String searchWord = paraMap.get("searchWord"); // 검색대상이 암호화 되어있다면 암호화도 시켜야한다."lee.yo.sub94@gmail.com" ==> ""
@@ -328,7 +328,7 @@ public class MemberDAO_imple implements MemberDAO {
 						+ "    from( "
 						+ "        select user_id, user_name, user_email, user_gender "
 						+ "        from tbl_user "
-						+ "        where user_id != 'admin' ";
+						+ "        where user_id != 'admin'  and user_status = 1 ";
 			String colname = paraMap.get("searchType");
 			String searchWord = paraMap.get("searchWord"); // 검색대상이 암호화 되어있다면 암호화도 시켜야한다."lee.yo.sub94@gmail.com" ==> ""
 			
@@ -401,7 +401,7 @@ public class MemberDAO_imple implements MemberDAO {
 				
 				String sql =  " select ceil(count(*)/?) "
 							+ " from tbl_user "
-							+ " where user_id != 'admin' ";
+							+ " where user_id != 'admin' and user_status = 1 ";
 				
 				String colname = paraMap.get("searchType");
 				String searchWord = paraMap.get("searchWord"); // 검색대상이 암호화 되어있다면 암호화도 시켜야한다."lee.yo.sub94@gmail.com" ==> ""
@@ -664,12 +664,13 @@ public class MemberDAO_imple implements MemberDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " update tbl_user set user_status = ? "+" lastpwddate = sysdate " + " where user_id = ? ";
+			String sql = " UPDATE tbl_user "
+					+ " SET user_status = 0, user_lastpwddate = sysdate "
+					+ " WHERE user_id = ? ";
 			
 			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setString(1, "0"); // 암호를 SHA256 알고리즘으로 단방향 암호화 시킨다. 
-			pstmt.setString(2, user_id);
+			 
+			pstmt.setString(1, user_id);
 			
 			result = pstmt.executeUpdate();
 			
