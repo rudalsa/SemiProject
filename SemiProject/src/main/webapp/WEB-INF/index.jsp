@@ -60,30 +60,30 @@
                         </c:forEach>
                     </c:if>
                 </ol>
+
                 <div class="carousel-inner">
                     <c:if test="${not empty requestScope.sdList}">
                         <c:forEach var="sdvo" items="${requestScope.sdList}" varStatus="status">
                             <c:if test="${status.index == 0}">
-                                <div class="carousel-item active" style="height: 500px; background-image: url('<%= ctxPath %>/img/${sdvo.ms_bg_file}'); background-size: 100% 100%; background-position: center;">
+                                <div class="carousel-item active" style="height: 300px; background-image: url('<%= ctxPath %>/img/${sdvo.ms_bg_file}'); background-size: 100% 100%; background-position: center;">
                                     <div class="carousel-caption d-none d-md-block" style="display: flex; align-items: center;">
                                     	
-                                        <img src="<%= ctxPath%>/img/${sdvo.ms_logo_file}" class="d-flex img-fluid" style="width: 40%; height: auto; margin-right: 20px;" alt="하...">
+                                        <img src="<%= ctxPath%>/img/${sdvo.ms_logo_file}" class="d-flex img-fluid" style="width: 25%; height: auto; margin-right: 20px;" alt="하...">
                                         <div>
-                                        
-                                        	<a href="gameoption.bz?imgsetno=${sdvo.ms_img_no}" id="purchasepage" class="btn btn-primary text-white btn_text mt-5 mr-3" style="margin-bottom: 6%; width: 17%; height: 42px; border: none; border-radius: 50px; font-size: 14pt; font-weight: bold; float:left;">구매하기</a>
-                                        	<a href="wowcarinfo.bz?imgsetno=${sdvo.ms_img_no}" id="car_info" class="btn btn-secondary text-white btn_text mt-5" style="margin-bottom: 6%; width: 17%; height: 42px; border: none; border-radius: 50px; font-size: 14pt; font-weight: bold; float:left;">자세히보기</a>
+                                        	<a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage" class="btn btn-info">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
+                                        	<a href="wowcarinfo.bz?imgsetno=${sdvo.ms_img_no}" id="car_info" class="btn btn-danger">자세히보기</a>
                                         </div>
                                     </div>
                                 </div>
                             </c:if>
                             <c:if test="${status.index > 0}">
-                                <div class="carousel-item" style="height: 500px; background-image: url('<%= ctxPath %>/img/${sdvo.ms_bg_file}'); background-size: 100% 100%; background-position: center;">
+                                <div class="carousel-item" style="height: 300px; background-image: url('<%= ctxPath %>/img/${sdvo.ms_bg_file}'); background-size: 100% 100%; background-position: center;">
                                     <div class="carousel-caption d-none d-md-block" style="display: flex; align-items: center;">
-                                        <img src="<%= ctxPath%>/img/${sdvo.ms_logo_file}" class="d-flex img-fluid" style="width: 40%; height: auto; margin-right: 20px;" alt="...">
+                                        <img src="<%= ctxPath%>/img/${sdvo.ms_logo_file}" class="d-flex img-fluid" style="width: 25%; height: auto; margin-right: 20px;" alt="...">
                                     	<div>
                                         
-                                        	<a href="gameoption.bz?imgsetno=${sdvo.ms_img_no}" id="purchasepage" class="btn btn-primary text-white btn_text mt-5 mr-3" style="margin-bottom: 6%; width: 17%; height: 42px; border: none; border-radius: 50px; font-size: 14pt; font-weight: bold; float:left;">구매하기</a>
-                                        	<a href="wowcarinfo.bz?imgsetno=${sdvo.ms_img_no}" id="car_info" class="btn btn-secondary text-white btn_text mt-5 mr-3" style="margin-bottom: 6%; width: 17%; height: 42px; border: none; border-radius: 50px; font-size: 14pt; font-weight: bold; float:left;">자세히보기</a>
+                                        	<a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage" class="btn btn-info">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
+                                        	<a href="wowcarinfo.bz?imgsetno=${sdvo.ms_img_no}" id="car_info" class="btn btn-danger">자세히보기</a>
                                         </div>
                                     
                                     </div>
@@ -119,7 +119,7 @@
 	              <div class="col-md-2 mx-auto video" 
 	                
 	                style="background-image: url('<%= ctxPath %>/img//tbl_list_image/${videovo.video_set_bg_img}' ); background-size: 100%,100%; height:300px; width:100%">   
-	                 <a href="gameoption.bz?imgsetno=${videovo.video_set_no}">
+	                 <a href="gameopt.bz?g_code=${videovo.fk_g_code}">
 	                <img src="<%= ctxPath %>/img//tbl_list_image/${videovo.video_set_logo_img}" alt="..." class="img-fluid" name="${videovo.video_set_gif}" >   
 	                 </a>
 	             </div>
