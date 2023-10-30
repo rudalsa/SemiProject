@@ -161,30 +161,32 @@
    <li class="nav-item dropdown ml-2">
       
 
-     <c:if test="${empty sessionScope.loginuser}">
-		<a class="nav-link dropdown-toggle menufont_size" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-	    	<i class="fa-regular fa-user"></i>&nbsp;&nbsp;계정로그인
-	    </a>
-	    
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
-		    <a class="dropdown-item" href="<%= ctxPath%>/login/login.bz">로그인</a>
-		    <a class="dropdown-item" href="<%= ctxPath%>/member/memberRegister.bz">회원가입</a>
-		    <a class="dropdown-item" href="#">나가기</a>
-		</div>
-		
-	    </c:if>
-		
-		<c:if test="${not empty sessionScope.loginuser}">
-		<a class="nav-link dropdown-toggle menufont_size" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-	    	<i class="fa-regular fa-user"></i>&nbsp;&nbsp;${sessionScope.loginuser.user_name} 님
-	    </a>
-	    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
-		    <a class="dropdown-item" href="<%= ctxPath%>/member/memberEdit.bz">계정관리</a>
-		    <a class="dropdown-item" href="#">장바구니</a>
-		    <a class="dropdown-item" href="<%= ctxPath%>/login/logout.bz">로그아웃</a>
-		</div>
-		
-	    </c:if>
+ <c:if test="${not empty sessionScope.loginuser}">
+         <c:choose>
+          <c:when test="${not empty sessionScope.loginuser and sessionScope.loginuser.user_id eq 'admin'}">
+              <!-- admin인 경우 -->
+              <a class="nav-link dropdown-toggle menufont_size" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+                  <i class="fa-regular fa-user"></i>&nbsp;&nbsp;${sessionScope.loginuser.user_name} 님
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
+                  <a class="dropdown-item" href="<%= ctxPath%>/member/memberList.bz">회원관리</a>
+                  <a class="dropdown-item" href="<%= ctxPath %>/shop/admin/productRegister.bz">제품추가</a>
+                  <a class="dropdown-item" href="<%= ctxPath%>/login/logout.bz">로그아웃</a>
+              </div>
+          </c:when>
+          <c:otherwise>
+              <!-- admin가 아닌 경우 -->
+              <a class="nav-link dropdown-toggle menufont_size" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+                  <i class="fa-regular fa-user"></i>&nbsp;&nbsp;${sessionScope.loginuser.user_name} 님
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
+                  <a class="dropdown-item" href="<%= ctxPath%>/member/memberEdit.bz">계정관리</a>
+                  <a class="dropdown-item" href="#">장바구니</a>
+                  <a class="dropdown-item" href="<%= ctxPath%>/login/logout.bz">로그아웃</a>
+              </div>
+          </c:otherwise>
+</c:choose>
+    </c:if>
       
       
     </li>

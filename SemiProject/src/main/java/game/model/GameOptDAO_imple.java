@@ -95,7 +95,7 @@ public class GameOptDAO_imple implements GameOptDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " select g_no, g_code, g_name, fk_c_code, g_company, g_img_1, g_img_2, g_qty, g_price, g_sale_price, fk_s_code, g_content "
+			String sql = " select g_no, g_code, g_name, fk_c_code, g_company, g_img_1, g_img_2, g_qty, g_price, g_sale_price, fk_s_code, g_content, g_info "
 					   + " from tbl_game_product "
 					   + " where g_code = ? ";
 			
@@ -119,6 +119,8 @@ public class GameOptDAO_imple implements GameOptDAO {
 				gameVO.setG_sale_price(rs.getInt(10));
 				gameVO.setFk_s_code(rs.getString(11));
 				gameVO.setG_content(rs.getString(12));
+				gameVO.setG_info(rs.getString(13));
+				
 				
 			} // end of if(rs.next())-------------------
 		

@@ -16,7 +16,10 @@ public class GameVO {
 	private String 	g_content;   // 게임설명 
 	private int 	g_coin;      // 포인트 점수                                         
 	private String 	g_inputdate; // 게임입고일자	
+	private String 	g_info; // 게임정보
 	
+
+
 	private CategoryVO categvo; // 카테고리VO 
 	private SpecVO spvo;        // 스펙VO 
 	/*
@@ -180,6 +183,17 @@ public class GameVO {
 	public void setSpvo(SpecVO spvo) {
 		this.spvo = spvo;
 	}
+	public String getG_info() {
+		return g_info;
+	}
+
+
+
+	public void setG_info(String g_info) {
+		this.g_info = g_info;
+	}
+	
+	
 
 	///////////////////////////////////////////////
 	// *** 제품의 할인률 ***

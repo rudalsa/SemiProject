@@ -278,7 +278,7 @@ td#error {
 			<div class="text-white">
 				
 				<h1>${requestScope.gameVO.g_content}</h1>
-				<h5> 게임 소개 들어 갈 것 임</h5>
+				<h5> ${requestScope.gameVO.g_info}</h5>
 		
 			</div>
 		
@@ -315,7 +315,7 @@ td#error {
            	
            	
            	
-	            <c:if test="${not empty requestScope.OptiList}">
+	           <c:if test="${not empty requestScope.OptiList}">
 	            	<c:forEach var="optvo" items="${requestScope.OptiList}">
 			  			<tr class="price custom-radio">
 						    <td>
@@ -332,7 +332,26 @@ td#error {
 						    </td>
 			 		 	</tr>
 	  				</c:forEach>
+	  				<%-- <c:if test="${not empty requestScope.gameVO}"> 옵션이 비었을경우 --%>
 	  			</c:if>
+	  			
+	  			<c:if test="${empty requestScope.OptiList}">
+	  					<tr class="price custom-radio">
+						    <td>
+							    <label class="btn custom-transparent-button">
+							    <input type="radio" id="${requestScope.gameVO.g_name}" name="coinmoney" value="${requestScope.gameVO.g_price}"/>
+							    <span class="opttitle">${requestScope.gameVO.g_name}</span>
+							    <br>
+							    <span class="panmaeprice">${requestScope.gameVO.g_sale_price}</span>
+							    <span class="saleprice">${requestScope.gameVO.g_price}</span>
+							    </label>
+						    </td>
+						    <td class="per">
+						      <span>${requestScope.gameVO.g_code}</span>
+						    </td>
+			 		 	</tr>
+			 		 </c:if>
+	  			
   			
        	
 	            <tr>
@@ -364,7 +383,7 @@ td#error {
 	    	</li>
 	      	
 	      	<li class="btn btn-danger mt-2" onclick="goCart()">
-	          &nbsp;<i class="fa-brands fa-google"></i> 장바구니
+	          	&nbsp;<i class="fa-brands fa-google"></i> 장바구니
 	      	</li>
 	      		      	
 	      	<li class="btn btn-success mt-2">
