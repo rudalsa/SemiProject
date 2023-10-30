@@ -70,7 +70,6 @@
                                     	
                                         <img src="<%= ctxPath%>/img/${sdvo.ms_logo_file}" class="d-flex img-fluid" style="width: 25%; height: auto; margin-right: 20px;" alt="하...">
                                         <div>
-                                        
                                         	<a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage" class="btn btn-info">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
                                         	<a href="wowcarinfo.bz?imgsetno=${sdvo.ms_img_no}" id="car_info" class="btn btn-danger">자세히보기</a>
                                         </div>
@@ -120,7 +119,7 @@
 	              <div class="col-md-2 mx-auto video" 
 	                
 	                style="background-image: url('<%= ctxPath %>/img//tbl_list_image/${videovo.video_set_bg_img}' ); background-size: 100%,100%; height:300px; width:100%">   
-	                 <a href="gameoption.bz?imgsetno=${videovo.video_set_no}">
+	                 <a href="gameopt.bz?g_code=${videovo.fk_g_code}">
 	                <img src="<%= ctxPath %>/img//tbl_list_image/${videovo.video_set_logo_img}" alt="..." class="img-fluid" name="${videovo.video_set_gif}" >   
 	                 </a>
 	             </div>

@@ -171,6 +171,29 @@ td#error {
       // 클릭된 버튼에만 'active' 클래스 추가
       $(this).addClass('active');
     });
+    
+    document.addEventListener("keydown", function (e) {
+    	// 모든 키보드 입력을 무시
+    	e.preventDefault();
+   	});
+    
+   
+    // 1 ~ 10 까지
+    $("input#spinner").spinner( {
+        spin: function(event, ui) {
+           if(ui.value > 10) {
+              $(this).spinner("value", 10);
+              return false;
+           }
+           else if(ui.value < 1) {
+              $(this).spinner("value", 1);
+              return false;
+           }
+        }
+     });// end of $("input#spinner").spinner({});----------------    
+    
+    
+    
   });
 </script>
 
@@ -253,7 +276,7 @@ td#error {
             </c:if>
 				
 			<div class="text-white">
-			
+				
 				<h1>${requestScope.gameVO.g_content}</h1>
 				<h5> 게임 소개 들어 갈 것 임</h5>
 		
@@ -305,7 +328,7 @@ td#error {
 							    </label>
 						    </td>
 						    <td class="per">
-						      <span>함수만들어서들어갈것임</span>
+						      <span>${optvo.fk_g_code}</span>
 						    </td>
 			 		 	</tr>
 	  				</c:forEach>
@@ -321,16 +344,29 @@ td#error {
      </div>
      
      <div class="purchase-btn text-center">
-	 	<ul class="list-unstyled">
 	 	
+	 	 <%-- ==== 장바구니 주문 개수 폼 ==== --%>
+         <form name="goCartFrm">       
+            <ul class="list-unstyled mt-3">
+                <li>
+                    <label for="spinner">주문개수&nbsp;</label>
+                    <input id="spinner"  name="oqty" value="1" style="width: 110px;">
+                    <input type="hidden" name="g_code" value="${requestScope.gameVO.g_code}" >
+                </li>
+            </ul>
+         </form> 
+		 <%-- ==== 장바구니 주문 개수 끝 ==== --%> 
+		  
+	 	<ul class="list-unstyled">
+	    	
 	    	<li id="purchase" onclick="buygame('<%=ctxPath %>','${sessionScope.loginuser.user_id}')" class="btn btn-primary">
 	          &nbsp;<i class="fa-brands fa-square-facebook"></i> 구매하기
 	    	</li>
 	      	
-	      	<li class="btn btn-danger mt-2">
+	      	<li class="btn btn-danger mt-2" onclick="goCart()">
 	          &nbsp;<i class="fa-brands fa-google"></i> 장바구니
 	      	</li>
-	      	
+	      		      	
 	      	<li class="btn btn-success mt-2">
 	          &nbsp;<i class="fa-brands fa-square-x-twitter"></i> 코인구매
 	        </li>
@@ -343,7 +379,7 @@ td#error {
 		   	<input type="hidden" name="user_id" />
 		   	<input type="hidden" name="coinmoney" />	
 	   </form>
-	  
+	  	
 	    
 	</div>
 	

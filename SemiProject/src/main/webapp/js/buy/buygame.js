@@ -17,7 +17,11 @@
 			opt_name = $(e.target).attr("id");
    });
    
-   });
+   
+   
+  });
+  
+  
    
 
  
@@ -77,6 +81,65 @@
     frm.submit();
    
 }
+
+ // *** 장바구니 담기 ***//
+   function goCart() {
+   	
+   
+ 	 // === 주문량에 대한 유효성 검사하기 === //
+     const frm = document.goCartFrm;
+     
+/////////////////////////////////////////////////////////////////     
+     
+     const regExp = /^[0-9]+$/;  // 숫자만 체크하는 정규표현식
+     let oqty = frm.oqty.value;
+     const bool = regExp.test(oqty);
+     // 숫자 이외의 값이 들어온 경우  
+     if(!bool) {
+         alert("숫자만 입력하세요");
+         frm.oqty.value = "1";
+         frm.oqty.focus();
+         return; // 종료 
+      }
+      
+      // 음수가 들어온 경우
+      oqty = parseInt(oqty);
+      if(oqty < 1) {
+         alert("주문갯수는 1개 이상이어야 합니다.");
+         frm.oqty.value = "1";
+         frm.oqty.focus();
+         return; // 종료 
+      }
+
+//////////////////////////////////////////////////////////////////     
+	
+	  const checked_cnt = $("input:radio[name='coinmoney']:checked").length;
+ 	 
+	  if(checked_cnt==0){
+	      // 결제금액을 선택하지 않았을 경우
+		  $("td#error").show();
+	 
+	 }
+    
+    else{
+        let oqty = frm.oqty.value;
+	    const g_code = frm.g_code.value;	
+	   
+	    alert("주문연결" + oqty+ opt_name + g_code); 	
+	  
+      
+  	    // 주문개수가 1개 이상인 경우
+    
+        frm.method = "POST";
+        frm.action = `/SemiProject/buy/cartAdd.bz`;
+        frm.submit();
+      
+      }
+   
+	}// end of function goCart()-------------------------
+   
+   
+   
  
  
  
