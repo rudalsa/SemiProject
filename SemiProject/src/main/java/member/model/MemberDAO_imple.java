@@ -101,8 +101,6 @@ public class MemberDAO_imple implements MemberDAO {
 	      	
 	}// end of public int registerMember(MemberVO member) throws SQLException-------
 	
-	
-
 
 	// 입력받은 paraMap 을 가지고 한명의 회원정보를 리턴시켜주는 메소드(로그인 처리)  
 	@Override
@@ -256,9 +254,6 @@ public class MemberDAO_imple implements MemberDAO {
 	} // end of public boolean isUserExist(Map<String, String> paraMap) throws SQLException {
 
 
-	
-	
-
 	// *** 페이징 처리를 안한 모든 회원 또는 검색한 모든 회원 목록 보여주기 *** //
 	@Override
 	public List<MemberVO> select_Member_nopaging(Map<String, String> paraMap) throws SQLException{
@@ -271,7 +266,7 @@ public class MemberDAO_imple implements MemberDAO {
 			
 			String sql = " select user_id, user_name, user_email, user_gender "
 			           + " from tbl_user "
-			           + " where user_id != 'admin' ";
+			           + " where user_id != 'admin' and user_status = 1 ";
 			
 			String colname = paraMap.get("searchType");
 			String searchWord = paraMap.get("searchWord"); // 검색대상이 암호화 되어있다면 암호화도 시켜야한다."lee.yo.sub94@gmail.com" ==> ""
@@ -333,7 +328,7 @@ public class MemberDAO_imple implements MemberDAO {
 						+ "    from( "
 						+ "        select user_id, user_name, user_email, user_gender "
 						+ "        from tbl_user "
-						+ "        where user_id != 'admin' ";
+						+ "        where user_id != 'admin'  and user_status = 1 ";
 			String colname = paraMap.get("searchType");
 			String searchWord = paraMap.get("searchWord"); // 검색대상이 암호화 되어있다면 암호화도 시켜야한다."lee.yo.sub94@gmail.com" ==> ""
 			
@@ -406,7 +401,7 @@ public class MemberDAO_imple implements MemberDAO {
 				
 				String sql =  " select ceil(count(*)/?) "
 							+ " from tbl_user "
-							+ " where user_id != 'admin' ";
+							+ " where user_id != 'admin' and user_status = 1 ";
 				
 				String colname = paraMap.get("searchType");
 				String searchWord = paraMap.get("searchWord"); // 검색대상이 암호화 되어있다면 암호화도 시켜야한다."lee.yo.sub94@gmail.com" ==> ""
@@ -627,10 +622,93 @@ int result = 0;
 	}
 	
 	
+	// 회원정보 수정시 email 중복검사 (tbl_member 테이블에서 다른 사용자가 email 이 존재하면 true 를 리턴해주고, email 이 존재하지 않으면 false 를 리턴한다) 
+	@Override
+	public boolean emailDuplicateCheck2(Map<String, String> paraMap) throws SQLException {
+
+		boolean isExists = false;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " select user_email "
+					   + " from tbl_user "
+					   + " where user_id != ? and user_email = ? ";
+			
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, paraMap.get("user_id"));
+			pstmt.setString(2, aes.encrypt(paraMap.get("user_email")));
+			
+			rs = pstmt.executeQuery();
+			
+			isExists = rs.next(); // 행이 있으면(중복된 email) true,
+			                      // 행이 없으면(사용가능한 email) false
+			
+		} catch(GeneralSecurityException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		return isExists;		
+		
+	}// end of public boolean emailDuplicateCheck2(Map<String, String> paraMap) throws SQLException-----
+
 	
+	// 비밀번호 변경시 현재 사용중인 비밀번호인지 아닌지 알아오기(현재 사용중인 비밀번호 이라면 true, 새로운 비밀번호이라면 false) 
+	@Override
+	public boolean duplicatePwdCheck(Map<String, String> paraMap) throws SQLException {
+
+		boolean isExists = false;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " select user_pwd "
+					   + " from tbl_user "
+					   + " where user_id = ? and user_pwd = ? ";
+			
+			pstmt = conn.prepareStatement(sql); 
+			pstmt.setString(1, paraMap.get("user_id"));
+			pstmt.setString(2, Sha256.encrypt(paraMap.get("new_pwd")));
+			
+			rs = pstmt.executeQuery();
+			
+			isExists = rs.next(); // 행이 있으면(현재 사용중인 비밀번호) true,
+			                      // 행이 없으면(새로운 비밀번호) false
+			
+		} finally {
+			close();
+		}
+		
+		return isExists;				
+		
+	}// end of public boolean duplicatePwdCheck(Map<String, String> paraMap) throws SQLException----------
 	
-	
-	
+	@Override
+	public int deleteUser(String user_id) throws SQLException {
+	int result = 0;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " UPDATE tbl_user "
+					+ " SET user_status = 0, user_lastpwddate = sysdate "
+					+ " WHERE user_id = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			 
+			pstmt.setString(1, user_id);
+			
+			result = pstmt.executeUpdate();
+			
+		} 
+		 finally {
+			close();
+		}
+		
+		return result;	
+	}
 	
 	
 	

@@ -5,24 +5,17 @@
 <%
     String ctxPath = request.getContextPath(); // MyMVC
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<title>Batttle.net 계정관리</title>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<jsp:include page="../header_suc.jsp"></jsp:include>
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/bootstrap-4.6.2-dist/css/bootstrap.min.css">
-
-<!-- Font Awesome 6 Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-<!-- Optional JavaScript -->
-<script type="text/javascript" src="<%= ctxPath%>/js/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="<%= ctxPath%>/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="<%= ctxPath%>/js/mypage.js"></script>
+<script type="text/javascript">
+function goResignation(){
+	const frm = document.memberResignation_frm;
+    frm.action = "<%= ctxPath%>/member/memberResignation.bz";
+    frm.method = "POST";
+    frm.submit();   	
+}
+</script>
 </head>
 
 <body style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
@@ -287,7 +280,7 @@
 					  <thead>
 					    <tr>
 					      <th style="width:150px">회원 탈퇴</th>
-					      <td class="text-right"><a href="#">탈퇴하기</a></td>
+					      <td class="text-right"><button type="button" class="btn btn-sm btn-danger text-right" onclick="goResignation()">회원 탈퇴</button></td>
 					    </tr>
 					  </thead>
 					  <tbody>
@@ -350,6 +343,9 @@
                <br>
                <br>
 
+<form name="memberResignation_frm">
+	<input type="hidden" name="user_id" value="${loginuser.user_id}" />
+</form>
 
 
 

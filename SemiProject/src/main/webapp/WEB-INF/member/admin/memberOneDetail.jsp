@@ -23,72 +23,13 @@
 </style>
 
 <script type="text/javascript">
-  $(document).ready(function(){ 
+function goResignation(){
+	const frm = document.memberResignation_frm;
+    frm.action = "<%= ctxPath%>/member/memberResignation.bz";
+    frm.method = "POST";
+    frm.submit();   	
+}
      
-     $("div#smsResult").hide();
-     
-     $("button#btnSend").click(()=>{
-        
-        console.log($("input#reservedate").val()+"  "+$("input#reservetime").val());
-        // 2023-10-10  10:32
-        
-        let reservedate = $("input#reservedate").val();
-        reservedate = reservedate.split("-").join("");
-        
-        let reservetime = $("input#reservetime").val();
-        reservetime = reservetime.split(":").join("");
-        
-        const datetime = reservedate+reservetime;
-        //console.log(datetime);
-        //202310101137
-        
-        let dataObj = {};
-        
-        if(reservedate == "" || reservetime=="" ){
-           // 문자를 바로 보내기인 경우
-           dataObj = {"mobile":"${requestScope.mvo.user_phone}",
-                 "smsContent":$("textarea#smsContent").val()};
-           
-        }
-        else{
-           dataObj = {"mobile":"${requestScope.mvo.user_phone}",
-                 "smsContent":$("textarea#smsContent").val(),
-                 "datetime":datetime};
-        }
-        
-        $.ajax({
-           url: "<%= ctxPath%>/member/smsSend.up",
-           type:"post",
-           data:dataObj,
-           dataType:"json",
-           success:function(json){
-           // json은 {"group_id":"R2GWPBT7UoW308sI","success_count":1,"error_count":0} 처럼 된다.
-           
-              if(json.success_count == 1){
-                 
-                 $("div#smsResult").html("<sapn style='color:red; font-weight:bold;'>문자전송이 성공 되었습니다.</span>")
-                 
-              }
-              else if(json.error_count != 0) {
-                 $("div#smsResult").html("<sapn style='color:red; font-weight:bold;'>문자전송이 실패되었습니다.</span>")
-                 }
-              
-              $("div#smsResult").show();
-              $("textarea#smsContent").val("");
-           
-           },error: function(request, status, error){
-               alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
-             }
-                         
-        });
-        
-        
-     });
-     
-     
-     
-     
-  });// end of $(document).ready(function(){})-----------
 </script>
 
 <div class="container pt-5">
@@ -161,22 +102,37 @@
 		      <td>가입일자&nbsp;:&nbsp;</td>
 		      <td>${requestScope.mvo.user_registerday}</td>
 		   </tr>
-		   	<tr>
-		      <td colspan="2" class="deborder"><a class="btn btn-sm btn-danger" href="#">회원 탈퇴 시키기</a></td>
-		   </tr>
-		   
+		     <tr>
+   			 <td colspan="2"><button type="button" class="btn btn-sm btn-danger text-right" onclick="goResignation()">회원 탈퇴 시키기</button></td>
+		   	 </tr>	         
 		</table>
-		
-		
-		
 	</c:if>
 
+
+<c:if test="${requestScope.method == 'POST'}">
+   
+   <div style="margin-top:5%; text-align: center; font-size: 14pt; color: red;">
+	   <c:if test="${requestScope.n == 1}">
+	      사용자 ID ${requestScope.mvo.user_id}님이 탈퇴되었습니다.
+	      
+	   </c:if>
+	   
+	   <c:if test="${requestScope.n == 0}">
+	      SQL구문 오류가 발생되어 회원을 탈퇴 시킬 수 없습니다.
+	   </c:if>
+   </div>
+</c:if>
     <div class="text-center my-5">
-       <button type="button" class="btn btn-secondary" onclick="javascript:location.href='memberList.up'">회원목록[처음으로]</button> 
-       <button type="button" class="btn btn-success mx-5" onclick="javascript:history.back()">회원목록[history.back()]</button>
-       <button type="button" class="btn btn-primary" onclick="javascript:location.href='<%= ctxPath%>${requestScope.goBackURL}'">회원목록[검색된결과]</button>
+       <button type="button" class="btn btn-secondary" onclick="javascript:location.href='memberList.bz'">회원목록[처음으로]</button> 
     </div>
-    
+		    
 </div>
+
+
+
+<form name="memberResignation_frm">
+	<input type="hidden" name="user_id" value="${requestScope.mvo.user_id}" />
+</form>
+
 
 <jsp:include page="../../footer_suc.jsp" />    
