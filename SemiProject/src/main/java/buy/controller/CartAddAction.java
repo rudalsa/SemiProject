@@ -51,8 +51,13 @@ public class CartAddAction extends AbstractController {
 				
 				String g_code = request.getParameter("g_code"); // 제품번호
 				String oqty = request.getParameter("oqty");     // 주문량		
+				String paymoney = request.getParameter("paymoney");
 				
+				System.out.println(paymoney);
+			
 				HttpSession session = request.getSession();
+				session.setAttribute("paymoney", paymoney);
+				
 				MemberVO loginuser = (MemberVO) session.getAttribute("loginuser");
 				String user_id = loginuser.getUser_id();
 				
@@ -69,7 +74,7 @@ public class CartAddAction extends AbstractController {
 					
 					if(n==1) {
 					  request.setAttribute("message", "장바구니 담기 성공");
-		              request.setAttribute("loc", request.getContextPath()+"/cartList.up");
+		              request.setAttribute("loc", request.getContextPath()+"/buy/cartList.bz");
 		              								// 장바구니 목록 보여주기 페이지로 이동한다.
 					
 					}
