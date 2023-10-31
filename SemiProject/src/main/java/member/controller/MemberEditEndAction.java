@@ -28,8 +28,6 @@ public class MemberEditEndAction extends AbstractController {
 			
 		}
 		else {
-			
-			System.out.println("POST 방식으로 넘오");
            // **** POST 방식으로 넘어온 것이라면 **** //
 		
 		   String user_id = request.getParameter("user_id");	
@@ -47,14 +45,21 @@ public class MemberEditEndAction extends AbstractController {
 		   String user_phone = hp1+hp2+hp3;
 			
 		   MemberVO member = new MemberVO(user_id, user_name, user_pwd, user_email, user_phone, user_zipcode, user_address, user_detail_address, user_extraaddress);  
-			
+		   System.out.println(user_id);
+		   System.out.println(user_name);
+		   System.out.println(user_pwd);
+		   System.out.println(user_email);
+		   System.out.println(user_phone);
+		   System.out.println(user_zipcode);
+		   System.out.println(user_address);
+		   System.out.println(user_detail_address);
+		   System.out.println(user_extraaddress);
+		   
 		   MemberDAO mdao = new MemberDAO_imple();
 		
-		   // === 회원수정이 성공되어지면 "회원정보 수정 성공!!" 이라는 alert 를 띄우고 시작페이지로 이동한다. === //
-		
-			
 			try {
 				int n = mdao.updateMember(member);
+				
 				
 				if(n==1) {
 					
@@ -87,8 +92,7 @@ public class MemberEditEndAction extends AbstractController {
 		//	super.setRedirect(false); 
 			super.setViewPage("/WEB-INF/msg.jsp");
 			}
-		
-		}		
+		}	
 		
 	}
 

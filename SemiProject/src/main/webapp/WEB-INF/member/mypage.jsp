@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
@@ -34,13 +35,13 @@ function goResignation(){
             	<div>
             		<ul class="nav flex-column mt-2 ">
 					  <li class="nav-item ">
-					    <a class="nav-link text-white active" href="#"> <span class="rounded-sm">계정 정보</span></a>
+					    <a class="nav-link text-white active" href=""> <span class="rounded-sm">계정 정보</span></a>
 					  </li>
 					  <li class="nav-item">
-					    <a class="nav-link text-white" href="#">계정 상세 정보</a>
+					    <a class="nav-link text-white">계정 상세 정보</a>
 					  </li>
 					  <li class="nav-item">
-					    <a class="nav-link text-white" href="#">게임 & 요금제</a>
+					    <a class="nav-link text-white" href="<%= ctxPath%>/mainShop.bz">게임 & 요금제</a>
 					  </li>
 					  <li class="nav-item">
 					    <a class="nav-link text-white" href="#">보안</a>
@@ -49,10 +50,10 @@ function goResignation(){
 					    <a class="nav-link text-white" href="#">결제 수단</a>
 					  </li>
 					  <li class="nav-item">
-					    <a class="nav-link text-white" href="#">결제 및 주문 내역</a>
+					    <a class="nav-link text-white" href="<%= ctxPath%>/buy/cartList.bz">결제 및 주문 내역</a>
 					  </li>
 					  <li class="nav-item">
-					    <a class="nav-link text-white" href="#">로그아웃</a>
+					    <a class="nav-link text-white" href="<%= ctxPath%>/login/logout.bz">로그아웃</a>
 					  </li>
 					</ul>
 				</div>
@@ -60,7 +61,7 @@ function goResignation(){
         </div>
         
           <div class="col-md-8  mt-1">
-          
+          		<c:set var="phone" value="${loginuser.user_phone}" />
                <div class="col-lg-12 mt-6" >
             	<div>
             		<h2 style="color:white;">계정정보</h2>
@@ -70,7 +71,8 @@ function goResignation(){
 					  <thead>
 					    <tr>
 					      <th colspan="2">내 정보</th>
-					      <td class="text-right"><a href="<%= ctxPath%>/member/memberEditEnd.bz">변경하기</a></td>
+					      <td class="text-right"><a type="button" class="btn btn-sm btn-primary text-right" href="<%= ctxPath%>/member/memberEditEnd.bz">변경하기</a></td>
+					  
 					    </tr>
 					  </thead>
 					  <tbody>
@@ -83,11 +85,11 @@ function goResignation(){
 					      <td >${loginuser.user_registerday}</td>
 					    <tr>
 					      <td colspan="2">보유 포인트</td>
-					      <td>${loginuser.user_coin}</td>
+					      <td><fmt:formatNumber value="${loginuser.user_coin}" pattern="###,###" /> POINT </td>
 					    </tr>
 					    <tr>
 					      <td colspan="2">연락처</td>
-					      <td>${loginuser.user_phone}</td>
+		     			 <td>${fn:substring(phone, 0, 3)}-${fn:substring(phone, 3, 7)}-${fn:substring(phone, 7, 11)}</td>
 					    </tr>
 					  </tbody>
 					</table>
@@ -95,12 +97,11 @@ function goResignation(){
 					  <thead>
 					    <tr>
 					      <th colspan="2">포인트</th>
-					      <td>[<a href="javascript:goCoinPurchaseTypeChoice('${(sessionScope.loginuser).user_id}','<%= ctxPath%>')">코인충전</a>]</td>
 					    </tr>
 					  </thead>
 					  <tbody>
 					    <tr>
-					      	<td colspan="3" class="text-center"><fmt:formatNumber value="${loginuser.user_coin}" pattern="###,###" /> POINT </td>		
+					      	<td colspan="3" class="text-center"><fmt:formatNumber value="${loginuser.user_payment}" pattern="###,###" /> POINT </td>		
 					    </tr>
 					    
 					  </tbody>
@@ -113,12 +114,98 @@ function goResignation(){
 					  <thead>
 					    <tr>
 					      <th colspan="2">구매 정보</th>
-					      <td class="text-right"><a href="#">장바구니 바로가기</a></td>
+					      <td class="text-right"><a href="<%= ctxPath %>/buy/cartList.bz">장바구니 바로가기</a></td>
 					    </tr>
 					  </thead>
 					  <tbody>
 					  	<tr>
-					  		<td colspan="3" class="text-center">장바구니 내용 뿌리기</td>
+<td colspan="3">
+
+   <div>
+       <table id="tblCartList" class="mx-auto" style="width: 100%">
+         <thead>
+
+         
+            <tr style="background-color: #cfcfcf;">
+              <th style="width:10%; text-align: center; height: 30px;">제품번호</th>
+              <th style="width:23%; text-align: center;">제품명</th>
+                 <th style="width:17%; text-align: center;">현재주문수량</th>
+                 <th style="width:30%; text-align: center;">판매가/포인트(개당)</th>
+                 <th style="width:30%; text-align: center;">주문총액/총포인트</th>
+            </tr>   
+         </thead>
+       
+         <tbody>
+            <c:if test="${empty requestScope.cartList}">
+               <tr>
+                    <td colspan="6" align="center">
+                      <span style="color: red; font-weight: bold;">
+                         장바구니에 담긴 상품이 없습니다.
+                      </span>
+                    </td>   
+               </tr>
+            </c:if>   
+            
+            <c:if test="${not empty requestScope.cartList}">
+               <c:forEach var="cartvo" items="${requestScope.cartList}" varStatus="status"> 
+                   <tr>
+                        <td> <%-- 체크박스 및 제품번호 --%>
+                             <%-- c:forEach 에서 선택자 id를 고유하게 사용하는 방법  
+                                  varStatus="status" 을 이용하면 된다.
+                                  status.index 은 0 부터 시작하고,
+                                  status.count 는 1 부터 시작한다. 
+                             --%> 
+                             <input type="checkbox" name="pnum" class=".chkbox_g_code" id="pnum${status.index}" value="${cartvo.fk_g_code}" /> &nbsp;<label for="pnum${status.index}">${cartvo.fk_g_code}</label>   
+                        </td>
+                        <td align="center"> <%-- 제품이미지1 및 제품명 --%> 
+                           <a href="<%= ctxPath%>>shop/prodView.?pnum=${cartvo.fk_g_code}">
+                              <img src="<%= ctxPath%>/images/${cartvo.gavo.g_img_1}" class="img-thumbnail" width="130px" height="100px" />
+                           </a> 
+                           <br/><span class="cart_g_code">${cartvo.gavo.g_name}:${cartvo.opvo.opt_name}</span> 
+                        </td>
+                        <td align="center"> 
+                            <%-- 현재주문수량 --%>
+                              <input class="spinner oqty" name="oqty" value="${cartvo.oqty}" style="width: 30px; height: 20px;">개
+                              <button type="button" class="btn btn-outline-secondary btn-sm updateBtn" onclick="goOqtyEdit(this)">수정</button>
+                              
+                              <%-- 장바구니 테이블에서 특정제품의 현재주문수량을 변경하여 적용하려면 먼저 장바구니번호(시퀀스)를 알아야 한다 --%>
+                              <input type="hidden" class="cartno" value="${cartvo.cartno}" /> 
+                        </td>
+                        
+                        <td align="right"> <%-- 판매가/포인트(개당) --%> 
+                            <fmt:formatNumber value="${cartvo.opvo.opt_sale_price}" pattern="###,###" /> 원<br>
+                            <fmt:formatNumber value="${cartvo.gavo.g_coin}" pattern="###,###" /> POINT
+                        </td>
+                        <td align="right"> <%-- 주문총액/총포인트 --%> 
+                            <fmt:formatNumber value="${cartvo.gavo.totalPrice}" pattern="###,###" /> 원<br>
+                            <fmt:formatNumber value="${cartvo.gavo.totalPoint}" pattern="###,###" /> POINT
+                            <input type="hidden" class="totalPrice" value="${cartvo.gavo.totalPrice}" />
+                            <input type="hidden" class="totalPoint" value="${cartvo.gavo.totalPoint}" />
+                        </td>
+                     
+                    </tr>
+                 </c:forEach>
+            </c:if>   
+            <tr>
+                 <td colspan="3" align="left">
+                     <span style="font-weight: bold;">장바구니 총액 :</span>
+                  <span style="color: red; font-weight: bold;"><fmt:formatNumber value="${requestScope.sumMap.SUMTOTALPRICE}" pattern="###,###" /></span> 원  
+                  </td>
+                  <td colspan="2" align="left">
+                     <span style="font-weight: bold;">총 포인트 :</span> 
+                  <span style="color: red; font-weight: bold;"><fmt:formatNumber value="${requestScope.sumMap.SUMTOTALPOINT}" pattern="###,###" /></span> POINT 
+                 </td>
+
+            </tr>
+  
+         </tbody>
+      </table> 
+   </div>
+   
+    <div>
+        <p id="order_error_msg" class="text-center text-danger font-weight-bold h4"></p>
+    </div>
+ </td>
 						</tr>
 					  </tbody>
 					</table>
