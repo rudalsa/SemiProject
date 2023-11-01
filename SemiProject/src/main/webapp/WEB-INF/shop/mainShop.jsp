@@ -22,12 +22,14 @@
   		<c:if test="${not empty requestScope.gameList}">
   		
   			<c:forEach var="gamevo" items="${requestScope.gameList}" varStatus="status">
-  			
-			         <c:if test="${gamevo.fk_s_code eq '100'}">
-				         <div class="col-md-3 img"> 
-				         	<a href="gameoption.bz?imgsetno=${gamevo.g_no}" ></a>
+  					
+		         <c:if test="${gamevo.fk_s_code eq '100'}">
+			         <div class="col-md-3 img">
+			     	 	<a href="gameopt.bz?g_code=${gamevo.g_code}"> 
 				     	   	<div class="img-container">
-				        		<img src="<%= ctxPath %>/img/tbl_game_product_image/${gamevo.g_img_1}" alt="이미지 5" class="img-fluid" style="width: 100%; height: 200px;">
+			        			${gamevo.g_code}
+			        			<img src="<%= ctxPath %>/img/tbl_game_product_image/${gamevo.g_img_1}" alt="이미지 5" class="img-fluid" style="width: 100%; height: 200px;">
+					        
 					            <ul class="list-unstyled text-white text-left" style="font-weight:bold; ">
 					                <li style="font-size: 8pt;"><span>${gamevo.g_name}</span></li>
 					                <li style="font-weight: bold; color:orange;"><span>${gamevo.g_content}</span></li>
@@ -36,8 +38,10 @@
 					                <li><span style="font-size: 14pt;"><fmt:formatNumber value="${gamevo.g_sale_price}" pattern="#,###" /> 원</span></li>
 					            </ul>
 				        	</div>
-				        </div>
-			        </c:if>
+				         </a>
+				    </div>
+			       
+		        </c:if>
 			        
        	    </c:forEach>
        	    
@@ -58,7 +62,7 @@
   			
 			         <c:if test="${gamevo.fk_s_code eq '101'}">
 				         <div class="col-md-3 img"> 
-				         	<a href="gameoption.bz?imgsetno=${gamevo.g_no}" ></a>
+				         	<a href="gameopt.bz?g_code=${gamevo.g_no}" ></a>
 				     	   	<div class="img-container">
 				        		<img src="<%= ctxPath %>/img/tbl_game_product_image/${gamevo.g_img_1}" alt="이미지 5" class="img-fluid" style="width: 100%; height: 200px;">
 					            <ul class="list-unstyled text-white text-left" style="font-weight:bold; ">
@@ -91,7 +95,7 @@
   			
 			         <c:if test="${gamevo.fk_s_code eq '102'}">
 				         <div class="col-md-3 img"> 
-				         	<a href="gameoption.bz?imgsetno=${gamevo.g_no}" ></a>
+				         	<a href="gameopt.bz?g_code=${gamevo.g_no}" ></a>
 				     	   	<div class="img-container">
 				        		<img src="<%= ctxPath %>/img/tbl_game_product_image/${gamevo.g_img_1}" alt="이미지 5" class="img-fluid" style="width: 100%; height: 200px;">
 					            <ul class="list-unstyled text-white text-left" style="font-weight:bold; ">
