@@ -36,7 +36,7 @@
 	                <tr>
 	                    <td>성명&nbsp;<span class="star">*</span></td>
 	                    <td>
-	                       <input type="hidden" name="userid" value="${sessionScope.loginuser.user_id}" />
+	                       <input type="hidden" name="user_id" value="${sessionScope.loginuser.user_id}" />
 	                       <input type="text" name="user_name" id="user_name" maxlength="30" class="requiredInfo" value="${sessionScope.loginuser.user_name}" />
 	                       <span class="error">성명은 필수입력 사항입니다.</span>
 	                    </td>
@@ -93,7 +93,7 @@
 	                <tr>
 	                    <td>주소</td>
 	                    <td>
-	                       <input type="text" name="user_address" id="address" size="40" maxlength="200" placeholder="주소" value="${sessionScope.loginuser.user_address}" /><br>
+	                       <input type="text" name="user_address" id="user_address" size="40" maxlength="200" placeholder="주소" value="${sessionScope.loginuser.user_address}" /><br>
 	                       <input type="text" name="user_detail_address" id="user_detail_address" size="40" maxlength="200" placeholder="상세주소" value="${sessionScope.loginuser.user_detail_address}" />&nbsp;<input type="text" name="user_extraaddress" id="user_extraaddress" size="40" maxlength="200" placeholder="참고항목" value="${sessionScope.loginuser.user_extraaddress}" />            
 	                       <span class="error">주소를 입력하세요.</span>
 	                    </td>
@@ -102,7 +102,7 @@
 	                <tr>
 	                    <td colspan="2" class="text-center" style="padding: 30px 0 10px 0;">
 	                       <button type="button" class="btn btn-success mr-5" onclick="goEdit()">수정하기</button>
-	                       <button type="reset"  class="btn btn-danger" onclick="self.close()">취소하기</button>
+	                       <button type="reset"  class="btn btn-danger" onclick="">취소하기</button>
 	                    </td>
 	                </tr>
 	                 

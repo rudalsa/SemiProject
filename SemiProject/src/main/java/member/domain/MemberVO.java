@@ -50,11 +50,10 @@ public class MemberVO {
 	}
 	
 	// 회원수정시 생성자
-		public MemberVO(String user_id, String user_pwd, String user_name, String user_email, String user_phone, String user_zipcode,
-			            String user_address, String user_detail_address, String user_extraaddress) { 
+		public MemberVO(String user_id, String user_name,String user_pwd,String user_email,String user_phone,String user_zipcode,String user_address,String user_detail_address,String user_extraaddress)			           { 
 			this.user_id = user_id;
-			this.user_pwd = user_pwd;
 			this.user_name = user_name;
+			this.user_pwd = user_pwd;
 			this.user_email = user_email;
 			this.user_phone = user_phone;
 			this.user_zipcode = user_zipcode;

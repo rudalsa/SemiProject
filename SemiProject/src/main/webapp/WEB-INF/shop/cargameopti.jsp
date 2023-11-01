@@ -369,8 +369,9 @@ td#error {
             <ul class="list-unstyled mt-3">
                 <li>
                     <label for="spinner">주문개수&nbsp;</label>
-                    <input id="spinner"  name="oqty" value="1" style="width: 110px;">
+                    <input id="spinner"  name="oqty"   value="1" style="width: 110px;">
                     <input type="hidden" name="g_code" value="${requestScope.gameVO.g_code}" >
+                    <input type="hidden" name="paymoney" >
                 </li>
             </ul>
          </form> 
