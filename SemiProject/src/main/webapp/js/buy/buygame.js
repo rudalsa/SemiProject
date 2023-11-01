@@ -130,7 +130,7 @@
 	   	let paymoney = frm.paymoney.value;
 	   	
 	    alert("주문연결" + oqty+ opt_name + g_code+ paymoney ); 	
-	  	alert("결제금액"+paymoney ); 	
+	  	alert("결제금액"+ paymoney ); 	
       
   	    // 주문개수가 1개 이상인 경우
     

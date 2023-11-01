@@ -86,8 +86,7 @@ public class CartAddAction extends AbstractController {
 				}
 				  // super.setRedirect(false);   
 	              super.setViewPage("/WEB-INF/msg.jsp");
-				
-				
+								
 			}
 			
 			else {

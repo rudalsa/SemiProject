@@ -23,7 +23,7 @@ public class DuplicatePwdCheckAction extends AbstractController {
 		
 			String new_pwd = request.getParameter("new_pwd");
 			String user_id = request.getParameter("user_id");
-						
+	
 			MemberDAO mdao = new MemberDAO_imple();
 			
 			Map<String, String> paraMap = new HashMap<>();
@@ -36,7 +36,7 @@ public class DuplicatePwdCheckAction extends AbstractController {
 			jsonObj.put("isExists", isExists);     // {"isExists":true} 또는 {"isExists":false} 으로 만들어준다. 
 			
 			String json = jsonObj.toString(); // 문자열 형태인 "{"isExists":true}" 또는 "{"isExists":false}" 으로 만들어준다. 
-		//	System.out.println(">>> 확인용 json => " + json);
+//			System.out.println(">>> 확인용 json => " + json);
 		    // >>> 확인용 json => {"isExists":true}
 			// >>> 확인용 json => {"isExists":false} 
 			

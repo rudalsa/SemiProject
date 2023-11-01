@@ -8,15 +8,15 @@ let b_email_change = false;
 $(document).ready(function(){
 	
 	$("span.error").hide();
-	$("input#user_name").focus();
+	$("input#user_pwd").focus();
 	
  //	$("input#name").bind("blur", function(e){ alert("name에 있던 포커스를 잃어버렸습니다."); });
  //	$("input#name").blur(function(e){ alert("name에 있던 포커스를 잃어버렸습니다."); });
 	
 	$("input#user_name").blur( (e) => {
 		
-		const name = $(e.target).val().trim();
-		if(name == "") {
+		const user_name = $(e.target).val().trim();
+		if(user_name == "") {
 			// 입력하지 않거나 공백만 입력했을 경우 
 			/*	
 			   >>>> .prop() 와 .attr() 의 차이 <<<<	         
@@ -46,9 +46,9 @@ $(document).ready(function(){
 	
 	$("input#user_pwd").blur( (e) => {
 		
-	//	const regExp_pwd = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).*$/g; 
+		const regExp_pwd = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).*$/g; 
 	//  또는
-	    const regExp_pwd = new RegExp(/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).*$/g); 
+	//    const regExp_pwd = new RegExp(/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).*$/g); 
 	    // 숫자/문자/특수문자 포함 형태의 8~15자리 이내의 암호 정규표현식 객체 생성 
 	    
 	    const bool = regExp_pwd.test($(e.target).val());	
@@ -285,17 +285,17 @@ $(document).ready(function(){
                         extraAddr = ' (' + extraAddr + ')';
                     }
                     // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("extraAddress").value = extraAddr;
+                    document.getElementById("user_extraaddress").value = extraAddr;
                 
                 } else {
-                    document.getElementById("extraAddress").value = '';
+                    document.getElementById("user_extraaddress").value = '';
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('postcode').value = data.zonecode;
-                document.getElementById("address").value = addr;
+                document.getElementById('user_zipcode').value = data.zonecode;
+                document.getElementById("user_address").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("detailAddress").focus();
+                document.getElementById("user_detail_address").focus();
             }
         }).open();
         
@@ -398,7 +398,7 @@ function goEdit(){
 	}// end of for-----------------------------
      	
 	
-	if(!b_requiredInfo) {
+	if(b_requiredInfo) {
 		return; // goEdit() 함수를 종료한다.
 	}
 	// *** 필수입력사항에 모두 입력이 되었는지 검사하기 끝 *** //
@@ -435,7 +435,7 @@ function goEdit(){
 			 url:"duplicatePwdCheck.bz",
 			 data:{"new_pwd":$("input:password[name='user_pwd']").val()
 			      ,"user_id":$("input:hidden[name='user_id']").val()}, // data 속성은 http://localhost:9090/MyMVC/member/emailDuplicateCheck.up 로 전송해야할 데이터를 말한다. 
-			 type:"post",  //  type 을 생략하면 type:"get" 이다.
+			 type:"POST",  //  type 을 생략하면 type:"get" 이다.
 			 
 			 async:false,  // !!!!! 반드시 동기방식 이어야 한다 !!!!! 
 			               // async:true 가 비동기 방식을 말한다. async 을 생략하면 기본값이 비동기 방식인 async:true 이다.
@@ -452,6 +452,9 @@ function goEdit(){
 					 $("span#duplicate_pwd").html("현재 사용중인 비밀번호로 비밀번호 변경은 불가합니다."); 
 					 isNewPwd = false;
 				 }
+				 else{
+					 $("span#duplicate_pwd").hide();
+				 }
 				 
 			 },
 			 
@@ -465,7 +468,7 @@ function goEdit(){
 	if(isNewPwd) { // 변경한 암호가 새로운 암호일 경우
 		const frm = document.editFrm;
 		frm.action = "memberEditEnd.bz";
-		frm.method = "post";
+		frm.method = "POST";
 		frm.submit();
 	}
 	
