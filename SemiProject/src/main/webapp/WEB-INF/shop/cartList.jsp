@@ -12,6 +12,7 @@
 <jsp:include page="header_shop.jsp" />
    
 <style type="text/css" >
+   
    table#tblCartList {width: 90%;
                       border: solid gray 1px;
                       margin-top: 20px;
@@ -20,6 +21,34 @@
                       
    table#tblCartList th {border: solid gray 1px;}
    table#tblCartList td {border: dotted gray 1px;} 
+   
+   div.loader {
+       border: 12px solid #f3f3f3;
+       border-radius: 50%;
+    /* border-top: 16px solid blue; */
+	   border-top: 12px dotted blue;
+    /* border-right: 16px solid green; */
+       border-right: 12px dotted green;
+    /* border-bottom: 16px solid red; */
+       border-bottom: 12px dotted red;
+       border-left: 12px dotted pink;
+       
+       width: 80px;
+       height: 80px;
+       -webkit-animation: spin 2s linear infinite;
+       animation: spin 2s linear infinite;
+   }
+
+   @-webkit-keyframes spin {
+       0% { -webkit-transform: rotate(0deg); }
+       100% { -webkit-transform: rotate(360deg); }
+   }
+
+   @keyframes spin {
+       0% { transform: rotate(0deg); }
+       100% { transform: rotate(360deg); }
+   }
+   
      
 </style>
 
@@ -27,23 +56,25 @@
 
    $(document).ready(function(){
       
-                        // CSS 로딩화면 감추기
-      
-                        
-                        // 코인잔액 부족시 주문이 안된다는 표시를 해주는 곳.
+	  $("div.loader").hide(); // CSS 로딩화면 감추기            
+	  $("p#order_error_msg").css({'display':'none'}); // 코인잔액 부족시 주문이 안된다는 표시를 해주는 곳.
                         
       
       $(".spinner").spinner({
-         spin: function(event, ui) {
-            if(ui.value > 100) {
-               $(this).spinner("value", 100);
+         
+    	  spin: function(event, ui) {
+            if(ui.value > 10) {
+               $(this).spinner("value", 10);
                return false;
             }
+            
             else if(ui.value < 0) {
                $(this).spinner("value", 0);
                return false;
             }
-         }
+         
+    	  }
+      
       });// end of $(".spinner").spinner({});-----------------
       
             
@@ -66,7 +97,7 @@
          
       });
       
-   }); // end of $(document).ready()--------------------------
+   }); // end of $(document).ready()-------------------------- 다했음
    
    
    // Function declaration
@@ -81,7 +112,7 @@
       */
       
       $(".chkbox_g_code").prop("checked", bool);
-   }// end of function allCheckBox()-------------------------
+   }// end of function allCheckBox()------------------------- 다했음
    
    
    // === 장바구니 현재주문수량 수정하기 === // 
@@ -112,33 +143,39 @@
       
       else {
          $.ajax({
-               url:"<%= ctxPath%>/buy/cartEdit.bz",
+               
+        	   url:"<%= ctxPath%>/buy/cartEdit.bz",
                type:"POST",
                data:{"cartno":cartno,
                     "oqty":oqty},
                dataType:"JSON",
                success:function(json){
-                  console.log("~~~ 확인용 ", JSON.stringify(json));
+                  
+            	   // console.log("~~~ 확인용 ", JSON.stringify(json));
                    // ~~~ 확인용 {"n":1}
                
                   if(json.n == 1) {
                      alert("주문수량이 변경되었습니다.");   
                      location.href = "cartList.bz";  // 장바구니 보기 페이지로 가야 한다.
                   }
+               
                },
+               
                error: function(request, status, error){
                   alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
                }
+               
             });
+      
       }
    
-   }// end of function goOqtyEdit(obj)-----------------
+   }// end of function goOqtyEdit(obj)----------------- 다했음
    
    
    // === 장바구니에서 특정 제품을 비우기 === //  
    function goDel(cartno) {
       
-	   alert("클릭되었습니다.");
+	  alert("클릭되었습니다.");
 	   
       const g_name = $(event.target).parent().parent().find("span.cart_g_code").text();
    
@@ -150,7 +187,7 @@
             data:{"cartno":cartno},
             dataType:"JSON",
             success:function(json){
-               console.log("~~~ 확인용 ", JSON.stringify(json) );
+               // console.log("~~~ 확인용 ", JSON.stringify(json) );
                // ~~~ 확인용 {"n":1}
                
                if(json.n == 1) { 
@@ -164,11 +201,12 @@
          });
          
       }
+      
       else {
          alert("장바구니에서 "+g_name+" 제품 삭제를 취소하셨습니다.");
       }
       
-   }// end of function goDel(cartno)
+   }// end of function goDel(cartno) --- 다했음
    
 
    
@@ -176,121 +214,157 @@
    // === 장바구니에서 제품 주문하기 === // 
    function goOrder() {
        
-      ///// == 체크박스의 체크된 갯수(checked 속성이용) == /////
-       const checkCnt = $("input:checkbox[name='pnum']:checked").length;
+   	   alert("클릭되었습니다.");
+       ///// == 체크박스의 체크된 갯수(checked 속성이용) == /////
+       const checkCnt = $("input:checkbox[name='g_code']:checked").length;
        
-      if(checkCnt < 1) {
-          alert("주문하실 제품을 선택하세요!!");
-          return; // 종료 
+       if(checkCnt < 1) {
+           alert("주문하실 제품을 선택하세요!!");
+           return; // 종료 
        }
        
        else {
-            //// == 체크박스에서 체크된 value값(checked 속성이용) == ////
-            ///  == 체크가 된 것만 값을 읽어와서 배열에 넣어준다. /// 
-              const allCnt = $("input:checkbox[name='pnum']").length;
-            
-              const pnumArr = new Array();        // 또는 const pnumArr = [];
-              const oqtyArr = new Array();        // 또는 const oqtyArr = [];
-              const cartnoArr = new Array();      // 또는 const cartnoArr = [];
-              const totalPriceArr = new Array();  // 또는 const totalPriceArr = [];
-              const totalPointArr = new Array();  // 또는 const totalPointArr = [];
+           //// == 체크박스에서 체크된 value값(checked 속성이용) == ////
+           ///  == 체크가 된 것만 값을 읽어와서 배열에 넣어준다. /// 
+           const allCnt = $("input:checkbox[name='g_code']").length;
+           const g_codeArr = new Array();      // 또는 const pnumArr = [];
+           const oqtyArr = new Array();        // 또는 const oqtyArr = [];
+           const cartnoArr = new Array();      // 또는 const cartnoArr = [];
+           const totalPriceArr = new Array();  // 또는 const totalPriceArr = [];
+           const totalPointArr = new Array();  // 또는 const totalPointArr = [];
              
-             for(let i=0; i<allCnt; i++) {
-                if( $("input:checkbox[name='pnum']").eq(i).prop("checked") ) {
-                        //   alert("제품번호 : " + $("input:checkbox[name='pnum']").eq(i).val() ); 
-                  //  alert("주문량 : " + $("input.oqty").eq(i).val() );
-                  //   alert("삭제해야할 장바구니 번호 : " + $("input.cartno").eq(i).val() ); 
-                  //  alert("주문한 제품의 개수에 따른 가격합계 : " + $("input.totalPrice").eq(i).val() );
-                  //  alert("주문한 제품의 개수에 따른 포인트합계 : " + $("input.totalPoint").eq(i).val() );   
+           for(let i=0; i<allCnt; i++) {
+                
+               if( $("input:checkbox[name='g_code']").eq(i).prop("checked") ) {
+               <%--윗 줄 불린타입이 나온다.    
+        		   
+        		   console.log("제품번호 : " , $("input:checkbox[name='g_code']").eq(i).val() ); 
+        		   console.log("주문량 : " , $("input.oqty").eq(i).val() );
+        		   console.log("삭제해야할 장바구니 번호 : " + $("input.cartno").eq(i).val() ); 
+                   console.log("주문한 제품의 개수에 따른 가격합계 : " , $("input.totalPrice").eq(i).val() );
+                   console.log("주문한 제품의 개수에 따른 포인트합계 : " , $("input.totalPoint").eq(i).val() );
+                   console.log("======================")
+          		   
+          		   제품번호 : 300 옵션번호?
+			       주문량 :  1    옵션재고도 있어야되고?
+				   삭제해야할 장바구니 번호 : 24 건들거 없음
+				   주문한 제품의 개수에 따른 가격합계 :  230000 세션값이라서 자꾸 동기화됨 옵션 가격도 있어야함?
+				   주문한 제품의 개수에 따른 포인트합계 :  0 옵션재고 포인트 있어야되고?
+				   ======================
+				   제품번호 :  332
+				   주문량 :  5
+				   장바구니 번호 : 17
+				   주문한 제품의 개수에 따른 가격합계 :  230000
+				   주문한 제품의 개수에 따른 포인트합계 :  100
+				   ======================
+				   
+          		--%> 
                    
-                   pnumArr.push( $("input:checkbox[name='pnum']").eq(i).val() );
+                  g_codeArr.push( $("input:checkbox[name='g_code']").eq(i).val() );
                   oqtyArr.push( $("input.oqty").eq(i).val() );
                   cartnoArr.push( $("input.cartno").eq(i).val() );
                   totalPriceArr.push( $("input.totalPrice").eq(i).val() );
-                  totalPointArr.push( $("input.totalPoint").eq(i).val() );
-               }
-            }// end of for---------------------------
-         
-         <%--   
-            for(let i=0; i<checkCnt; i++) {
-               console.log("확인용 제품번호: " + pnumArr[i] + ", 주문량: " + oqtyArr[i] + ", 장바구니번호 : " + cartnoArr[i] + ", 주문금액: " + totalPriceArr[i] + ", 포인트: " + totalPointArr[i]);
+                  totalPointArr.push( $("input.totalPoint").eq(i).val() ); 
+               
+               } // end of if -----
+            
+           }// end of for---------------------------
+           
+           <%-- 확인용입니다.
+           for(let i=0; i<checkCnt; i++) {
+               console.log("확인용 제품번호: " + g_codeArr[i] + ", 주문량: " + oqtyArr[i] + ", 장바구니번호 : " + cartnoArr[i] + ", 주문금액: " + totalPriceArr[i] + ", 포인트: " + totalPointArr[i]);
             /*
-                    확인용 제품번호: 3, 주문량: 3, 장바구니번호 : 14, 주문금액: 30000, 포인트: 15
-                    확인용 제품번호: 56, 주문량: 2, 장바구니번호: 13, 주문금액: 2000000, 포인트 : 120 
-                    확인용 제품번호: 59, 주문량: 3, 장바구니번호: 11, 주문금액: 30000, 포인트 : 300    
+				확인용 제품번호: 300, 주문량: 1, 장바구니번호 : 24, 주문금액: 230000, 포인트: 0
+				확인용 제품번호: 332, 주문량: 5, 장바구니번호 : 17, 주문금액: 230000, 포인트: 100
             */
-            }// end of for---------------------------
-         --%>
             
-            const pnumjoin = pnumArr.join();
-            const oqtyjoin = oqtyArr.join();
-            const cartnojoin = cartnoArr.join();
-            const totalPricejoin = totalPriceArr.join();
-            const totalPointjoin = totalPointArr.join();
+           }// end of for---------------------------
+           --%>
+           
+          // , 을 기준으로 합쳤다. 
+          const g_code_join = g_codeArr.join();
+          const oqty_join = oqtyArr.join();
+          const cartno_join = cartnoArr.join();
+          const totalPrice_join = totalPriceArr.join();
+          const totalPoint_join = totalPointArr.join();
+		  
+          let sum_totalPrice = 0;
+          for(var i=0; i<totalPriceArr.length; i++) {
+              sum_totalPrice += parseInt(totalPriceArr[i]);
+          }
 
-            let sumtotalPrice = 0;
-            for(var i=0; i<totalPriceArr.length; i++) {
-               sumtotalPrice += parseInt(totalPriceArr[i]);
-            }
-
-            let sumtotalPoint = 0;
-            for(var i=0; i<totalPointArr.length; i++) {
-               sumtotalPoint += parseInt(totalPointArr[i]);
-            }
-            
-            console.log("확인용 pnumjoin : " + pnumjoin);             // 확인용 pnumjoin : 3,56,59
-            console.log("확인용 oqtyjoin : " + oqtyjoin);             // 확인용 oqtyjoin : 3,2,3
-            console.log("확인용 cartnojoin : " + cartnojoin);         // 확인용 cartnojoin : 14,13,11
-            console.log("확인용 totalPricejoin : " + totalPricejoin); // 확인용 totalPricejoin : 30000,2000000,30000
-            console.log("확인용 totalPointjoin : " + totalPointjoin); // 확인용 totalPointjoin : 15,120,300
-            console.log("확인용 sumtotalPrice : " + sumtotalPrice);   // 확인용 sumtotalPrice : 2060000
-            console.log("확인용 sumtotalPoint : " + sumtotalPoint);   // 확인용 sumtotalPoint : 435
-            
-                const currentcoin = ${sessionScope.loginuser.user_coin};
-                
-                const str_sumtotalPrice = sumtotalPrice.toLocaleString('en'); // 자바스크립트에서 숫자 3자리마다 콤마 찍어주기  
-             	const str_currentcoin = currentcoin.toLocaleString('en');     // 자바스크립트에서 숫자 3자리마다 콤마 찍어주기 
-             
-            if( sumtotalPrice > currentcoin ) {
-                $("p#order_error_msg").html("코인잔액이 부족하므로 주문이 불가합니다.<br>주문총액 : "+str_sumtotalPrice+"원 / 코인잔액 : "+str_currentcoin+"원").css('display',''); 
-                return;
-            }
-            
-            else {
-               $("p#order_error_msg").css('display','none'); 
-               
-               const bool = confirm("총주문액 : "+str_sumtotalPrice+"원 결제하시겠습니까?");
-               
-               if(bool) {
-               
-                  $("div.loader").show(); // CSS 로딩화면 보여주기
+          let sum_totalPoint = 0;
+          for(var i=0; i<totalPointArr.length; i++) {
+              sum_totalPoint += parseInt(totalPointArr[i]);
+          }
+          
+          const currentcoin = ${sessionScope.loginuser.user_coin};
+      	  <%--
+          console.log("확인용 g_code_join : " + g_code_join);         // 확인용 g_codejoin : 300,332
+          console.log("확인용 oqty_join : " + oqty_join);             // 확인용 oqtyjoin : 1,5
+          console.log("확인용 cartno_join : " + cartno_join);         // 확인용 cartnojoin : 24,17
+          console.log("확인용 totalPrice_join : " + totalPrice_join); // 확인용 totalPricejoin : 230000,230000
+          console.log("확인용 totalPoint_join : " + totalPoint_join); // 확인용 totalPointjoin : 0,100 옵션포인트 해야될 것 같아. 
+          console.log("확인용 sum_totalPrice : " + sum_totalPrice);   // 확인용 sumtotalPrice : 460000
+          console.log("확인용 sum_totalPoint : " + sum_totalPoint);   // 확인용 sumtotalPoint : 100
+          console.log("확인용 currentcoin : " + currentcoin);       // 확인용 currentcoin : 6100
+		  --%>      
+          
+          const str_sum_totalPrice = sum_totalPrice.toLocaleString('en'); // 자바스크립트에서 숫자 3자리마다 콤마 찍어주기  
+          const str_currentcoin = currentcoin.toLocaleString('en');     // 자바스크립트에서 숫자 3자리마다 콤마 찍어주기 
+          
+          <%-- 보유 포인트가 얼마 있습니다 사용하시고 결제 하시겠습니까?
+          
+          if(sum_totalPrice > currentcoin ) {
+              $("p#order_error_msg").html("코인잔액이 부족하므로 주문이 불가합니다.<br>주문총액 : "+str_sum_totalPrice+"원 / 코인잔액 : "+str_currentcoin+"원").css('display',''); 
+              return;
+          }
+          --%>
+          
+          //else {
+              
+        	  $("p#order_error_msg").css('display','none'); 
+              const bool = confirm("총주문액 : "+str_sum_totalPrice+"원 결제하시겠습니까?");
+              
+              if(bool) {	
+                    $("div.loader").show(); // CSS 로딩화면 보여주기
                   
-                  $.ajax({
-                     url:"<%= request.getContextPath()%>/shop/orderAdd.up",
-                     type:"POST",
-                     data:{"sumtotalPrice":sumtotalPrice,
-                          "sumtotalPoint":sumtotalPoint,
-                          "pnumjoin":pnumjoin,
-                          "oqtyjoin":oqtyjoin, 
-                          "totalPricejoin":totalPricejoin,
-                          "cartnojoin":cartnojoin
-                          },
-                     dataType:"JSON",     
-                     success:function(json){
-                        if(json.isSuccess == 1) {
-                           location.href="<%= request.getContextPath()%>/shop/orderList.up";
+                    $.ajax({
+                        url:"<%= request.getContextPath()%>/buy/orderAdd.bz",
+                        type:"POST",
+                        data:{
+                           	"sum_totalPrice":sum_totalPrice,
+                            "sum_totalPoint":sum_totalPoint,
+                            "g_code_join":g_code_join,
+                            "oqty_join":oqty_join, 
+                            "totalPrice_join":totalPrice_join,
+                            "cartno_join":cartno_join
+                          
+                        },
+                        dataType:"JSON",     
+                        success:function(json){
+                            if(json.isSuccess == 1) {
+                                location.href="<%= request.getContextPath()%>/buy/orderList.bz";
+                        
+                            }
+                            else {
+                                location.href="<%= request.getContextPath()%>/buy/orderError.bz";
+                        
+                            }
+                     
+                        },
+                     
+                        error: function(request, status, error){
+                            alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+                     
                         }
-                        else {
-                           location.href="<%= request.getContextPath()%>/shop/orderError.up";
-                        }
-                     },
-                     error: function(request, status, error){
-                        alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
-                     }
-                  });
-               }
-            }   
-       
+                  
+                    });
+               
+              } 
+            
+          //}  
+          
        }
       
    }// end of function goOrder()----------------------
@@ -344,10 +418,10 @@
                                   status.index 은 0 부터 시작하고,
                                   status.count 는 1 부터 시작한다. 
                              --%> 
-                             <input type="checkbox" name="pnum" class=".chkbox_g_code" id="pnum${status.index}" value="${cartvo.fk_g_code}" /> &nbsp;<label for="pnum${status.index}">${cartvo.fk_g_code}</label>   
+                             <input type="checkbox" name="g_code" class=".chkbox_g_code" id="g_code${status.index}" value="${cartvo.fk_g_code}" /> &nbsp;<label for="g_code${status.index}">${cartvo.fk_g_code}</label>   
                         </td>
                         <td align="center"> <%-- 제품이미지1 및 제품명 --%> 
-                           <a href="<%= ctxPath%>>shop/prodView.up?pnum=${cartvo.fk_g_code}">
+                           <a href="<%= ctxPath%>>shop/prodView.up?g_code=${cartvo.fk_g_code}">
                               <img src="<%= ctxPath%>/images/${cartvo.gavo.g_img_1}" class="img-thumbnail" width="130px" height="100px" />
                            </a> 
                            <br/><span class="cart_g_code">${cartvo.gavo.g_name}:${cartvo.opvo.opt_name}</span> 
@@ -366,10 +440,10 @@
                             <fmt:formatNumber value="${cartvo.gavo.g_coin}" pattern="###,###" /> POINT
                         </td>
                         <td align="right"> <%-- 주문총액/총포인트 --%> 
-                            <fmt:formatNumber value="${cartvo.gavo.totalPrice}" pattern="###,###" /> 원<br>
-                            <fmt:formatNumber value="${cartvo.gavo.totalPoint}" pattern="###,###" /> POINT
-                            <input type="hidden" class="totalPrice" value="${cartvo.gavo.totalPrice}" />
-                            <input type="hidden" class="totalPoint" value="${cartvo.gavo.totalPoint}" />
+                            <fmt:formatNumber value="${cartvo.opvo.opt_sale_price}" pattern="###,###" /> 원<br>
+                            <fmt:formatNumber value="${cartvo.gavo.g_coin}" pattern="###,###" /> POINT
+                            <input type="hidden" class="totalPrice" value="${cartvo.opvo.opt_sale_price}" />
+                            <input type="hidden" class="totalPoint" value="${cartvo.gavo.g_coin}" />
                         </td>
                         <td align="center"> <%-- 장바구니에서 해당 특정 제품 비우기 --%> 
                             <button type="button" class="btn btn-outline-danger btn-sm" onclick="goDel('${cartvo.cartno}')">삭제</button>  
@@ -377,7 +451,7 @@
                     </tr>
                  </c:forEach>
             </c:if>   
-         <%--    
+      
             <tr>
                  <td colspan="3" align="right">
                      <span style="font-weight: bold;">장바구니 총액 :</span>
@@ -387,11 +461,11 @@
                   <span style="color: red; font-weight: bold;"><fmt:formatNumber value="${requestScope.sumMap.SUMTOTALPOINT}" pattern="###,###" /></span> POINT 
                  </td>
                  <td colspan="3" align="center">
-                  <button type="button" class="btn btn-outline-dark btn-sm mr-3" onclick="">주문하기</button>
+                  <button type="button" class="btn btn-outline-dark btn-sm mr-3" onclick="goOrder()">주문하기</button>
                     <a class="btn btn-outline-dark btn-sm" href="<%= request.getContextPath() %>/shop/mallHomeMore.up" role="button">계속쇼핑</a>
                  </td>
             </tr>
-          --%>  
+
          </tbody>
       </table> 
    </div>
@@ -399,6 +473,13 @@
     <div>
         <p id="order_error_msg" class="text-center text-danger font-weight-bold h4"></p>
     </div>
+    
+    <%-- CSS 로딩화면 구현한것--%>
+    <div style="display: flex">
+    	<div class="loader" style="margin: auto"></div>
+    </div>
+    
+    
  </div>
     
 <jsp:include page="../footer_suc.jsp" />  

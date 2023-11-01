@@ -48,7 +48,7 @@ public class CartListAction extends AbstractController {
 					
 					request.setAttribute("cartList", cartList);
 					
-				//	session.removeAttribute("paymoney"); 이거 수정해야된다.
+				//	session.removeAttribute("paymoney"); // 이거 수정해야된다.
 					
 				//	super.setRedirect(false);
 					super.setViewPage("/WEB-INF/shop/cartList.jsp");

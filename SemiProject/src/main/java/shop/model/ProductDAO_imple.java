@@ -353,8 +353,42 @@ public class ProductDAO_imple implements ProductDAO {
 	      
 	      return n;
 		}
-	
+
+
+	@Override
+	public int get_seq_tbl_order() throws SQLException {
+		
+		int seq = 0;
+	       
+		try {
+	           
+			conn = ds.getConnection();
+	           
+	           
+			String sql = " select seq_tbl_order_code.nextval AS seq "
+	                   + " from dual";
+	           
+	           
+			pstmt = conn.prepareStatement(sql);
+	        rs = pstmt.executeQuery();
+	          
+	        rs.next();
+	          
+	        seq = rs.getInt("seq");
+	           
+	       	  
+		}  finally {
+			close();
+	       
+		}
+	      
+		return seq;
+		
+		
 	}
+	
+	
+}
 
 
 

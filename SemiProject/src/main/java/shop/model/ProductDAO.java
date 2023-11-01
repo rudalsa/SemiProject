@@ -32,6 +32,9 @@ public interface ProductDAO {
 	// 장바구니 테이블에서 특정제품 수량을 수정하기
 	int updateCart(Map<String, String> paraMap) throws SQLException;
 	
+	// 주문 번호 (시퀀스 seq_tbl_order 값) 을 채번해오는 것
+	int get_seq_tbl_order() throws SQLException;
+	
 
 
 	
