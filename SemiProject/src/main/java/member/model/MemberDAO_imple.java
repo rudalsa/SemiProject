@@ -112,21 +112,23 @@ public class MemberDAO_imple implements MemberDAO {
 			conn = ds.getConnection();
 			
 			String sql = " SELECT user_id, user_name, user_email, user_phone, user_zipcode, user_address, user_detail_address, user_extraaddress, user_gender "+
-						 "     , user_birthday, user_coin, user_registerday "+
-						 " FROM "+
-						 " ( "+
-						 " select user_id, user_name, user_email, user_phone, user_zipcode, user_address, user_detail_address, user_extraaddress, user_gender "+
-						 "     ,  user_birthday, user_coin, to_char(user_registerday, 'yyyy-mm-dd') AS user_registerday "+
-						 "     , trunc( months_between(sysdate, user_lastpwddate) ) AS pwdchangegap "+
-						 " from tbl_user "+
-						 " where user_status = 1 and user_id = ? and user_pwd = ? "+
-						 " ) M "+
-						 " CROSS JOIN "+
-						 " ( "+
-						 " select trunc( months_between(sysdate, max(login_date)) ) AS lastlogingap "+
-						 " from tbl_loginhistory " +
-						 " where user_id = ? "+
-						 " )H ";
+						"     , user_birthday, user_coin, user_payment, user_registerday, pwdchangegap "+
+						"     , nvl( user_lastlogingap , trunc( months_between(sysdate, to_date(user_registerday, 'yyyy-mm-dd'))) ) AS user_lastlogingap "+
+						" 	  , user_idle " +
+						" FROM "+
+						"        (                        "+
+						"        select user_id, user_name, user_email, user_phone, user_zipcode, user_address, user_detail_address, user_extraaddress, user_gender "+
+						"             , user_birthday, user_coin, user_payment, to_char(user_registerday, 'yyyy-mm-dd') AS user_registerday "+
+						"             , trunc( months_between(sysdate, user_lastpwddate) ) AS pwdchangegap , user_idle "+
+						"        from tbl_user "+
+						"        where user_status = 1 and user_id = ? and user_pwd = ? "+
+						"        ) U "+
+						"        CROSS JOIN "+
+						"        ( "+
+						"        select trunc( months_between(sysdate, max(login_date)) ) AS user_lastlogingap "+
+						"        from tbl_loginhistory "+
+						"        where user_id = ? "+
+						"        ) H " ;
 
 			
 			pstmt = conn.prepareStatement(sql);
@@ -150,8 +152,47 @@ public class MemberDAO_imple implements MemberDAO {
 				member.setUser_gender(rs.getString(9));
 				member.setUser_birthday(rs.getString(10));
 				member.setUser_coin(rs.getInt(11));
-				member.setUser_registerday(rs.getString(12)); 
-			}
+				member.setUser_payment(rs.getInt(12));
+				member.setUser_registerday(rs.getString(13));
+				member.setUser_idle(rs.getInt(16));
+
+				if(rs.getInt(16) == 0 && rs.getInt(14) >= 3) {
+					// 휴면이 아니면서 
+					// 마지막으로 암호를 변경한 날짜가 현재시각으로 부터 3개월이 지났으면 true
+					// 마지막으로 암호를 변경한 날짜가 현재시각으로 부터 3개월이 지나지 않았으면 false 
+					
+					member.setRequirePwdChange(true); // 로그인시 암호를 변경해라는 alert 를 띄우도록 할때 사용한다. 
+				}
+				
+				if(rs.getInt(16) == 0 && rs.getInt(15) >= 12) {
+				    // 휴면이 아니면서
+					// 마지막으로 로그인 한 날짜시간이 현재시각으로 부터 1년이 지났으면 휴면으로 지정 
+					member.setUser_idle(1);
+					
+					// === tbl_user 테이블의 user_idle 컬럼의 값을 1로 변경하기 === //
+					sql = " update tbl_user set user_idle = 1 "
+						+ " where user_id = ? "; 
+					
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, paraMap.get("user_id"));
+					
+					pstmt.executeUpdate();
+				}
+				
+				// === 휴면이 아닌 회원만 tbl_loginhistory(로그인기록) 테이블에 insert 하기 === // 
+				if(rs.getInt(16) == 0) {
+					 
+					sql = " insert into tbl_loginhistory(historyno, user_id, login_ip) "
+						+ " values(seq_historyno.nextval, ?, ?) "; 
+					
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, paraMap.get("user_id"));
+					pstmt.setString(2, paraMap.get("login_ip"));
+					
+					pstmt.executeUpdate();
+				}
+				
+			} // end of if(rs.next())-------------------
 			
 		}catch(GeneralSecurityException | UnsupportedEncodingException e) {
 		         e.printStackTrace();
