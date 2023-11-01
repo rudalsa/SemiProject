@@ -56,7 +56,7 @@ public class OrderAddAction extends AbstractController {
 			String totalPrice_join = request.getParameter("totalPrice_join");
 			String cartno_join = request.getParameter("cartno_join");
 			
-			/*
+			
 			System.out.println(sum_totalPrice); // 460000
 			System.out.println(sum_totalPoint); // 100 
 			System.out.println(g_code_join);    // 300,332
@@ -64,7 +64,7 @@ public class OrderAddAction extends AbstractController {
 			System.out.println(totalPrice_join);// 230000,230000
 			System.out.println(cartno_join);	// 24,17
 			System.out.println(getOdrcode());   // bz20231101-1
-			*/
+			
 			
 			// ===== Transaction 처리하기 ===== // 
 			// 1. 주문 테이블에 입력되어야할 주문전표를 채번(select)하기 

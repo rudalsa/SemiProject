@@ -126,8 +126,8 @@
     <ul class="navbar-nav ml-auto">
     
     	<li class="nav-item active ml-2">     
-           <a  href="mainShop.bz" class="nav-link menufont_size" id="shopPage">
-          <i class="fa-brands fa-shopify"></i>&nbsp;&nbsp;상점
+           <a href="mainShop.bz" class="nav-link menufont_size" id="shopPage">
+          		<i class="fa-brands fa-shopify"></i>&nbsp;&nbsp;상점
            </a>  
        </li>
       
