@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>열심히 만들겠음</title>
 </head>
 <body>
 	이벤트페이지 만들것임
