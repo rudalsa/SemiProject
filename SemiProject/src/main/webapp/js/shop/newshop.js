@@ -12,34 +12,64 @@ $(document).ready(function(){
     // 즉, 맨처음에는 "스크롤"을 하지 않더라도 "스크롤" 한 것 처럼 8개의 HIT상품을 게시해주어야 한다는 말이다. 
     display(start);
     
-    // === 스크롤 이벤트 발생시키기 시작 === //
+// === 스크롤 이벤트 발생시키기 시작 === //
+    
     $(window).scroll(function(){
-     
-        if( $(window).scrollTop() + 1 >= $(document).height() - $(window).height() ) {
-			
-			if( $("span#totalCount").text() != $("span#countSum").text() ) { // 값이 같지 않을때만 새로운 창을 보여준다.
-				start += len;
-				display(start);	
-			}
-			
-		}
-		// 아래는 만약에 위의 값이 제대로 안나오는 경우 이벤트가 발생되는 숫자를 만들기 위해서 스크롤탑의 위치값에 +1 을 더해서 보정해준 것이다. 
-        // console.log( "$(window).scrollTop() + 1  => " + ( $(window).scrollTop() + 1  ) );
-        // console.log( "$(document).height() - $(window).height() => " + ( $(document).height() - $(window).height() ) );
-        
-        if($(window).scrollTop() == 0) {
-			// 다시 처음부터 시작하도록 한다.
-			$("div#display").empty();
-			$("span#end").empty();
-			$("span#countSum").text("0");
-			
-			start = 1;
-			display(start);
-			
-		}
 		
-				
-	}); // end of $(window).scroll(function(){}) ----------------------
+/*		console.log("$(window).scrollTop() => ", $(window).scrollTop());
+		
+		// 보여주어야할 문서의 높이값(더보기를 해주므로 append 되어져서 높이가 계속 증가 될것이다)
+		
+		console.log("$(document).scrollTop() => ", $(document).scrollTop());
+		// 웹브라우저창의 높이값(디바이스마다 다르게 표현되는 고정값) 
+		console.log("$(window).height() => ", $(window).height() );
+		// 아래는 스크롤되어진 스크롤탑의 위치값이 웹브라우저창의 높이만큼 내려갔을 경우를 알아보는 것이다.*/
+		
+			
+		// 아래는 스크롤되어진 스크롤탑의 위치값이 웹브라우저창의 높이만큼 내려갔을 경우를 알아보는 것이다.
+	    console.log( "$(window).scrollTop() => ", $(window).scrollTop() );
+	    console.log( "$(document).height() - $(window).height() => ", ( $(document).height() - $(window).height() ) ); 
+	      
+	   
+	      
+	     /* if( $(window).scrollTop() == $(document).height() - $(window).height() ) { 
+	         alert("기존 문서내용을 끝까지 봤습니다. 이제 새로운 내용을 읽어다가 보여드리겠습니다.");
+	      }*/
+	      
+	   // 아래는 만약에 위의 값이 제대로 안나오는 경우 이벤트가 발생되는 숫자를 만들기 위해서 스크롤탑의 위치값에 +1 을 더해서 보정해준 것이다. 
+       // console.log( "$(window).scrollTop() + 1  => " + ( $(window).scrollTop() + 1  ) );
+       // console.log( "$(document).height() - $(window).height() => " + ( $(document).height() - $(window).height() ) );
+	   
+	   
+	   // 만약에 위의 값대로 잘 안되면 아래의 것을 하도록 한다.     
+       		if( $(window).scrollTop() + 1 >= $(document).height() - $(window).height() ) {   
+	      		alert("기존 문서내용을 끝까지 봤습니다. 이제 새로운 내용을 읽어다가 보여드리겠습니다.");
+      			if($("span#totalCount").text() != $("span#countSum").text() )
+      			{
+					  
+					start += len;
+	      			display(start);	  
+						  
+					  
+				  }
+      		
+      
+      } // end of if if( $(window).scrollTop() + 1 >= $(document).height() - $(window).height() )
+      		
+  		if($(window).scrollTop() == 0) {
+         // 다시 처음부터 시작하도록 한다.
+         $("div#display").empty();
+         $("span#end").empty();
+         $("span#countSum").text("0");
+         
+         start = 1;
+         display(start);
+      }
+      
+      
+	});  
+
+    
     // === 스크롤 이벤트 발생시키기 끝 === //
 	
 }); // end of$(document).ready(function(){}); ----------------------- 

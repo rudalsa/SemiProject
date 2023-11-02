@@ -3,40 +3,11 @@
 <%
     String ctxPath = request.getContextPath(); // MyMVC
 %>
-<style>
-
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    tr.img td {
-        padding: 0;
-        text-align: center;
-        width: 100px;
-        height: 75px;
-        
-    }
-    
-
-    tr.img td img {
-    
-        width: 50%;
-        height: 100%;
-    }
-    
-    tr.text-cor td {
-    	text-align:center;
-    	height: 25px;
-    	color: white;
-    
-    }
-</style>
 
 <jsp:include page="header_suc.jsp" />
 
 <script type="text/javascript" src="<%= ctxPath%>/js/shop/newshop.js"></script>
-
+<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/shop/mallHomeScroll.css" />
 	
 	<div class="mx-auto" style="width:90%; margin-top: 10%;">
 		
