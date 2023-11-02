@@ -6,13 +6,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import member.domain.MemberVO;
@@ -752,6 +759,32 @@ int result = 0;
 		
 		return result;	
 	}
+
+
+	// 로그인 1년 경과된 회원을 tbl_user 테이블에서 idle 값을 1로 변경해주기
+	@Override
+	public int updateIdle(Map<String, String> paraMap) throws SQLException {
+		
+		int idle = 0; 
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " update tbl_user set user_idle = 1 "
+					   + " where user_id = ? "; 
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, paraMap.get("user_id"));
+			
+			pstmt.executeUpdate();
+			
+		} 
+		 finally {
+			close();
+		}
+		
+		return idle;
+	} // end of public int updateIdle(Map<String, String> paraMap) throws SQLException ----------
 	
 	
 	

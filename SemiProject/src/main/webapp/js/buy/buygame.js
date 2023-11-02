@@ -94,6 +94,8 @@
      const regExp = /^[0-9]+$/;  // 숫자만 체크하는 정규표현식
      let oqty = frm.oqty.value;
      const bool = regExp.test(oqty);
+     let g_qty = frm.g_qty.value;
+     
      // 숫자 이외의 값이 들어온 경우  
      if(!bool) {
          alert("숫자만 입력하세요");
@@ -104,8 +106,21 @@
       
       // 음수가 들어온 경우
       oqty = parseInt(oqty);
+      g_qty = parseInt(g_qty);
+      
       if(oqty < 1) {
          alert("주문갯수는 1개 이상이어야 합니다.");
+         frm.oqty.value = "1";
+         frm.oqty.focus();
+         return; // 종료 
+      }
+      
+
+      if(g_qty < oqty) {
+         // 주문개수가 잔고개수 보다 클 경우
+         alert("주문개수가 잔고개수 보다 더 커서 진행할 수 없습니다.");
+//       alert(g_qty);
+//       alert(oqty);
          frm.oqty.value = "1";
          frm.oqty.focus();
          return; // 종료 

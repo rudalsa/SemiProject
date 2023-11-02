@@ -4,6 +4,7 @@
     String ctxPath = request.getContextPath(); // MyMVC
 %>
 
+<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/index/index.css">
 
 <script>
     // JavaScript를 사용하기 위해 해당 코드를 추가해 주세요.
@@ -65,7 +66,7 @@
                     <c:if test="${not empty requestScope.sdList}">
                         <c:forEach var="sdvo" items="${requestScope.sdList}" varStatus="status">
                             <c:if test="${status.index == 0}">
-                                <div class="carousel-item active" style="height: 300px; background-image: url('<%= ctxPath %>/img/${sdvo.ms_bg_file}'); background-size: 100% 100%; background-position: center;">
+                                <div class="carousel-item active" style="height: 600px; margin-top:11%; background-image: url('<%= ctxPath %>/img/${sdvo.ms_bg_file}'); background-size: 100% 100%; background-position: center;">
                                     <div class="carousel-caption d-none d-md-block" style="display: flex; align-items: center;">
                                     	
                                         <img src="<%= ctxPath%>/img/${sdvo.ms_logo_file}" class="d-flex img-fluid" style="width: 25%; height: auto; margin-right: 20px;" alt="하...">
@@ -77,7 +78,7 @@
                                 </div>
                             </c:if>
                             <c:if test="${status.index > 0}">
-                                <div class="carousel-item" style="height: 300px; background-image: url('<%= ctxPath %>/img/${sdvo.ms_bg_file}'); background-size: 100% 100%; background-position: center;">
+                                <div class="carousel-item" style="height: 600px; background-image: url('<%= ctxPath %>/img/${sdvo.ms_bg_file}'); background-size: 100% 100%; background-position: center;">
                                     <div class="carousel-caption d-none d-md-block" style="display: flex; align-items: center;">
                                         <img src="<%= ctxPath%>/img/${sdvo.ms_logo_file}" class="d-flex img-fluid" style="width: 25%; height: auto; margin-right: 20px;" alt="...">
                                     	<div>
@@ -103,12 +104,12 @@
                 </a>
             </div>
         </div>
-    </div>
-    <h1 class="text-white mt-5" style="font-weight: bold">추천게임</h1>
-</div>
+    
  <%-- 캐러셀 끝 --%>
 
-
+</div>
+    <h1 class="text-white mt-5" style="font-weight: bold">추천게임</h1>
+</div>
 <div class="row mb-5 pl-1" style="margin: 0px 5%;">  
         <c:if test="${not empty requestScope.videoList}">
            <c:forEach var="videovo" items="${requestScope.videoList}" varStatus="status">
