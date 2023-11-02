@@ -29,6 +29,7 @@
 	margin-bottom: 5%;
 	margin-left: 10%;
   }
+
 </style>
 
 <script type="text/javascript">
@@ -71,45 +72,56 @@
 		  
 	  });// end of $("button.btn-success").click()--------
 	  
-	  
   });// end of $(document).ready(function(){})-------------
+ 
+  function openPopup() {
+      document.getElementById('popup').style.display = 'block';
+  }
+
+  function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+  }
+
+
   
-  
-  // Function Declaration
-   
 </script>
 
 <body style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 <!-- background-repeat: no-repeat;를 적용하면 배경 이미지가 한 번만 표시됩니다: -->
 
+
 <c:if test="${requestScope.method == 'GET'}">
-    
-	<form name="pwdUpdateEndFrm">
+
+	<h2 class="text-center text-white mt-5">암호를 변경해주세요</h2>
+	     
+	<form name="pwdUpdateEndFrm" class="text-center">
 	
-	   <div class="div_pwd mt-5" style="text-align: center;">
-	      <span style="color: blue; font-size: 12pt;">새암호</span><br/> 
+	   <div class="div_pwd mt-5 mx-auto" style="text-align: center;">
+	      <span style="color: blue; font-size: 16pt;">새암호</span><br/> 
 	      <input type="password" name="pwd" size="25" /><br/> 
-	      <span style="color: blue; font-size: 12pt;">새암호확인</span><br/>
+	      <span style="color: blue; font-size: 16pt;">새암호확인</span><br/>
 	      <input type="password" id="pwd2" size="25" />
 	   </div>
-	
 	   
 	   <input type="hidden" name="user_id" value="${loginuser.user_id}">
 	   
 	   <div style="text-align: center;">
-	      <button type="button" class="btn btn-success">암호변경하기</button>
+	      <button type="button" class="btn btn-success">암호 변경하기</button> &nbsp; &nbsp;
+	      <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%= ctxPath%>/index.bz'">다음에 변경하기</button>
+	      
 	   </div>
-	   
 	</form>
-
 </c:if>
+
 
 
 <c:if test="${requestScope.method == 'POST'}">
    
-   <div style="text-align: center; font-size: 14pt; color: navy;">
+   <div style="text-align: center; font-size: 20pt; color: white;" class="mt-5">
 	   <c:if test="${requestScope.n == 1}">
-	      사용자 ID ${requestScope.userid}님의 비밀번호가 새로이 변경되었습니다.
+	      사용자 ID ${requestScope.userid}님의 비밀번호가 변경되었습니다. <br>
+	   <button type="button" class="btn btn-danger my-5" onclick="javascript:location.href='<%= ctxPath%>/index.bz'">메인페이지로 돌아가기</button>
+	      
 	   </c:if>
 	   
 	   <c:if test="${requestScope.n == 0}">
@@ -117,4 +129,3 @@
 	   </c:if>
    </div>
 </c:if>
-

@@ -35,6 +35,12 @@ public interface ProductDAO {
 	// 주문 번호 (시퀀스 seq_tbl_order 값) 을 채번해오는 것
 	int get_seq_tbl_order() throws SQLException;
 	
+	// 하나의 스펙에 몇개의 게임이있는지 알아오는 것 
+	int totalSpecCount(String fk_s_code) throws SQLException;
+	
+	// 더보기 방식(페이징처리)으로 상품정보를 8개씩 잘라(start ~ end) 조회해오기 기준은 일단 스펙 나중에 바꾸자
+	List<GameVO> selectBySpecName(Map<String, String> paraMap) throws SQLException;
+	
 
 
 	
