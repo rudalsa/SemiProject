@@ -3,7 +3,7 @@
 
 <%
     String ctxPath = request.getContextPath();
-    //    /MyMVC
+
 %>
 <!DOCTYPE html>
 <html>
@@ -27,7 +27,7 @@
 <%-- Optional JavaScript --%>
 <script type="text/javascript" src="<%= ctxPath%>/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="<%= ctxPath%>/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js" ></script> 
-
+<script type="text/javascript" src="<%= ctxPath%>/js/member/snifflinggame.js" ></script> 
 <%-- jQueryUI CSS 및 JS --%>
 <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/jquery-ui-1.13.1.custom/jquery-ui.min.css" />
 <script type="text/javascript" src="<%= ctxPath%>/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
