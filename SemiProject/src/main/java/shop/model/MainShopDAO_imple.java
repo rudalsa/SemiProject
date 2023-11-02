@@ -97,8 +97,7 @@ public class MainShopDAO_imple implements MainShopDAO {
 			conn = ds.getConnection();
 			
 			String sql = " select c_no, c_code, c_name "
-					   + " from tbl_game_category "
-					   + " order by c_code asc ";
+					   + " from tbl_game_category ";
 			
 			pstmt = conn.prepareStatement(sql);
 			

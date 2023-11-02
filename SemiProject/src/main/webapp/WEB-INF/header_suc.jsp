@@ -41,7 +41,7 @@
 <!-- navbar-expand-lg: 네비게이션 바의 크기를 화면 너비에 따라 조절하는 클래스입니다. navbar-expand-lg 클래스는 화면 너비가 대형(Large) 이상일 때 네비게이션 바가 확장되도록 합니다. 작은 화면에서는 기본적으로 접혀 있는 상태가 됩니다. -->
     <!-- Brand/logo -->
     <a class="navbar-brand" href="<%= ctxPath %>/index.bz">
-        <img src="<%= ctxPath %>/img/footer_logo.jpg" style="width: 100%; height: 50px" />
+          <img src="<%= ctxPath %>/img/footer_logo.jpg" style="width: 100%; height: 50px" />
     </a>
     
    <!-- 아코디언 같은 Navigation Bar 만들기 -->
@@ -54,14 +54,72 @@
     <!-- 네비게이션 메뉴들... -->
     <ul class="navbar-nav mr-auto">
        
-       <c:forEach var="categoryvo" items="${requestScope.categoryList}" varStatus="status">
-  			<li>
-  				<span>${categoryvo.c_name}</span>
-  			</li>		
-			        
-   	   </c:forEach>
+       <li class="nav-item dropdown ml-3">
+           <a class="nav-link dropdown-toggle menufont_size text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+              워크래프트
+           </a>
+            
+            <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/index_bg.jpg');">
+              
+               <a class="dropdown-item" href="#">월드 오브 워크래프트</a>
+               <a class="dropdown-item" href="#">월드 오브 워크래프트 클래식</a>
+               <a class="dropdown-item" href="#">월드 오브 워크래프트III:리포지드</a>
+               <a class="dropdown-item" href="#">하스스톤</a>
+               <div class="bg-dark"></div>
+		       <a class="dropdown-item rumble"  href="#">워크래프트 럼블</a>
+              </div>
+         </li>
            
-        
+        <li class="nav-item dropdown ml-2">
+           
+           <a class="nav-link dropdown-toggle menufont_size text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+               디아블로
+           </a>
+           
+           <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/index_bg.jpg');">
+              <a class="dropdown-item" href="#" style="font-weight:bold;">디아블로IV</a>
+              <a class="dropdown-item" href="#" style="font-weight:bold;">디아블로 이모탈</a>              
+              <a class="dropdown-item" href="#" style="font-weight:bold;">디아블로II:레져렉션</a>              
+           </div>
+           
+       </li>
+   
+       <li class="nav-item dropdown ml-2">
+           
+           <a class="nav-link dropdown-toggle menufont_size text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+              오버워치
+           </a>
+       
+           <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/index_bg.jpg');">
+               <a class="dropdown-item" href="#">오버워치2</a>
+           </div>
+       
+       </li>
+
+       <li class="nav-item dropdown ml-2">
+         
+           <a class="nav-link dropdown-toggle menufont_size text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+              스타크래프트
+           </a>
+         
+           <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/index_bg.jpg');">
+              <a class="dropdown-item" href="#">스타크래프트2</a>
+           </div>
+           
+       </li>
+       
+      <li class="nav-item dropdown ml-2">
+         
+           <a class="nav-link dropdown-toggle menufont_size text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+              젤다의 전설
+           </a>
+         
+           <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/index_bg.jpg');">
+              <a class="dropdown-item" href="#">젤다의 전설1</a>
+              <a class="dropdown-item" href="#">젤다의 전설2</a>
+           </div>
+           
+       </li>
    </ul>
    
    

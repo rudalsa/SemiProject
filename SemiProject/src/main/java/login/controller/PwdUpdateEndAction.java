@@ -1,4 +1,4 @@
-package member.controller;
+package login.controller;
 
 import java.sql.SQLException;
 import java.util.*;

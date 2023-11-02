@@ -26,7 +26,7 @@ public class VerifyCertificationAction extends AbstractController {
 			
 			if(certification_code.equals(userCertificationCode)) {
 				message = "인증성공 되었습니다.";
-				loc = request.getContextPath()+"/login/pwdUpdateEnd.bz?user_id="+user_id;
+				loc = request.getContextPath()+"/member/pwdUpdateEnd.bz?user_id="+user_id;
 			}
 			else {
 				message = "발급된 인증코드가 아닙니다.\\n인증코드를 다시 발급받으세요!!";
