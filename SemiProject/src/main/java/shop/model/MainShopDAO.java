@@ -10,6 +10,9 @@ public interface MainShopDAO  {
 	
 	// tbl_featured_game 테이블을 모두 조회(select)하는 메소드 
 	List<GameVO> ShopListSelectAll() throws SQLException;
+	
+	// tbl_game_category 테이블을 모두 조회(select)하는 메소드 
+	List<CategoryVO> ShopListSelect() throws SQLException;
 
 	
 }

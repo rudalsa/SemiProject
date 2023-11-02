@@ -56,8 +56,9 @@ public interface MemberDAO {
 	// 회원상태 탈퇴시키기, DB에는 남아있지만 Status = 0 으로 변경
 	public int deleteUser(String user_id) throws SQLException ;
 
-
-		
+	// 휴면처리된 회원을 이메일 인증을 통해 idle 값을 0으로 변경
+	int updateIdle(Map<String, String> paraMap) throws SQLException;
+	
 		
 		
 	}
