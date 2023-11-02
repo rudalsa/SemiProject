@@ -18,14 +18,20 @@
                           padding-left: 10px;
                           height: 50px; }
                           
-    .prodInputName {background-color: #e6fff2; 
+    .prodInputName { 
                     font-weight: bold; }                                                 
    
-   .error {color: red; font-weight: bold; font-size: 9pt;
+   .error {color: red; font-weight: bold; font-size: 9pt;}
+   
+   input {
+   		background-color: gray;
+   }
+   
 
 
 </style>
 
+<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/shop/admin/productRegister.css"> 
 
 <script type="text/javascript">
 	
@@ -53,8 +59,8 @@
 		$("input#spinnerImgQty").spinner({
 
 			spin : function(event, ui) {
-				if (ui.value > 10) {
-					$(this).spinner("value", 10);
+				if (ui.value > 3) {
+					$(this).spinner("value", 3);
 					return false;
 				} else if (ui.value < 0) {
 					$(this).spinner("value", 0);
@@ -63,6 +69,8 @@
 			}
 
 		});// end of $("input#spinnerImgQty").spinner()-------------------
+		
+		
 		
 		
 		// #### 스피너의 이벤트는 click 도 아니고 change 도 아니고 "spinstop" 이다. #### //
@@ -83,10 +91,13 @@
 			
 			for(let i=0; i<Number(cnt); i++){
 				v_html += `<br><input type="text" name="attachName\${i}" placeholder="옵션이름" />
-				           <input type="file" name="attachimg\${i}" class="btn btn-default img_file" accept="image/*" />
-			        	   <input type="text" name="attachPrice\${i}" style="width: 100px;" name="g_price" class="box infoData" placeholder="제품정가" /> 원
-		        		   <input type="text" name="attachSalePrice\${i}" style="width: 100px;" name="g_price" class="box infoData" placeholder="제품판매가" /> 원`;
+				           <input type="file" name="attachimg\${i}" class="btn btn-default img_file" accept="image/*" /><br>
+				           <input type="number" name="attachOpty\${i}" style="width: 100px;" class="box infoData" max="100" placeholder="옵션수량" /> 개
+			        	   <input type="text" name="attachPrice\${i}" style="width: 100px;" class="box infoData" placeholder="제품정가" /> 원
+		        		   <input type="text" name="attachSalePrice\${i}" style="width: 100px;" class="box infoData mb-1" placeholder="제품판매가" /> 원<br>
+	        			   <textarea name="attachContent\${i}" rows="5" cols="60" placeholder="옵션정보"></textarea>/><br><br>`;
 			}
+			
 			
 			$("div#divfileattach").html(v_html);
 			$("input:hidden[name='attachCount']").val(cnt); // 추가이미지파일 개수 
@@ -197,9 +208,9 @@
 
 
 
-<div align="center" style="margin-bottom: 20px; margin-top: 100px;">
+<div align="center" style="margin-bottom: 20px; margin-top: 100px; color: silver;">
 
-	<div style="border: solid green 2px; width: 250px; margin-top: 20px; padding-top: 10px; padding-bottom: 10px; border-left: hidden; border-right: hidden;">       
+	<div style="border: solid darkblue 2px; width: 250px; margin-top: 20px; padding-top: 10px; padding-bottom: 10px; border-left: hidden; border-right: hidden;">       
 	   <span style="font-size: 15pt; font-weight: bold;">제품등록&nbsp;[관리자전용]</span>   
 	</div>
 	<br/>
@@ -213,7 +224,7 @@
       method="POST"                         
       enctype="multipart/form-data"> 
 	      
-	<table id="tblProdInput" style="width: 80%;">
+	<table id="tblProdInput" style="width: 60%;" class="table-dark">
 	<tbody>
 		
 	
@@ -241,6 +252,13 @@
 	      <td width="25%" class="prodInputName">제품명</td>
 	      <td width="75%" align="left" style="border-top: hidden; border-bottom: hidden;" >
 	         <input type="text" style="width: 300px;" name="g_name" class="box infoData" />
+	         <span class="error">필수입력</span>
+	      </td>
+	   </tr>
+	   <tr>
+	      <td width="25%" class="prodInputName">제품옵션명</td>
+	      <td width="75%" align="left" style="border-top: hidden; border-bottom: hidden;" >
+	         <input type="text" style="width: 300px;" name="g_content" class="box infoData" />
 	         <span class="error">필수입력</span>
 	      </td>
 	   </tr>
@@ -304,7 +322,7 @@
 	   <tr>
 	      <td width="25%" class="prodInputName">제품설명</td>
 	      <td width="75%" align="left" style="border-top: hidden; border-bottom: hidden;">
-	         <textarea name="g_content" rows="5" cols="60"></textarea>
+	         <textarea name="g_info" rows="5" cols="60"></textarea>
 	      </td>
 	   </tr>
 	   <tr>
