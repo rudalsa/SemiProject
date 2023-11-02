@@ -74,16 +74,6 @@
 	  
   });// end of $(document).ready(function(){})-------------
  
-  function openPopup() {
-      document.getElementById('popup').style.display = 'block';
-  }
-
-  function closePopup() {
-      document.getElementById('popup').style.display = 'none';
-  }
-
-
-  
 </script>
 
 <body style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">

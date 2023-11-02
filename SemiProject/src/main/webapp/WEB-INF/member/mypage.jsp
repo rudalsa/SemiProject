@@ -32,28 +32,6 @@ document.getElementById('accountDetailsLink').addEventListener('click', function
 });
 
 </script>
-<style>
-  table {
-    background-color: rgba(0, 0, 255, 0.2); /* Slightly transparent blue background */
-    border-radius: 10px; /* Rounded corners */
-    border: 1px solid #ccc; /* Border color */
-  }
-
-  th, td {
-    padding: 10px; /* Add some padding for better spacing */
-    text-align: center; /* Center align text */
-    color: white; /* Text color */
-  }
-
-  th {
-    background-color: #333; /* Header background color */
-  }
-
-  td {
-    background-color: #444; /* Cell background color */
-  }
-</style>
-
 </head>
 
 <body style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
