@@ -8,8 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
+
 import common.controller.AbstractController;
+import login.controller.GoogleMail;
 import member.domain.MemberVO;
+import shop.domain.GameVO;
 import shop.model.*;
 
 public class OrderAddAction extends AbstractController {
@@ -84,13 +88,11 @@ public class OrderAddAction extends AbstractController {
 			
 			
 			Map<String, Object> paraMap = new HashMap<>();
-				
+			String odrcode = getOdrcode();	
 		    // 주문테이블(tbl_order) 에 insert 할 데이터
-			paraMap.put("odrcode", getOdrcode()); // 주문코드(명세서번호)
+			paraMap.put("odrcode", odrcode); // 주문코드(명세서번호)
 		    // getOdrcode() 메소드는 위에서 정의한 전표 (주문코드)를 생성해주는 것이다.
 		        
-				
-				
 			HttpSession session = request.getSession();
 		    MemberVO loginuser = (MemberVO)session.getAttribute("loginuser");
 		         
@@ -99,7 +101,8 @@ public class OrderAddAction extends AbstractController {
 		    paraMap.put("user_id", loginuser.getUser_id()); // 회원ID
 		    paraMap.put("sum_totalPrice", sum_totalPrice ); // 주문총액
 		    paraMap.put("sum_totalPoint", sum_totalPoint ); // 주문총포인트
-		         
+		    
+		    
 		    // === 주문상세테이블(tbl_orderdetail)에 insert 할 데이터 ===
 		         
 		    String[] g_code_arr = g_code_join.split("\\,"); // 여러개 제품을 주문한 경우          ex) "5,4,61".split("\\,"); ==> ["5","4","61"]
@@ -128,21 +131,74 @@ public class OrderAddAction extends AbstractController {
 		         
 		   // **** Transaction 처리를 해주는 메소드 호출하기 **** //
 				
-		   // int isSuccess = pdao.orderAdd(paraMap); 내일 11-02 일에 할 것임
+		   int isSuccess = pdao.orderAdd(paraMap); // 내일 11-02 일에 할 것임
 		   
 			
 		   // **** 주문이 완료되었을시 세션에 저장되어져 있는 loginuser 정보를 갱신하고  
 		   //      이어서 주문이 완료되었다라는 email 보내주기  **** //
 				
-		   /*		
+		  	
 		   if(isSuccess == 1) {
 					
 		   // 세션에 저장되어져 있는 loginuser 정보를 갱신
-					
+		   
+		   loginuser.setUser_payment(loginuser.getUser_payment() - Integer.parseInt(sum_totalPrice) );
+	       loginuser.setUser_coin(loginuser.getUser_coin() + Integer.parseInt(sum_totalPoint) );   
+		   
+	       
+	    // 시작 이어서 주문이 완료되었다라는 email 보내주기  **** //
+			GoogleMail mail = new GoogleMail(); 
+			
+			// str_pnum_join 5,4,61 "swkm,kjkm,kkk" 우리조는 '' 꼭해줘야함 "'kkk','kdjh','ajls'" ;
+			
+			String g_noes = "'"+String.join("','", g_code_join.split("\\,"))+"'";	// str_pnum_join.split("\\,") ==> ["5","4","61"]
+			// ["5","4","61"]
+			// " 5 ' , 4 ' , 61 ' " 띄워쓰기는 잘보이게 하려고 한 것 임
+			// " ' 5 ' , ' 4 ' , ' 61 ' " 띄워쓰기는 잘보이게 하려고 한 것 임
+			
+			System.out.println("확인용 주문한 제품번호 g_noes "+ g_noes);
+			
+			// 주문한 제품에 대해 email 보내기시 email 내용에 넣을 주문한 제품번호들에 대한 제품정보를 얻어오는 것
+			List<GameVO> jumungameList = pdao.getJumungameList(g_noes);
+			
+			// 주문한 제품에 대해 email 보내기시 email 내용에 넣을 주문한 제품번호들에 대한 제품정보를 얻어오는 것
+			StringBuilder sb = new StringBuilder();
+	         
+	        sb.append("주문코드번호 : <span style='color: blue; font-weight: bold;'>"+odrcode+"</span><br/><br/>");
+	        sb.append("<주문상품><br/>");
+	        
+	        for(int i=0; i<jumungameList.size(); i++) {
+	        	
+	        	sb.append(jumungameList.get(i).getG_name()+"&nbsp;"+oqty_arr[i]+"개&nbsp;&nbsp;");
+	            sb.append("<img src='http://127.0.0.1:9090/SemiProject/img/상품옵션_디아블로4_2.jpg'/>");
+	            // +jumungameList.get(i).getG_img_1()+"
+	            
+	            sb.append("<br/>");
+	        	
+	        	
+	        } // end of for -----
+			
+	        sb.append("<br/>이용해 주셔서 감사합니다.");
+	         
+	        String emailContents = sb.toString();
+	         
+	        mail.sendmail_OrderFinish(loginuser.getUser_email(), loginuser.getUser_name(), emailContents);
+	       // 끝 이어서 주문이 완료되었다라는 email 보내주기  **** //
+			   
+			   
+			   
 		   ////////// === 주문이 완료되었다는 email 보내기 시작 === ///////////
 					
 		   }
-		   */	
+		   
+		    JSONObject jsobj = new JSONObject(); // {}
+		    jsobj.put("isSuccess", isSuccess);	 // {"isSuccess":0} or 1
+		       
+		    String json = jsobj.toString();
+		    request.setAttribute("json", json);
+		       
+		    super.setRedirect(false);
+		    super.setViewPage("/WEB-INF/jsonview.jsp");
 				
 				
 		
