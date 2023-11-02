@@ -81,7 +81,7 @@ public class ProductRegisterAction extends AbstractController {
 	    		  // ==> C:\NCS\workspace_jsp\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\MyMVC\images    
 	    		  
 	    	   // C:\NCS\workspace_jsp\MyMVC\src\main\webapp\images
-	    	    String uploadFileDir = "C:\\git\\SemiProject\\SemiProject\\src\\main\\webapp\\img";
+	    	    String uploadFileDir = "C:\\git\\SemiProject\\SemiProject\\src\\main\\webapp\\img\\tbl_game_product_image";
 	    		  
 	    		  
 	    		  /*
@@ -120,7 +120,6 @@ public class ProductRegisterAction extends AbstractController {
 					String fk_c_code = mtrequest.getParameter("fk_c_code");   // 카테고리 번호
 					String g_no = mtrequest.getParameter("g_no");
 					String g_name = mtrequest.getParameter("g_name");       // 제품명
-					String g_content = mtrequest.getParameter("g_content");
 					String g_company = mtrequest.getParameter("g_company"); // 제조사회사명
 
 					// 업로드되어진 시스템의 첨부파일 이름(파일서버에 업로드 되어진 실제파일명)을 얻어 올때는
@@ -203,10 +202,8 @@ public class ProductRegisterAction extends AbstractController {
 					String fk_s_code = mtrequest.getParameter("fk_s_code"); 	  // 'HIT', 'NEW', 'BEST' 에 대한 스펙번호인 시퀀스번호를 참조
 					
 					// !!!! 크로스 사이트 스크립트 공격에 대응하는 안전한 코드(시큐어코드) 작성하기 !!!! // 
-					String g_info	= mtrequest.getParameter("g_info");     // 제품설명 
-					g_info = g_info.replaceAll("<", "&lt;");
-					g_info = g_info.replaceAll(">", "&gt;");
-					g_info = g_info.replaceAll("\r\n", "<br>");
+					String g_content	= mtrequest.getParameter("g_content");     // 제품설명 
+					
 					/*
 					  <script type="text/javascript"> 
 					  
@@ -232,7 +229,6 @@ public class ProductRegisterAction extends AbstractController {
 					GameVO gamevo = new GameVO();										   // 제품번호(Primary Key)
 					gamevo.setG_code(Integer.toString(g_code));
 					gamevo.setG_name(g_name);									   // 제품명
-					gamevo.setG_content(g_content);
 					gamevo.setFk_c_code(fk_c_code);				   // 카테고리코드(Foreign Key)의 시퀀스번호 참조
 					gamevo.setG_company(g_company); 								   // 제조회사명
 					gamevo.setG_img_1(g_img_1);								   // 제품이미지1   이미지파일명
@@ -241,7 +237,7 @@ public class ProductRegisterAction extends AbstractController {
 					gamevo.setG_price(Integer.parseInt(g_price)); 					   // 제품 정가
 					gamevo.setG_sale_price(Integer.parseInt(g_sale_price)); 			   // 제품 판매가(할인해서 팔 것이므로)
 					gamevo.setFk_s_code(fk_s_code); 				   // 'HIT', 'NEW', 'BEST' 에 대한 스펙번호인 시퀀스번호를 참조
-					gamevo.setG_info(g_info); 								   // 제품설명 
+					gamevo.setG_content(g_content); 								   // 제품설명 
 					gamevo.setG_coin(Integer.parseInt(g_coin)); 					   // 포인트 점수
 					
 					
@@ -272,18 +268,14 @@ public class ProductRegisterAction extends AbstractController {
 		                	   for(int i=0; i<n_attachCount; i++) {
 		                		   String attachName = mtrequest.getParameter("attachName"+i);
 		                		   String attachimg = mtrequest.getFilesystemName("attachimg"+i); // 파일서버에 업로드되어지는 실제 제품설명서 파일명 (파일명이 중복되는 것을 피하기 위해서 중복된 파일명이 있으면 파일명뒤에 숫자가 자동적으로 붙어 생성됨) 
-		                		   String attachOpty = mtrequest.getParameter("attachOpty"+i);
 		                		   String attachPrice = mtrequest.getParameter("attachPrice"+i);
 		                		   String attachSalePrice = mtrequest.getParameter("attachSalePrice"+i);
-		                		   String attachContent = mtrequest.getParameter("attachContent"+i);
 		                		   
 		                		   
 		                		   paraMap.put("attachName", attachName);
 		                		   paraMap.put("attachimg", attachimg);
-		                		   paraMap.put("attachOpty", attachOpty);
 		                		   paraMap.put("attachPrice", attachPrice);
 		                		   paraMap.put("attachSalePrice", attachSalePrice);
-		                		   paraMap.put("attachContent", attachContent);
 		                		   
 		                		   // tbl_product_imagefile 테이블에 제품의 추가이미지 파일명 insert 하기
 		                		   pdao.tbl_product_optinfo_insert(paraMap);

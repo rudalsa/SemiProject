@@ -22,7 +22,6 @@
 			<div>
 				<h2>::: 회원가입 :::</h2>
 				<h6 class="mb-5">::: 태그를 누르시면 입력칸이 나옵니다 :::</h6>
-				
 			</div>
 			<div class="div1">
 				<label onclick="showInputTag('nameInput');">
@@ -40,7 +39,7 @@
 				<span style="font-size: 12pt;" >아이디</span> <span style="font-size: 9pt; color: gray;">영문 또는 영문+숫자 조합 4~12자</span>
 				</label>
 				<div id="useridInput" class="hideInput">
-					<input type="text" name="user_id" id="user_id" class="inputFocus requiredInfo" maxlength="12" autocomplete="off" />
+					<input type="text" name="user_id" id="user_id" class="inputFocus requiredInfo" maxlength="12" autocomplete="off" >
 					<button type="button" class="close" onclick="inputClose('user_id')">&times;</button>
 					<img src="<%= ctxPath%>/img/b_id_check.gif" id="idcheck" />
 				</div>
