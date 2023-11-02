@@ -63,7 +63,7 @@
       $(".spinner").spinner({
          
     	  spin: function(event, ui) {
-            if(ui.value > 10) {
+            if(ui.value > 100) {
                $(this).spinner("value", 10);
                return false;
             }
@@ -135,6 +135,21 @@
          location.href="javascript:history.go(0);";
          return;
       }
+      
+      const g_qty = $("input.g_qty").eq(index).val();  // 잔고개수
+      alert("주문량 : "+ oqty + ", 잔고량 : " + g_qty);
+  	  alert(typeof oqty + " , " + typeof g_qty)	
+      
+  	  //   !!! 조심할 것 !!! //
+  	  //   if(oqty > pqty) { 으로 하면 꽝됨!! 왜냐하면 string 타입으로 비교하기에
+  	  //   if("2" > "19") {  참이됨
+  	  //   if(2 > 19) {  거짓이됨     
+      if(Number(oqty) > Number(g_qty)) {
+         alert("주문개수가 잔고개수 보다 더 커서 진행할 수 없습니다.");
+         location.href="javascript:history.go(0)";
+         return; // goOqtyEdit 함수 종료
+      }
+  	  
             
  	  alert("장바구니번호 "+cartno+"을 "+oqty+"개로 수정합니다.");
       if(oqty == "0") {
@@ -229,6 +244,7 @@
            const allCnt = $("input:checkbox[name='g_code']").length;
            const g_codeArr = new Array();      // 또는 const pnumArr = [];
            const oqtyArr = new Array();        // 또는 const oqtyArr = [];
+           const g_qtyArr = new Array();        // 또는 const pqtyArr = [];
            const cartnoArr = new Array();      // 또는 const cartnoArr = [];
            const totalPriceArr = new Array();  // 또는 const totalPriceArr = [];
            const totalPointArr = new Array();  // 또는 const totalPointArr = [];
@@ -240,6 +256,7 @@
         		   
         		   console.log("제품번호 : " , $("input:checkbox[name='g_code']").eq(i).val() ); 
         		   console.log("주문량 : " , $("input.oqty").eq(i).val() );
+        		   console.log("잔고량 : " ,  $("input.g_qty").eq(i).val() );
         		   console.log("삭제해야할 장바구니 번호 : " + $("input.cartno").eq(i).val() ); 
                    console.log("주문한 제품의 개수에 따른 가격합계 : " , $("input.totalPrice").eq(i).val() );
                    console.log("주문한 제품의 개수에 따른 포인트합계 : " , $("input.totalPoint").eq(i).val() );
@@ -262,6 +279,7 @@
                    
                   g_codeArr.push( $("input:checkbox[name='g_code']").eq(i).val() );
                   oqtyArr.push( $("input.oqty").eq(i).val() );
+                  g_qtyArr.push( $("input.g_qty").eq(i).val() );
                   cartnoArr.push( $("input.cartno").eq(i).val() );
                   totalPriceArr.push( $("input.totalPrice").eq(i).val() );
                   totalPointArr.push( $("input.totalPoint").eq(i).val() ); 
@@ -272,7 +290,7 @@
            
            <%-- 확인용입니다.
            for(let i=0; i<checkCnt; i++) {
-               console.log("확인용 제품번호: " + g_codeArr[i] + ", 주문량: " + oqtyArr[i] + ", 장바구니번호 : " + cartnoArr[i] + ", 주문금액: " + totalPriceArr[i] + ", 포인트: " + totalPointArr[i]);
+               console.log("확인용 제품번호: " + g_codeArr[i] + " 잔고량: " + g_qtyArr[i] + 주문량: " + oqtyArr[i] + ", 장바구니번호 : " + cartnoArr[i] + ", 주문금액: " + totalPriceArr[i] + ", 포인트: " + totalPointArr[i]);
             /*
 				확인용 제품번호: 300, 주문량: 1, 장바구니번호 : 24, 주문금액: 230000, 포인트: 0
 				확인용 제품번호: 332, 주문량: 5, 장바구니번호 : 17, 주문금액: 230000, 포인트: 100
@@ -280,6 +298,17 @@
             
            }// end of for---------------------------
            --%>
+          
+           for(let i=0; i<checkCnt; i++) {
+               if(Number(g_qtyArr[i]) < Number(oqtyArr[i])) {
+                  // 주문할 제품중 아무거나 하나가 잔고량이 주문량 보다 적을 경우
+                  
+                  alert("제품번호 "+ g_codeArr[i] +" 의 주문개수가 잔고개수 보다 더 커서 진행할 수 없습니다.");
+               location.href="javascript:history.go(0)";
+               return; // goOrder 함수 종료
+               } 
+            }// end of for---------------------------
+           
            
           // , 을 기준으로 합쳤다. 
           const g_code_join = g_codeArr.join();
@@ -430,6 +459,9 @@
                             <%-- 현재주문수량 --%>
                               <input class="spinner oqty" name="oqty" value="${cartvo.oqty}" style="width: 30px; height: 20px;">개
                               <button type="button" class="btn btn-outline-secondary btn-sm updateBtn" onclick="goOqtyEdit(this)">수정</button>
+                              
+                              <%-- 잔고량 --%>
+                              <input type="text" class="g_qty" value="${cartvo.gavo.g_qty}" />
                               
                               <%-- 장바구니 테이블에서 특정제품의 현재주문수량을 변경하여 적용하려면 먼저 장바구니번호(시퀀스)를 알아야 한다 --%>
                               <input type="text" class="cartno" value="${cartvo.cartno}" /> 

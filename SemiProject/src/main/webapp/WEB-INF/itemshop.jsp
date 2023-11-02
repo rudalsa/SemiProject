@@ -3,40 +3,13 @@
 <%
     String ctxPath = request.getContextPath(); // MyMVC
 %>
-<style>
-
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    tr.img td {
-        padding: 0;
-        text-align: center;
-        width: 100px;
-        height: 75px;
-        
-    }
-    
-
-    tr.img td img {
-    
-        width: 50%;
-        height: 100%;
-    }
-    
-    tr.text-cor td {
-    	text-align:center;
-    	height: 25px;
-    	color: white;
-    
-    }
-</style>
 
 <jsp:include page="header_suc.jsp" />
-
-<script type="text/javascript" src="<%= ctxPath%>/js/shop/newshop.js"></script>
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi+Ink&display=swap" rel="stylesheet">
+<script type="text/javascript" src="<%= ctxPath%>/js/shop/displayitem.js"></script>
+<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/shop/displayitem.css" />
 	
 	<div class="mx-auto" style="width:90%; margin-top: 10%;">
 		
@@ -72,14 +45,14 @@
 		
 		
 		<div>
-			<span class="h5 text-white">게임명/카테고리/갯수</span>
+			<span class="text-cor">게임명/카테고리/갯수</span>
 		</div>
 		
 		<%-- === HIT 상품을 모두 가져와서 디스플레이(더보기 방식으로 페이징 처리한 것) === --%>
    		<div>
         	<p class="h3 my-3 text-center">- - HIT 상품 -(스크롤) -</p>
       
-      	<div class="row" id="display"></div>
+      	<div class="row" id="displayitem"></div>
       
       	<div style="background-color:red;">
          	<p class="text-center">

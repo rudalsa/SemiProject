@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import common.controller.AbstractController;
 import shop.model.*;
-public class NewshopAddAction extends AbstractController {
+public class DisplayItemAddAction extends AbstractController {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -15,6 +15,7 @@ public class NewshopAddAction extends AbstractController {
 		
 		
 		int SpecCount = pdao.totalSpecCount("100"); // 나중에 파라미터 밭아 올거임.
+		
 		System.out.println("확인용 SpecCount => " + SpecCount );
 		// 확인용 SpecCount => 30
 				
@@ -23,7 +24,7 @@ public class NewshopAddAction extends AbstractController {
 		
 		
 		super.setRedirect(false);
-		super.setViewPage("/WEB-INF/newshop.jsp");
+		super.setViewPage("/WEB-INF/itemshop.jsp");
 		
 	}
 
