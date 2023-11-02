@@ -2,19 +2,22 @@
 
 label.prodInfo {
 	border: solid 0px gray;
-	display: inline-block; /* label 태그는 width 가 안먹으므로 디스플레이를 변경해주어야 한다.;*/
-	width: 65px;
-	margin-left: 5px;
+	display: inline-block; /* label 태그는 width 가 안먹으므로 디스플레이를 변경해주어야 한다.; */
+	width: 75px;
+	text-align: left;
 }
 
 
 table {
+    
     border-collapse: collapse;
     width: 100%;
 }
 
+
 tr.img td {
-    padding: 0;
+
+/*  padding: 0; */
     text-align: center;
     width: 100px;
     height: 75px;
@@ -22,14 +25,21 @@ tr.img td {
 }
 
 tr.img td img {
-
+	
     width: 50%;
     height: 100%;
+
 }
 
-tr.text-cor td {
+tr.text-cor td,
+span.text-cor {
 	text-align:center;
+	font-weight: bold;
 	height: 25px;
 	color: white;
+	font-size: 14pt;
+}
 
+*{
+font-family: 'Reem Kufi Ink', sans-serif;
 }
