@@ -17,6 +17,8 @@ $(document).ready(function(){
      
         if( $(window).scrollTop() + 1 >= $(document).height() - $(window).height() ) {
 			
+			alert("ZD");
+			
 			if( $("span#totalCount").text() != $("span#countSum").text() ) { // 값이 같지 않을때만 새로운 창을 보여준다.
 				start += len;
 				display(start);	
