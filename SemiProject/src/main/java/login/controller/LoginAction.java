@@ -18,27 +18,27 @@ public class LoginAction extends AbstractController {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 	String method = request.getMethod(); // "GET" 또는 "POST" 
-		
-		if("GET".equalsIgnoreCase(method)) {
-            super.setRedirect(false);
-			super.setViewPage("/WEB-INF/login/login.jsp");
-		}
-		
-		else {
-			
+				
+		if("POST".equalsIgnoreCase(method)) {
+			// 포스트 방식으로 넘어온 것이라면
 			String user_id = request.getParameter("user_id");
 			String user_pwd = request.getParameter("user_pwd");
+			
+			String login_ip = request.getRemoteAddr();
+
 
 			Map<String, String> paraMap = new HashMap<>();
 			paraMap.put("user_id", user_id);
 			paraMap.put("user_pwd", user_pwd);
+			paraMap.put("login_ip", login_ip);
+
 
 			MemberDAO mdao = new MemberDAO_imple();
 			
 			MemberVO loginuser = mdao.selectOneMember(paraMap);
 			
 			if(loginuser != null) {
-				System.out.println("~~~ 확인용 로그인 성공 ^___^");
+				// System.out.println("~~~ 확인용 로그인 성공 ^___^");
 				
 				if(loginuser.getUser_idle() == 1) {
 					// 마지막으로 로그인 한것이 1년 이상 지난 경우 
@@ -88,14 +88,13 @@ public class LoginAction extends AbstractController {
 				
 				session.setAttribute("loginuser", loginuser);
 				// session(세션)에 로그인 되어진 사용자 정보인 loginuser 를 키이름을 "loginuser" 으로 저장시켜두는 것이다. 
-				
 				System.out.println("~~~ 확인용 로그인 성공 ^___^"+loginuser.getUser_name());
 
 				if(loginuser.isRequirePwdChange() == true) {
 					// 비밀번호를 변경한지 3개월 이상된 경우 
 									
 					String message = "비밀번호를 변경하신지 3개월이 지났습니다.\\n암호를 변경하는 페이지로 이동합니다!!";
-					String loc = request.getContextPath()+"/index.bz";
+					String loc = request.getContextPath()+"/member/pwdUpdateEnd.bz";
 					// 원래는 위와같이 index.up 이 아니라 암호를 변경하는 페이지로 URL을 잡아주어야 한다.!!
 					
 					request.setAttribute("message", message);
@@ -130,6 +129,11 @@ public class LoginAction extends AbstractController {
 			}
 		
 		}
+		else{
+            super.setRedirect(false);
+			super.setViewPage("/WEB-INF/login/login.jsp");
+		}
+		
 
 	}
 

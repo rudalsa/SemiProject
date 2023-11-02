@@ -16,7 +16,44 @@ function goResignation(){
     frm.method = "POST";
     frm.submit();   	
 }
+
+$(document).ready(function(){
+
+document.getElementById('accountMainLink').addEventListener('click', function() {
+    document.getElementById('maininfo').style.display = 'block';
+    document.getElementById('accountDetails').style.display = 'none';
+});
+
+document.getElementById('accountDetailsLink').addEventListener('click', function() {
+    document.getElementById('maininfo').style.display = 'none';
+    document.getElementById('accountDetails').style.display = 'block';
+});
+
+});
+
 </script>
+<style>
+  table {
+    background-color: rgba(0, 0, 255, 0.2); /* Slightly transparent blue background */
+    border-radius: 10px; /* Rounded corners */
+    border: 1px solid #ccc; /* Border color */
+  }
+
+  th, td {
+    padding: 10px; /* Add some padding for better spacing */
+    text-align: center; /* Center align text */
+    color: white; /* Text color */
+  }
+
+  th {
+    background-color: #333; /* Header background color */
+  }
+
+  td {
+    background-color: #444; /* Cell background color */
+  }
+</style>
+
 </head>
 
 <body style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
@@ -35,10 +72,10 @@ function goResignation(){
             	<div>
             		<ul class="nav flex-column mt-2 ">
 					  <li class="nav-item ">
-					    <a class="nav-link text-white active" href=""> <span class="rounded-sm">계정 정보</span></a>
+					    <a class="nav-link text-white active" id="accountMainLink"> <span class="rounded-sm">계정 정보</span></a>
 					  </li>
 					  <li class="nav-item">
-					    <a class="nav-link text-white">계정 상세 정보</a>
+					    <a class="nav-link text-white" id="accountDetailsLink" >계정 상세 정보</a>
 					  </li>
 					  <li class="nav-item">
 					    <a class="nav-link text-white" href="<%= ctxPath%>/mainShop.bz">게임 & 요금제</a>
@@ -62,7 +99,7 @@ function goResignation(){
         
           <div class="col-md-8  mt-1">
           		<c:set var="phone" value="${loginuser.user_phone}" />
-               <div class="col-lg-12 mt-6" >
+               <div class="col-lg-12 mt-6" id="maininfo">
             	<div>
             		<h2 style="color:white;">계정정보</h2>
 				</div>
@@ -96,7 +133,7 @@ function goResignation(){
 					<table class="col-md-5 ml-1 table table-dark "style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
 					  <thead>
 					    <tr>
-					      <th colspan="2">포인트</th>
+					      <th colspan="2">누적 결제금액</th>
 					    </tr>
 					  </thead>
 					  <tbody>
@@ -212,8 +249,85 @@ function goResignation(){
 				</div>
 				
             </div>
-            
-            			<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
+<div id="accountDetails" style="display: none;" class="col-lg-12 mt-6">
+    <div class="col-lg-12 mt-6" >
+            	
+				<div class="row">
+					<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
+					  <thead>
+					    <tr>
+					      <th style="width:150px">내 정보</th>
+						 <td class="text-right"><a type="button" class="btn btn-sm btn-primary text-right" href="<%= ctxPath%>/member/memberEditEnd.bz">변경하기</a></td>					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <td >아이디</td>
+					      <td>${loginuser.user_id}</td>
+					    </tr>
+					  </tbody>
+					</table>
+					
+					<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
+					  <thead>
+					    <tr>
+					      <th style="width:150px">성명</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <td >이름</td>
+					      <td>${loginuser.user_name}</td>
+					    </tr>
+					  </tbody>
+					</table>
+					
+					<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
+					  <thead>
+					    <tr>
+					      <th style="width:150px">이메일</th>
+				    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <td >이메일</td>
+					      <td >${loginuser.user_email}</td>
+					    </tr>
+					  </tbody>
+					</table>
+					
+					<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
+					  <thead>
+					    <tr>
+					      <th style="width:150px">주소</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <td >주소</td>
+					      <td >${loginuser.user_address}, ${loginuser.user_detail_address} ${loginuser.user_extraaddress}</td>
+					    </tr>
+					  </tbody>
+					</table>
+					
+					<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
+					  <thead>
+					    <tr>
+					      <th style="width:150px">연락처</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <td >연락처</td>
+		     			 <td>${fn:substring(phone, 0, 3)}-${fn:substring(phone, 3, 7)}-${fn:substring(phone, 7, 11)}</td>
+					    </tr>
+					  </tbody>
+					</table>
+						
+				</div>
+				
+              </div>
+			</div>
+           			<table class="col-md-11 table table-dark" style="background-image: url('<%= ctxPath%>/img/bg_blz.jpg');">
 					  <thead>
 					    <tr>
 					      <th style="width:150px">회원 비밀번호 변경</th>
@@ -222,13 +336,13 @@ function goResignation(){
 					  </thead>
 					  <tbody>
 					    <tr>
-					      <td colspan="3">회원에서 탈퇴하려면 탈퇴하기 버튼을 눌러주세요</td>
+					      <td colspan="3">회원의 비밀번호를 변경하려면 버튼을 눌러주세요</td>
 					      
 					    </tr>
 					  </tbody>
 					</table>
 			
-						<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
+						<table class="col-md-11 table table-dark" style="background-image: url('<%= ctxPath%>/img/bg_blz.jpg');">
 					  <thead>
 					    <tr>
 					      <th style="width:150px">회원 탈퇴</th>

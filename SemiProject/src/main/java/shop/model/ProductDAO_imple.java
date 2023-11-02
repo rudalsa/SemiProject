@@ -7,7 +7,6 @@ import javax.naming.*;
 import javax.sql.DataSource;
 
 import gameopt.domain.OptVO;
-import shop.domain.CartVO;
 import shop.domain.*;
 
 
@@ -386,6 +385,111 @@ public class ProductDAO_imple implements ProductDAO {
 		
 		
 	}
+
+	// 하나의 스펙에 몇개의 게임이있는지 알아오는 것
+	
+	@Override
+	public int totalSpecCount(String fk_s_code) throws SQLException {
+		
+	int SpecCount = 0;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " select count(*) "
+					   + " from tbl_game_product "
+					   + " where fk_s_code = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, fk_s_code);
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			SpecCount = rs.getInt(1);
+			
+		} finally {
+			close();
+		}
+		
+		return SpecCount;
+		
+	}
+	
+	// 더보기 방식(페이징처리)으로 상품정보를 8개씩 잘라(start ~ end) 조회해오기
+	@Override
+	
+	public List<GameVO> selectBySpecName(Map<String, String> paraMap) throws SQLException {
+		
+		List<GameVO> gameList = new ArrayList<>();
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = "\r\n"
+					+ " SELECT g_no, g_code, g_name, c_name, G_COMPANY, G_IMG_1, G_IMG_2, g_qty, g_price, g_sale_price, s_name, g_content, g_coin, G_INPUTDATE "
+					+ "	FROM "
+					+ "	( " 
+					+ "	select row_number() over(order by g_no desc) AS RNO "
+					+ "	, g_no, g_code, g_name, C.c_name, G_COMPANY, G_IMG_1, G_IMG_2, g_qty, g_price, g_sale_price, S.s_name, g_content, g_coin "
+					+ "	, to_char(G_INPUTDATE, 'yyyy-mm-dd') AS G_INPUTDATE "
+					+ "	from tbl_game_product P "
+					+ "	JOIN TBL_GAME_CATEGORY C "
+					+ "	ON P.fk_c_code = C.c_code "
+					+ "	JOIN tbl_game_spec S "
+					+ "	ON P.fk_s_code = S.s_code "
+					+ "	where S.s_name = ? "
+					+ "	) V "
+					+ "	WHERE RNO between ? and ? " ;
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, paraMap.get("s_name"));
+			pstmt.setString(2, paraMap.get("start"));
+			pstmt.setString(3, paraMap.get("end"));
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				GameVO gavo = new GameVO();
+				
+				gavo.setG_no(rs.getInt(1));              // 제품번호 
+				gavo.setG_code(rs.getString(2));	     // 제품코드
+				gavo.setG_name(rs.getString(3));	     // 제품명
+				
+				CategoryVO categvo = new CategoryVO();
+				categvo.setC_name(rs.getString(4));      // 카테고리명
+				gavo.setCategvo(categvo);
+				
+				gavo.setG_company(rs.getString(5));    // 제조회사명
+				gavo.setG_img_1(rs.getString(6));     // 제품이미지1   이미지파일명
+				gavo.setG_img_2(rs.getString(7));     // 제품이미지2   이미지파일명
+				gavo.setG_qty(rs.getInt(8));           // 제품 재고량
+	            gavo.setG_price(rs.getInt(9));          // 제품 정가
+	            gavo.setG_sale_price(rs.getInt(10));      // 제품 판매가(할인해서 팔 것이므로)
+	            
+	       
+	            
+	            SpecVO spvo = new SpecVO();
+	            spvo.setS_name(rs.getString(11));     // 스펙명
+	            gavo.setSpvo(spvo);
+	            
+	            gavo.setG_content(rs.getString(12));   // 제품설명 
+	            gavo.setG_coin(rs.getInt(13));         // 포인트 점수        
+	            gavo.setG_inputdate(rs.getString(13)); // 제품입고일자  
+	            
+	            gameList.add(gavo);
+			} // end of while() --------------------------------------------
+			
+		} finally {
+			close();
+		}
+		
+		return gameList;
+	} // end of public List<ProductVO> selectBySpecName(Map<String, String> paraMap)
+	
+	
 	
 	
 }
