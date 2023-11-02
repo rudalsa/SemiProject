@@ -155,8 +155,8 @@ public class ProductDAO_imple implements ProductDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " insert into tbl_game_product(g_no, g_code, g_name, fk_c_code, g_company, g_img_1, g_img_2, g_qty, g_price, g_sale_price, fk_s_code, g_content, g_coin) "
-					   + " values(seq_tbl_game_product_g_no.nextval,?,?,?,?,?,?,?,?,?,?,?,?) "; 
+			String sql = " insert into tbl_game_product(g_no, g_code, g_name, fk_c_code, g_company, g_img_1, g_img_2, g_qty, g_price, g_sale_price, fk_s_code, g_content, g_coin, g_info) "
+					   + " values(seq_tbl_game_product_g_no.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?) "; 
 					   
 			
 			pstmt = conn.prepareStatement(sql);
@@ -174,7 +174,8 @@ public class ProductDAO_imple implements ProductDAO {
 	        pstmt.setString(10, gamevo.getFk_s_code());
 	        pstmt.setString(11, gamevo.getG_content());
 	        pstmt.setInt(12, gamevo.getG_coin());
-			
+	        pstmt.setString(13, gamevo.getG_info());
+	        
 	        result = pstmt.executeUpdate();
 			
 		} finally {
@@ -195,8 +196,8 @@ public class ProductDAO_imple implements ProductDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " insert into tbl_product_optinfo(optinfono, fk_g_code, imgfile, opt_name, opt_price, opt_sale_price) "
-					   + " values(tbl_product_optinfo_optinfono.nextval, ?, ?, ?, ?, ?) "; 
+			String sql = " insert into tbl_product_optinfo(optinfono, fk_g_code, imgfile, opt_name, opt_price, opt_sale_price, opt_content, opt_qty) "
+					   + " values(tbl_product_optinfo_optinfono.nextval, ?, ?, ?, ?, ?, ?, ?) "; 
 					   
 			
 			pstmt = conn.prepareStatement(sql);
@@ -206,6 +207,8 @@ public class ProductDAO_imple implements ProductDAO {
 	        pstmt.setString(3, paraMap.get("attachName"));
 	        pstmt.setInt(4, Integer.parseInt(paraMap.get("attachPrice")));
 	        pstmt.setInt(5, Integer.parseInt(paraMap.get("attachSalePrice")));
+	        pstmt.setString(6, paraMap.get("attachContent"));
+	        pstmt.setInt(7, Integer.parseInt(paraMap.get("attachOpty")));
 	        
 			
 	        result = pstmt.executeUpdate();
