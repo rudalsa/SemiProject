@@ -96,6 +96,7 @@
 	      <c:if test="${not empty loginuser.user_id}">
 	       &nbsp; &nbsp;
 		  <button type="button" class="btn btn-danger mt-5 mx-auto" onclick="javascript:location.href='<%= ctxPath%>/index.bz'">다음에 변경하기</button>
+	   <input type="hidden" name="user_id" value="${loginuser.user_id}">
 	      </c:if>
 	   </div>
 	   
