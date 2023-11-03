@@ -91,15 +91,17 @@
 	      <span style="color: blue; font-size: 14pt;">새암호</span><br/> 
 	      <input type="password" name="pwd" size="25" /><br/> 
 	      <span style="color: blue; font-size: 14pt;">새암호확인</span><br/>
-	      <input type="password" id="pwd2" size="25" />
-	      <button type="button" class="btn btn-success mt-5 mx-auto">암호 변경하기</button> &nbsp; &nbsp;
-	      
+	      <input type="password" id="pwd2" size="25" /><br/>
+	      <button type="button" class="btn btn-success mt-5 mx-auto">암호 변경하기</button>
+	      <c:if test="${not empty loginuser.user_id}">
+	       &nbsp; &nbsp;
+		  <button type="button" class="btn btn-danger mt-5 mx-auto" onclick="javascript:location.href='<%= ctxPath%>/index.bz'">다음에 변경하기</button>
+	      </c:if>
 	   </div>
 	   
 	   <input type="hidden" name="user_id" value="${requestScope.user_id}">
 	   
 	   <div>
-<%--      <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%= ctxPath%>/index.bz'">다음에 변경하기</button>--%>
 	      
 	   </div>
 	</form>
