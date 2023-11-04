@@ -59,6 +59,7 @@
 		  alert("인증코드 입력");
 		 const input_confirmCode = $("input:text[name='input_confirmCode']").val().trim(); 
 		  
+		  
 		  if(input_confirmCode == "") {
 			  alert("인증코드를 입력하세요!!");
 			  return; // 종료

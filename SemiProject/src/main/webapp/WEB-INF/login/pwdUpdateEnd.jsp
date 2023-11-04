@@ -74,19 +74,10 @@
 	  
   });// end of $(document).ready(function(){})-------------
  
-  function openPopup() {
-      document.getElementById('popup').style.display = 'block';
-  }
-
-  function closePopup() {
-      document.getElementById('popup').style.display = 'none';
-  }
-
-
-  
+ 
 </script>
 
-<body style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+<body style="background-image: url('<%= ctxPath%>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 <!-- background-repeat: no-repeat;를 적용하면 배경 이미지가 한 번만 표시됩니다: -->
 
 
@@ -97,17 +88,21 @@
 	<form name="pwdUpdateEndFrm" class="text-center">
 	
 	   <div class="div_pwd mt-5 mx-auto" style="text-align: center;">
-	      <span style="color: blue; font-size: 16pt;">새암호</span><br/> 
+	      <span style="color: blue; font-size: 14pt;">새암호</span><br/> 
 	      <input type="password" name="pwd" size="25" /><br/> 
-	      <span style="color: blue; font-size: 16pt;">새암호확인</span><br/>
-	      <input type="password" id="pwd2" size="25" />
+	      <span style="color: blue; font-size: 14pt;">새암호확인</span><br/>
+	      <input type="password" id="pwd2" size="25" /><br/>
+	      <button type="button" class="btn btn-success mt-5 mx-auto">암호 변경하기</button>
+	      <c:if test="${not empty loginuser.user_id}">
+	       &nbsp; &nbsp;
+		  <button type="button" class="btn btn-danger mt-5 mx-auto" onclick="javascript:location.href='<%= ctxPath%>/index.bz'">다음에 변경하기</button>
+	   <input type="hidden" name="user_id" value="${loginuser.user_id}">
+	      </c:if>
 	   </div>
 	   
-	   <input type="hidden" name="user_id" value="${loginuser.user_id}">
+	   <input type="hidden" name="user_id" value="${requestScope.user_id}">
 	   
-	   <div style="text-align: center;">
-	      <button type="button" class="btn btn-success">암호 변경하기</button> &nbsp; &nbsp;
-	      <button type="button" class="btn btn-danger" onclick="javascript:location.href='<%= ctxPath%>/index.bz'">다음에 변경하기</button>
+	   <div>
 	      
 	   </div>
 	</form>
@@ -119,8 +114,7 @@
    
    <div style="text-align: center; font-size: 20pt; color: white;" class="mt-5">
 	   <c:if test="${requestScope.n == 1}">
-	      사용자 ID ${requestScope.userid}님의 비밀번호가 변경되었습니다. <br>
-	   <button type="button" class="btn btn-danger my-5" onclick="javascript:location.href='<%= ctxPath%>/index.bz'">메인페이지로 돌아가기</button>
+	      사용자 ID ${requestScope.user_id}님의<br> 비밀번호가 변경되었습니다. 
 	      
 	   </c:if>
 	   
