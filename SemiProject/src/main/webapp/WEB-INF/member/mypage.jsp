@@ -32,6 +32,7 @@ document.getElementById('accountDetailsLink').addEventListener('click', function
 });
 
 </script>
+
 </head>
 
 <body style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
@@ -116,7 +117,7 @@ document.getElementById('accountDetailsLink').addEventListener('click', function
 					  </thead>
 					  <tbody>
 					    <tr>
-					      	<td colspan="3" class="text-center"><fmt:formatNumber value="${loginuser.user_payment}" pattern="###,###" /> POINT </td>		
+					      	<td colspan="3" class="text-center"><fmt:formatNumber value="${loginuser.user_payment}" pattern="###,###" /> 원 </td>		
 					    </tr>
 					    
 					  </tbody>
@@ -129,12 +130,12 @@ document.getElementById('accountDetailsLink').addEventListener('click', function
 					  <thead>
 					    <tr>
 					      <th colspan="2">구매 정보</th>
-					      <td class="text-right"><a href="<%= ctxPath %>/buy/cartList.bz">장바구니 바로가기</a></td>
+					      <td class="text-right"><a class="btn btn-success btn-sm"href="<%= ctxPath %>/buy/cartList.bz">장바구니 바로가기</a></td>
 					    </tr>
 					  </thead>
 					  <tbody>
 					  	<tr>
-<td colspan="3">
+					<td colspan="3">
 
    <div>
        <table id="tblCartList" class="mx-auto" style="width: 100%">
