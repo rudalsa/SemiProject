@@ -32,27 +32,6 @@ document.getElementById('accountDetailsLink').addEventListener('click', function
 });
 
 </script>
-<style>
-  table {
-    background-color: rgba(0, 0, 255, 0.2); /* Slightly transparent blue background */
-    border-radius: 10px; /* Rounded corners */
-    border: 1px solid #ccc; /* Border color */
-  }
-
-  th, td {
-    padding: 10px; /* Add some padding for better spacing */
-    text-align: center; /* Center align text */
-    color: white; /* Text color */
-  }
-
-  th {
-    background-color: #333; /* Header background color */
-  }
-
-  td {
-    background-color: #444; /* Cell background color */
-  }
-</style>
 
 </head>
 
@@ -138,7 +117,7 @@ document.getElementById('accountDetailsLink').addEventListener('click', function
 					  </thead>
 					  <tbody>
 					    <tr>
-					      	<td colspan="3" class="text-center"><fmt:formatNumber value="${loginuser.user_payment}" pattern="###,###" /> POINT </td>		
+					      	<td colspan="3" class="text-center"><fmt:formatNumber value="${loginuser.user_payment}" pattern="###,###" /> 원 </td>		
 					    </tr>
 					    
 					  </tbody>
@@ -151,12 +130,12 @@ document.getElementById('accountDetailsLink').addEventListener('click', function
 					  <thead>
 					    <tr>
 					      <th colspan="2">구매 정보</th>
-					      <td class="text-right"><a href="<%= ctxPath %>/buy/cartList.bz">장바구니 바로가기</a></td>
+					      <td class="text-right"><a class="btn btn-success btn-sm"href="<%= ctxPath %>/buy/cartList.bz">장바구니 바로가기</a></td>
 					    </tr>
 					  </thead>
 					  <tbody>
 					  	<tr>
-<td colspan="3">
+					<td colspan="3">
 
    <div>
        <table id="tblCartList" class="mx-auto" style="width: 100%">
