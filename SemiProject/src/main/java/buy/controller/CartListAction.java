@@ -40,9 +40,8 @@ public class CartListAction extends AbstractController {
 					
 					MemberVO loginuser = (MemberVO) session.getAttribute("loginuser");
 					
-					
-					
 					ProductDAO pdao = new ProductDAO_imple();
+					
 					
 					List<CartVO> cartList = pdao.selectProductCart(loginuser.getUser_id(), paymoney);
 					

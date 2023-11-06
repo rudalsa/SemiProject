@@ -268,14 +268,18 @@ public class ProductRegisterAction extends AbstractController {
 		                	   for(int i=0; i<n_attachCount; i++) {
 		                		   String attachName = mtrequest.getParameter("attachName"+i);
 		                		   String attachimg = mtrequest.getFilesystemName("attachimg"+i); // 파일서버에 업로드되어지는 실제 제품설명서 파일명 (파일명이 중복되는 것을 피하기 위해서 중복된 파일명이 있으면 파일명뒤에 숫자가 자동적으로 붙어 생성됨) 
+		                		   String attachOpty = mtrequest.getParameter("attachOpty"+i);
 		                		   String attachPrice = mtrequest.getParameter("attachPrice"+i);
 		                		   String attachSalePrice = mtrequest.getParameter("attachSalePrice"+i);
+		                		   String attachContent = mtrequest.getParameter("attachContent"+i);
 		                		   
 		                		   
 		                		   paraMap.put("attachName", attachName);
 		                		   paraMap.put("attachimg", attachimg);
+		                		   paraMap.put("attachOpty", attachOpty);
 		                		   paraMap.put("attachPrice", attachPrice);
 		                		   paraMap.put("attachSalePrice", attachSalePrice);
+		                		   paraMap.put("attachContent", attachContent);
 		                		   
 		                		   // tbl_product_imagefile 테이블에 제품의 추가이미지 파일명 insert 하기
 		                		   pdao.tbl_product_optinfo_insert(paraMap);

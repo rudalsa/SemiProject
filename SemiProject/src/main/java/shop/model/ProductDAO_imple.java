@@ -194,8 +194,8 @@ public class ProductDAO_imple implements ProductDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " insert into tbl_product_optinfo(optinfono, fk_g_code, imgfile, opt_name, opt_price, opt_sale_price) "
-					   + " values(tbl_product_optinfo_optinfono.nextval, ?, ?, ?, ?, ?) "; 
+			String sql = " insert into tbl_product_optinfo(optinfono, fk_g_code, imgfile, opt_name, opt_price, opt_sale_price, opt_content, opt_qty) "
+					   + " values(tbl_product_optinfo_optinfono.nextval, ?, ?, ?, ?, ?, ?, ?) "; 
 					   
 			
 			pstmt = conn.prepareStatement(sql);
@@ -205,6 +205,8 @@ public class ProductDAO_imple implements ProductDAO {
 	        pstmt.setString(3, paraMap.get("attachName"));
 	        pstmt.setInt(4, Integer.parseInt(paraMap.get("attachPrice")));
 	        pstmt.setInt(5, Integer.parseInt(paraMap.get("attachSalePrice")));
+	        pstmt.setString(6, paraMap.get("attachContent"));
+	        pstmt.setInt(7, Integer.parseInt(paraMap.get("attachOpty")));
 	        
 			
 	        result = pstmt.executeUpdate();
@@ -215,29 +217,33 @@ public class ProductDAO_imple implements ProductDAO {
 
 		return result;
 	}
+	
 
 	// 로그인한 사용자의 장바구니 목록을 조회하기
 	@Override
-	public List<CartVO> selectProductCart(String user_id, String paymoney) throws SQLException {
+	public List<CartVO> selectProductCart(String user_id,String paymoney) throws SQLException {
 		
 		List<CartVO> cartList = null;
 		
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " SELECT C.cartno, C.fk_userid, C.fk_g_code, C.oqty, p.g_name, P.g_img_1, o.opt_name, o.opt_sale_price, p.g_coin, p.g_qty "
-					+ "    FROM ( "
-					+ "    SELECT cartno, fk_userid, fk_g_code, registerday, oqty "
-					+ "    FROM tbl_game_cart "
-					+ "    WHERE fk_userid = ? "
-					+ "    ) C "
-					+ "    JOIN tbl_game_product P ON C.fk_g_code = P.g_code "
-					+ "    JOIN TBL_PRODUCT_OPTINFO O ON o.opt_sale_price = ?" ;
-			
+			String sql = " SELECT G.cartno, G.fk_userid, G.fk_g_code, G.oqty, G.g_name, G.g_img_1, G.g_coin, G.g_qty, O.opt_name, O.optinfono, O.imgfile, O.opt_sale_price "
+					   + " FROM ( "
+					   + "     SELECT C.cartno, C.fk_userid, C.fk_g_code, C.oqty, P.g_code, P.g_name, P.g_img_1, P.g_coin, P.g_qty "
+					   + "     FROM ( "
+					   + "         SELECT cartno, fk_userid, fk_g_code, registerday, oqty "
+					   + "         FROM tbl_game_cart "
+					   + "         WHERE fk_userid = ? "
+					   + "     ) C "
+					   + "     JOIN tbl_game_product P "
+					   + "     ON C.fk_g_code = P.g_code "
+					   + "     )G "
+					   + " JOIN TBL_PRODUCT_OPTINFO O "
+					   + " ON G.g_code = O.fk_g_code ";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user_id);
-			pstmt.setString(2, paymoney);
 			
 			rs = pstmt.executeQuery();
 			
@@ -258,10 +264,13 @@ public class ProductDAO_imple implements ProductDAO {
 				int oqty = rs.getInt("OQTY"); // 주문량
 				String g_name = rs.getString("G_NAME");
 				String g_img_1 = rs.getString("G_IMG_1");
-				String opt_name = rs.getString("opt_name");
-				int opt_sale_price = rs.getInt("OPT_SALE_PRICE");
 				int g_coin = rs.getInt("G_COIN"); 
-				int g_qty = rs.getInt("g_qty"); // 잔고량
+				int g_qty = rs.getInt("G_QTY"); // 잔고량
+				String opt_name = rs.getString("OPT_NAME");
+				int optinfono = rs.getInt("OPTINFONO");
+				String imgfile = rs.getString("IMGFILE");
+				int opt_sale_price = rs.getInt("OPT_SALE_PRICE");
+				
 				
 				GameVO gvo = new GameVO();
 				gvo.setG_code(fk_g_code);
@@ -277,8 +286,10 @@ public class ProductDAO_imple implements ProductDAO {
 				// 우리는 옵션도 해야함 //
 				
 				OptVO ovo = new OptVO();
-				ovo.setOpt_sale_price(opt_sale_price);
 				ovo.setOpt_name(opt_name);
+				ovo.setOptinfono(optinfono);
+				ovo.setImgfile(imgfile);
+				ovo.setOpt_sale_price(opt_sale_price);
 				// 나중에 더 추가 //
 				
 				CartVO cvo = new CartVO();

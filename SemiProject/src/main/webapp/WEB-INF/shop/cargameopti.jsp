@@ -374,6 +374,7 @@ td#error {
                     <input type="hidden" name="g_code" value="${requestScope.gameVO.g_code}" >
                     <input type="hidden" name="paymoney" >
                     <input type="hidden" name="g_qty" value="${requestScope.gameVO.g_qty}">
+                    <input type="hidden" name="optinfono" value="${requestScope.OptiList.optinfono}">
                 </li>
             </ul>
          </form> 

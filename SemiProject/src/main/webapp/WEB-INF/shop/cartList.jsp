@@ -447,7 +447,8 @@
                                   status.index 은 0 부터 시작하고,
                                   status.count 는 1 부터 시작한다. 
                              --%> 
-                             <input type="checkbox" name="g_code" class="chkbox_g_code" id="g_code${status.index}" value="${cartvo.fk_g_code}" /> &nbsp;<label for="g_code${status.index}">${cartvo.fk_g_code}</label>   
+                            <input type="checkbox" name="g_code" class="chkbox_g_code" id="g_code${status.index}" value="${cartvo.fk_g_code}" /> &nbsp;<label for="g_code${status.index}">${cartvo.fk_g_code}</label>   
+                        	<input type="hidden" name="optinfono" value="${cartvo.opvo.optinfono}" />
                         </td>
                         <td align="center"> <%-- 제품이미지1 및 제품명 --%> 
                            <a href="<%= ctxPath%>>shop/prodView.up?g_code=${cartvo.fk_g_code}">

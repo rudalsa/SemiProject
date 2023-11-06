@@ -27,157 +27,142 @@
 <%-- Optional JavaScript --%>
 <script type="text/javascript" src="<%= ctxPath%>/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="<%= ctxPath%>/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js" ></script> 
-<script type="text/javascript" src="<%= ctxPath%>/js/member/snifflinggame.js" ></script> 
+
 <%-- jQueryUI CSS 및 JS --%>
 <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/jquery-ui-1.13.1.custom/jquery-ui.min.css" />
 <script type="text/javascript" src="<%= ctxPath%>/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
 
 
+<style type="text/css">
+
+#collapsibleNavbar > ul.navbar-nav.ml-auto > li.nav-item.dropdown.show > div > a:hover{
+	 
+	 background-color: rgba(255, 255, 255, 0.25); /* 마우스 호버 시 투명한 밝은 배경색으로 변경 */
+
+}
+
+
+</style>
+
+
+
+
 </head>
+
+
+
 <body style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 <!-- background-repeat: no-repeat;를 적용하면 배경 이미지가 한 번만 표시됩니다: -->
 
-<nav class="navbar navbar-expand-lg mx-auto mt-3 bg-dark fixed-top" id="scrollNavbar" style=" width: 97%;  background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 70px">
+<nav class="navbar navbar-expand-lg mx-auto mt-3 bg-dark fixed-top" id="scrollNavbar" style=" width: 97%;  background-color: black; height: 75px">
 <!-- navbar-expand-lg: 네비게이션 바의 크기를 화면 너비에 따라 조절하는 클래스입니다. navbar-expand-lg 클래스는 화면 너비가 대형(Large) 이상일 때 네비게이션 바가 확장되도록 합니다. 작은 화면에서는 기본적으로 접혀 있는 상태가 됩니다. -->
-    <!-- Brand/logo -->
+    
+   <!-- Brand/logo -->
     <a class="navbar-brand" href="<%= ctxPath %>/index.bz">
-          <img src="<%= ctxPath %>/img/footer_logo.jpg" style="width: 100%; height: 50px" />
-    </a>
+    	<img src="<%= ctxPath %>/img/newshop/logo_steam.svg" style="width: 180px; height: 60px" />
+    </a> 
     
    <!-- 아코디언 같은 Navigation Bar 만들기 -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+       <span class="navbar-toggler-icon"></span>
+   </button>
 
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     
-    <!-- 네비게이션 메뉴들... -->
-    <ul class="navbar-nav mr-auto">
-       
-       <li class="nav-item dropdown ml-3">
-           <a class="nav-link dropdown-toggle menufont_size text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-              워크래프트
-           </a>
-            
-            <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/index_bg.jpg');">
-              
-               <a class="dropdown-item" href="#">월드 오브 워크래프트</a>
-               <a class="dropdown-item" href="#">월드 오브 워크래프트 클래식</a>
-               <a class="dropdown-item" href="#">월드 오브 워크래프트III:리포지드</a>
-               <a class="dropdown-item" href="#">하스스톤</a>
-               <div class="bg-dark"></div>
-		       <a class="dropdown-item rumble"  href="#">워크래프트 럼블</a>
-              </div>
-         </li>
-           
-        <li class="nav-item dropdown ml-2">
-           
-           <a class="nav-link dropdown-toggle menufont_size text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-               디아블로
-           </a>
-           
-           <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/index_bg.jpg');">
-              <a class="dropdown-item" href="#" style="font-weight:bold;">디아블로IV</a>
-              <a class="dropdown-item" href="#" style="font-weight:bold;">디아블로 이모탈</a>              
-              <a class="dropdown-item" href="#" style="font-weight:bold;">디아블로II:레져렉션</a>              
-           </div>
-           
-       </li>
-   
-       <li class="nav-item dropdown ml-2">
-           
-           <a class="nav-link dropdown-toggle menufont_size text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-              오버워치
-           </a>
-       
-           <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/index_bg.jpg');">
-               <a class="dropdown-item" href="#">오버워치2</a>
-           </div>
-       
-       </li>
-
-       <li class="nav-item dropdown ml-2">
-         
-           <a class="nav-link dropdown-toggle menufont_size text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-              스타크래프트
-           </a>
-         
-           <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/index_bg.jpg');">
-              <a class="dropdown-item" href="#">스타크래프트2</a>
-           </div>
-           
-       </li>
-       
-      <li class="nav-item dropdown ml-2">
-         
-           <a class="nav-link dropdown-toggle menufont_size text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-              젤다의 전설
-           </a>
-         
-           <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/index_bg.jpg');">
-              <a class="dropdown-item" href="#">젤다의 전설1</a>
-              <a class="dropdown-item" href="#">젤다의 전설2</a>
-           </div>
-           
-       </li>
-   </ul>
-   
-   
-    <ul class="navbar-nav ml-auto">
-    
-    	<li class="nav-item active ml-2">     
-           <a href="mainShop.bz" class="nav-link menufont_size" id="shopPage">
-          		<i class="fa-brands fa-shopify"></i>&nbsp;&nbsp;상점
-           </a>  
-       </li>
-      
-   <li class="nav-item dropdown ml-2">
-       <c:if test="${empty sessionScope.loginuser}">
-		<a class="nav-link dropdown-toggle menufont_size" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-	    	<i class="fa-regular fa-user"></i>&nbsp;&nbsp;계정로그인
-	    </a>
+   <!-- 네비게이션 메뉴들... -->
+   <ul class="navbar-nav d-flex flex-row">
 	    
-		<div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
-		    <a class="dropdown-item" href="<%= ctxPath%>/login/login.bz">로그인</a>
-		    <a class="dropdown-item" href="<%= ctxPath%>/member/memberRegister.bz">회원가입</a>
-		    <a class="dropdown-item" href="#">나가기</a>
-		</div>
-		
-	    </c:if>
-		
-	<c:if test="${not empty sessionScope.loginuser}">
-         <c:choose>
-          <c:when test="${not empty sessionScope.loginuser and sessionScope.loginuser.user_id eq 'admin'}">
-              <!-- admin인 경우 -->
-              <a class="nav-link dropdown-toggle menufont_size" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-                  <i class="fa-regular fa-user"></i>&nbsp;&nbsp;${sessionScope.loginuser.user_name} 님
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
-                  <a class="dropdown-item" href="<%= ctxPath%>/member/memberList.bz">회원관리</a>
-                  <a class="dropdown-item" href="<%= ctxPath %>/shop/admin/productRegister.bz">제품추가</a>
-                  <a class="dropdown-item" href="<%= ctxPath%>/login/logout.bz">로그아웃</a>
-              </div>
-          </c:when>
-          <c:otherwise>
-              <!-- admin가 아닌 경우 -->
-              <a class="nav-link dropdown-toggle menufont_size" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-                  <i class="fa-regular fa-user"></i>&nbsp;&nbsp;${sessionScope.loginuser.user_name} 님
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
-                  <a class="dropdown-item" href="<%= ctxPath%>/member/memberEdit.bz">계정관리</a>
-                  <a class="dropdown-item" href="#">장바구니</a>
-                  <a class="dropdown-item" href="<%= ctxPath%>/login/logout.bz">로그아웃</a>
-              </div>
-          </c:otherwise>
-		</c:choose>
-    </c:if>
+	    <li class="nav-item active">
+	      <a class="nav-link d-flex align-items-center text-nowrap" href="#">
+	        <img src="<%= ctxPath %>/img/newshop/games_diablo.svg" alt="디아블로" style="width: 45px; height: 45px">
+	        <span class="ml-3" style="color:white; font-weight:bold;">디아블로</span>
+	      </a>
+	    </li>
 	    
-   		
-      
-      
-    </li>
-    
-    </ul>
-   
-   </div>
+	    <li class="nav-item active">
+	      <a class="nav-link d-flex align-items-center text-nowrap" href="#">
+	        <img src="<%= ctxPath %>/img/newshop/games_hearthstone.svg" alt="하스스톤" style="width: 45px; height: 45px">
+	        <span class="ml-3" style="color:white; font-weight:bold;">하스스톤</span>
+	      </a>
+	    </li>
+	    
+	    <li class="nav-item active">
+	      <a class="nav-link d-flex align-items-center text-nowrap" href="#">
+	        <img src="<%= ctxPath %>/img/newshop/games_wow.svg" alt="스타크래프트" style="width: 45px; height: 45px">
+	        <span class="ml-3" style="color:white; font-weight:bold;">워크래프트</span>
+	      </a>
+	    </li>
+	    
+	    <li class="nav-item active">
+	      <a class="nav-link d-flex align-items-center text-nowrap" href="#">
+	        <img src="<%= ctxPath %>/img/newshop/games_overwatch.svg" alt="오버워치" style="width: 40px; height: 40px">
+	        <span class="ml-3" style="color:white; font-weight:bold;">오버워치</span>
+	      </a>
+	    </li>
+	    
+	    <li class="nav-item active">
+	      <a class="nav-link d-flex align-items-center text-nowrap" href="#">
+	        <img src="<%= ctxPath %>/img/newshop/games_sc2.svg" alt="스타크래프트" style="width: 40px; height: 40px">
+	        <span class="ml-3" style="color:white; font-weight:bold;">스타크래프트</span>
+	      </a>
+	    </li>
+	    
+	    
+	    
+	</ul>
+	<ul class="navbar-nav ml-auto">
+	
+		<li class="nav-item active">
+	      <a class="nav-link d-flex align-items-center text-nowrap" href="mainShop.bz">
+	        <img src="<%= ctxPath %>/img/newshop/games_cod-mw.svg" alt="상점" style="width: 40px; height: 40px">
+	        <span class="ml-3" style="color:white; font-weight:bold;">상점</span>
+	      </a>
+	    </li>
+   	    
+   	    <li class="nav-item dropdown">
+        	<c:if test="${empty sessionScope.loginuser}">
+				<a class="nav-link d-flex dropdown-toggle align-items-center text-nowrap ml-3" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+	    			<img src="<%= ctxPath %>/img/newshop/games_cod-vanguard.svg" alt="로그인" style="width: 40px; height: 40px">
+	        		<span class="ml-3" style="color:white; font-weight:bold;">로그인</span>
+	    		</a>
+			    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: black; font-weight:bold; text-align:center;">
+					<a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/login/login.bz">로그인</a>
+				    <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/member/memberRegister.bz">회원가입</a>
+				    <a class="dropdown-item text-white font-weight-bold" href="#">나가기</a>
+				</div>
+		
+	    	</c:if>
+			<c:if test="${not empty sessionScope.loginuser}">
+		        <c:choose>
+		           <c:when test="${not empty sessionScope.loginuser and sessionScope.loginuser.user_id eq 'admin'}">
+		              <!-- admin인 경우 -->
+		              <a class="nav-link d-flex dropdown-toggle align-items-center text-nowrap ml-3" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+	    			      <img src="<%= ctxPath %>/img/newshop/games_cod-vanguard.svg" alt="로그인" style="width: 40px; height: 40px">
+	        		      <span class="ml-3" style="color:white; font-weight:bold;">${sessionScope.loginuser.user_name}님</span>
+	    			  </a>	
+		              <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: black; text-align:center;">
+		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/member/memberList.bz">회원관리</a>
+		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath %>/shop/admin/productRegister.bz">제품추가</a>
+		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/login/logout.bz">로그아웃</a>
+		              </div>
+		          </c:when>
+		          <c:otherwise>
+		              <!-- admin가 아닌 경우 -->
+		              <a class="nav-link d-flex dropdown-toggle align-items-center text-nowrap ml-3" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+	    			      <img src="<%= ctxPath %>/img/newshop/games_cod-vanguard.svg" alt="로그인" style="width: 40px; height: 40px">
+	        		      <span class="ml-3" style="color:white; font-weight:bold;">${sessionScope.loginuser.user_name}님</span>
+	    			  </a>	
+		              <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: black; text-align:center;">
+		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/member/memberEdit.bz">계정관리</a>
+		                  <a class="dropdown-item text-white font-weight-bold" href="#">장바구니</a>
+		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/login/logout.bz">로그아웃</a>
+		              </div>
+		          </c:otherwise>
+				</c:choose>
+		    </c:if>
+      	
+      	</li>	    	    
+	</ul>
+	
+	</div>
 </nav>
