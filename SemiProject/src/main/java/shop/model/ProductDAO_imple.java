@@ -225,7 +225,7 @@ public class ProductDAO_imple implements ProductDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " SELECT C.cartno, C.fk_userid, C.fk_g_code, C.oqty, p.g_name, P.g_img_1, o.opt_name, o.opt_sale_price, p.g_coin "
+			String sql = " SELECT C.cartno, C.fk_userid, C.fk_g_code, C.oqty, p.g_name, P.g_img_1, o.opt_name, o.opt_sale_price, p.g_coin, p.g_qty "
 					+ "    FROM ( "
 					+ "    SELECT cartno, fk_userid, fk_g_code, registerday, oqty "
 					+ "    FROM tbl_game_cart "
@@ -261,12 +261,14 @@ public class ProductDAO_imple implements ProductDAO {
 				String opt_name = rs.getString("opt_name");
 				int opt_sale_price = rs.getInt("OPT_SALE_PRICE");
 				int g_coin = rs.getInt("G_COIN"); 
+				int g_qty = rs.getInt("g_qty"); // 잔고량
 				
 				GameVO gvo = new GameVO();
 				gvo.setG_code(fk_g_code);
 				gvo.setG_name(g_name);
 				gvo.setG_img_1(g_img_1);
 				gvo.setG_coin(g_coin);
+				gvo.setG_qty(g_qty);
 				
 				// ***** !!!! 중요함 !!!! ***** //
 				gvo.setTotalPriceTotalPoint(oqty);
@@ -488,7 +490,260 @@ public class ProductDAO_imple implements ProductDAO {
 		
 		return gameList;
 	} // end of public List<ProductVO> selectBySpecName(Map<String, String> paraMap)
-	
+
+	// ===== Transaction 처리하기 ===== // 
+    // 1. 주문 테이블에 입력되어야할 주문전표를 채번(select)하기
+    // 2. 주문 테이블에 채번해온 주문전표, 로그인한 사용자, 현재시각을 insert 하기(수동커밋처리)
+    // 3. 주문상세 테이블에 채번해온 주문전표, 제품번호, 주문량, 주문금액을 insert 하기(수동커밋처리)
+    // 4. 제품 테이블에서 제품번호에 해당하는 잔고량을 주문량 만큼 감하기(수동커밋처리)
+
+    // 5. 장바구니 테이블에서 str_cartno_join 값에 해당하는 행들을 삭제(delete)하기(수동커밋처리)
+    // >> 장바구니에서 주문을 한 것이 아니라 특정제품을 바로주문하기를 한 경우에는 장바구니 테이블에서 행들을 삭제할 작업은 없다. <<
+
+    // 6. 회원 테이블에서 로그인한 사용자의 coin 액을 sum_totalPrice 만큼 감하고, point 를 sum_totalPoint 만큼
+    // 더하기(update)(수동커밋처리)
+    // 7. **** 모든처리가 성공되었을시 commit 하기(commit) ****
+    // 8. **** SQL 장애 발생시 rollback 하기(rollback) ****   
+	@Override
+	public int orderAdd(Map<String, Object> paraMap) throws SQLException {
+		int isSuccess = 0;
+	    int n1=0, n2=0, n3=0, n4=0, n5=0;
+	    
+	    try {
+	           conn = ds.getConnection();
+	          
+	           conn.setAutoCommit(false); // 수동커밋으로 전환
+	          
+	           // 2. 주문 테이블에 채번해온 주문전표, 로그인한 사용자, 현재시각을 insert 하기(수동커밋처리)
+	           String sql = " insert into tbl_order(odrcode, fk_userid, odrtotalPrice, odrtotalPoint, odrdate) "
+	                   		+ " values(?, ?, ?, ?, default) ";
+	          
+	           pstmt = conn.prepareStatement(sql);
+	           
+	           pstmt.setString(1, (String)paraMap.get("odrcode"));
+	           pstmt.setString(2, (String)paraMap.get("user_id"));
+	           pstmt.setInt(3, Integer.parseInt((String)paraMap.get("sum_totalPrice")));
+	           pstmt.setInt(4, Integer.parseInt((String)paraMap.get("sum_totalPoint")));
+	          
+	           n1 = pstmt.executeUpdate();
+	          
+	           System.out.println("~~~~ 확인용 n1 : " + n1);
+	           //   ~~~~ 확인용 n1 : 1 시발
+	          
+	           // 3. 주문상세 테이블에 채번해온 주문전표, 제품번호, 주문량, 주문금액을 insert 하기(수동커밋처리)
+	           if(n1 == 1) {
+	           //   주문코드(명세서번호) --> (String)paraMap.get("odrcode");
+	              String[] g_code_arr = (String[])paraMap.get("g_code_arr");             // 제품번호
+	              String[] oqty_arr = (String[])paraMap.get("oqty_arr");             // 주문량
+	              String[] totalPrice_arr = (String[])paraMap.get("totalPrice_arr"); // 주문가격
+	             
+	              int cnt = 0;
+	              for(int i=0; i<g_code_arr.length; i++) {
+	              
+	                  sql = " insert into tbl_orderdetail(odrseqno , fk_odrcode , fk_g_code , oqty , odrprice , deliverStatus )"
+	                		+ " values(seq_tbl_orderdetail.nextval, ?, to_number(?), to_number(?), to_number(?), default) ";
+	                
+	                  pstmt = conn.prepareStatement(sql);
+	                  pstmt.setString(1, (String)paraMap.get("odrcode"));
+	                  pstmt.setString(2, g_code_arr[i]);
+	                  pstmt.setString(3, oqty_arr[i]);
+	                  pstmt.setString(4, totalPrice_arr[i]);
+	                
+	                  pstmt.executeUpdate();
+	                  
+	                  cnt++;
+	               }// end of for----------------------
+	             
+	               if(cnt == g_code_arr.length) {
+	                   n2 = 1;
+	               }
+	               	   System.out.println("~~~~ 확인용 n2 : " + n2);
+	               //   ~~~~ 확인용 n2 : 1
+	             
+	          }// end of if(n1 == 1)----------------
+	          
+	          // 4. 제품 테이블에서 제품번호에 해당하는 잔고량을 주문량 만큼 감하기(수동커밋처리)
+	          if(n2==1) {
+	             
+	              String[] g_code_arr = (String[])paraMap.get("g_code_arr"); // 제품번호
+	              String[] oqty_arr = (String[])paraMap.get("oqty_arr"); // 주문량
+	             
+	              int cnt = 0;
+	              for(int i=0; i<g_code_arr.length; i++) {
+	                  
+	            	  sql = " update tbl_game_product set g_qty = g_qty - ? "
+	                		+ " where g_code = ? ";
+	                
+	                  pstmt = conn.prepareStatement(sql);
+	                  pstmt.setInt(1, Integer.parseInt(oqty_arr[i]));
+	                  pstmt.setString(2, g_code_arr[i]);
+	                
+	                  pstmt.executeUpdate();
+	                  
+	                  cnt++;
+	             
+	              }// end of for--------
+	              
+	              if(cnt == g_code_arr.length) {
+	                  n3 = 1;
+	              }
+	              System.out.println("~~~~ 확인용 n3 : " + n3);
+	              //   ~~~~ 확인용 n3 : 1
+	             
+	          }// end of if(n2==1)-------------------
+	          
+
+	          // 5. 장바구니 테이블에서 str_cartno_join 값에 해당하는 행들을 삭제(delete)하기(수동커밋처리)
+	          // >> 장바구니에서 주문을 한 것이 아니라 특정제품을 바로주문하기를 한 경우에는 장바구니 테이블에서 행들을 삭제할 작업은 없다. <<
+	          if(n3==1 && paraMap.get("cartno_arr") != null) {
+	          /*
+	              sql = " delete from tbl_cart "
+	                  + " where cartno in (?) ";
+	          	  !!! 중요 in 절은 위와 같이 위치홀더 ? 를 사용하면 안됨. !!!
+	          */   
+	              String[] cartno_arr = (String [])paraMap.get("cartno_arr");
+	              // cartno_arr 은 ["11","8","7"]
+	             
+	              String cartno_join = String.join("','",cartno_arr); // "11','10','7"
+	             
+	              cartno_join = "'"+cartno_join+"'"; // "'11','10','7'"
+	             
+	            //System.out.println("~~~ 확인용 cartno_join => " + cartno_join);
+	            //  ~~~ 확인용 cartno_join => '11','10','7'
+	             
+	              System.out.println("이게 왜 에러" + cartno_join);
+	              
+	              sql = " delete from tbl_game_cart "
+	                  + " where cartno in ("+ cartno_join +") ";
+	              
+	              // !!! 중요 in 절은 위와 같이 직접 변수로 처리해야 함. !!! //
+	              // String.join(",", cartno_arr) 은 "11,10,7" 이러한 것이다.
+	              // 조심할 것은 in 에 사용되어지는 cartno 컬럼의 타입이 number 타입이라면 괜찮은데
+	              // 만약에 cartno 컬럼의 타입이 varchar2 타입이라면 "11,10,7" 와 같이 되어지면 오류가 발생한다.
+	              // 그래서 cartno 컬럼의 타입이 varchar2 타입이라면 "11,10,7" 을 "'11','10','7'" 와 같이 변경해주어야 한다.
+	             
+	              pstmt = conn.prepareStatement(sql);
+	              n4 = pstmt.executeUpdate();
+	             
+	              System.out.println("~~~~ 확인용 n4 : " + n4);
+	              //   ~~~~ 확인용 n4 : 3
+	              
+	              if(n4 == cartno_arr.length) {
+	                  n4 = 1;
+	              }
+	          }
+	          
+	          if(n3==1 && paraMap.get("cartno_arr") == null) {
+	          // "제품 상세 정보" 페이지에서 "바로주문하기" 를 한 경우
+	          // 장바구니 번호인 paraMap.get("cartno_arr") 이 없는 것이다.
+	             n4 = 1;
+	          }
+	          
+	          // 6. 회원 테이블에서 로그인한 사용자의 USER_PAYMENT 액을 sum_totalPrice 만큼 더하고, point 를 sum_totalPoint 만큼 더하기(update)(수동커밋처리)
+	          if(n4 == 1) {
+	              sql = " update tbl_user set USER_PAYMENT = USER_PAYMENT + ? , "				// g_coin = g_coin - ? , 이거 우짤거임 
+	            		  + " user_coin = user_coin + ? "
+	            		  + " where user_id = ? ";
+	             
+	              pstmt = conn.prepareStatement(sql);
+	             
+	              pstmt.setInt(1, Integer.parseInt((String)paraMap.get("sum_totalPrice")) );
+	              pstmt.setInt(2, Integer.parseInt((String)paraMap.get("sum_totalPoint")) );
+	              pstmt.setString(3, (String)paraMap.get("user_id"));
+	             
+	              n5 = pstmt.executeUpdate();
+	             
+	          
+	          } // end of if -----
+	          
+	          System.out.println("확인용"+n5);
+	          
+	          
+	          
+	          
+	       // 7. **** 모든처리가 성공되었을시 commit 하기(commit) **** 
+	          if(n1*n2*n3*n4*n5 == 1) {
+	              
+	              conn.commit();
+	              conn.setAutoCommit(true); // 자동커밋으로 전환
+	             
+	              // System.out.println("확인용 n1*n2*n3*n4*n5 : " + n1*n2*n3*n4*n5);
+	              // 확인용 n1*n2*n3*n4*n5 : 1
+	             
+	              isSuccess = 1;
+	          
+	          } // end of if(
+	          
+	       } catch(SQLException e) {
+	          // 8. **** SQL 장애 발생시 rollback 하기(rollback) ****
+	             conn.rollback();
+	             conn.setAutoCommit(true); // 자동커밋으로 전환
+	             
+	             isSuccess = 0;
+	          
+	       } finally {
+	             
+	    	     close();
+	       
+	       }
+	       
+	       return isSuccess;
+	    
+	    }// end of public int orderAdd(Map<String, Object> paraMap) throws SQLException--------
+
+	 // 주문한 제품에 대해 email 보내기시 email 내용에 넣을 주문한 제품번호들에 대한 제품정보를 얻어오는 것
+	@Override
+	public List<GameVO> getJumungameList(String g_noes) throws SQLException {
+		
+		List<GameVO> jumunProductList = new ArrayList<>();
+	      
+	      try {
+	         conn = ds.getConnection();
+	         
+	         String sql = " select g_no, g_code, g_name, fk_c_code, g_company, G_IMG_1, G_IMG_2, g_qty, g_price, g_sale_price, fk_s_code, g_content, g_coin "+
+	                    "      , to_char(g_inputdate, 'yyyy-mm-dd') as g_inputdate "+
+	                    " from tbl_game_product "+
+	                    " where g_no in("+ g_noes +") ";
+	         // prdmanual_systemFileName, prdmanual_orginFileName 할꺼면 추가하세요
+	         
+	         pstmt = conn.prepareStatement(sql);
+	         
+	         rs = pstmt.executeQuery();
+	                  
+	         while(rs.next()) {
+	                        
+	             int g_no = rs.getInt("g_no");
+	             String g_code = rs.getString("g_code");
+	             String g_name = rs.getString("g_name");
+	             String fk_c_code = rs.getString("fk_c_code");
+	             String g_company = rs.getString("g_company");
+	             String G_IMG_1 = rs.getString("G_IMG_1");
+	             String G_IMG_2 = rs.getString("G_IMG_2");
+	             int g_qty = rs.getInt("g_qty");
+	             int g_price = rs.getInt("g_price");
+	             int g_sale_price = rs.getInt("g_sale_price");
+	             String fk_s_code = rs.getString("fk_s_code");
+	             String g_content = rs.getString("g_content");
+	             int g_coin = rs.getInt("g_coin");
+	             String g_inputdate = rs.getString("g_inputdate");
+	             
+	             GameVO gamevo = new GameVO(g_no, g_code, g_name, fk_c_code, g_company, G_IMG_1, G_IMG_2, g_qty, g_price, g_sale_price, fk_s_code, g_content, g_coin, g_inputdate); 
+	             
+	             jumunProductList.add(gamevo);
+	            
+	         } // end of while----------------------------------
+	                  
+	      } finally {
+	         close();
+	      }
+	      
+	      return jumunProductList;
+	}
+
+	    
+	    
+	    
+
 	
 	
 	

@@ -57,7 +57,7 @@
 	  // === 인증하기 버튼 클릭시 이벤트 처리해주기 === //
 	  $("button.btn-info").click(function(){
 		  
-		  const input_confirmCode = $("input:text[user_name='input_confirmCode']").val().trim(); 
+		  const input_confirmCode = $("input:text[name='input_confirmCode']").val().trim(); 
 		  
 		  if(input_confirmCode == "") {
 			  alert("인증코드를 입력하세요!!");
@@ -66,7 +66,7 @@
 		  
 		  const frm = document.verifyCertificationFrm;
 		  frm.userCertificationCode.value = input_confirmCode;
-		  frm.user_id.value = $("input:text[name='userid']").val();
+		  frm.user_id.value = $("input:text[name='user_id']").val();
 		  
 		  frm.action = "<%= ctxPath%>/login/verifyCertification.bz";
 		  frm.method = "post";

@@ -181,7 +181,7 @@ td#error {
     // 1 ~ 10 까지
     $("input#spinner").spinner( {
         spin: function(event, ui) {
-           if(ui.value > 10) {
+           if(ui.value > 100) {
               $(this).spinner("value", 10);
               return false;
            }
@@ -367,11 +367,13 @@ td#error {
 	 	 <%-- ==== 장바구니 주문 개수 폼 ==== --%>
          <form name="goCartFrm">       
             <ul class="list-unstyled mt-3">
+                <li>잔고갯수: <span style="color: maroon; font-weight: bold;">${requestScope.gameVO.g_qty} 개</span></li> 
                 <li>
                     <label for="spinner">주문개수&nbsp;</label>
                     <input id="spinner"  name="oqty"   value="1" style="width: 110px;">
                     <input type="hidden" name="g_code" value="${requestScope.gameVO.g_code}" >
                     <input type="hidden" name="paymoney" >
+                    <input type="hidden" name="g_qty" value="${requestScope.gameVO.g_qty}">
                 </li>
             </ul>
          </form> 
