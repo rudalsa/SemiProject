@@ -29,7 +29,7 @@ public class MemberEditAction extends AbstractController {
 			// 로그인한 사용자가 자신의 정보를 수정하는 경우
 				String paymoney = (String) session.getAttribute("paymoney");
 				ProductDAO pdao = new ProductDAO_imple();
-				List<CartVO> cartList = pdao.selectProductCart(loginuser.getUser_id(), paymoney);
+				List<CartVO> cartList = pdao.selectProductCart(loginuser.getUser_id());
 				request.setAttribute("cartList", cartList);
 			
 			super.setRedirect(false);

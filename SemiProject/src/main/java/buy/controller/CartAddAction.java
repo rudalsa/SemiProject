@@ -51,12 +51,16 @@ public class CartAddAction extends AbstractController {
 				
 				String g_code = request.getParameter("g_code"); // 제품번호
 				String oqty = request.getParameter("oqty");     // 주문량		
-				String paymoney = request.getParameter("paymoney");
+				String paymoney = request.getParameter("paymoney"); // 가격
+				String optno = request.getParameter("optno"); // 가격  
 				
-				System.out.println(paymoney);
-			
+				
+				System.out.println("이건 뭐고" + paymoney);
+				System.out.println("이건 뭐고" + optno);
+				
+				
 				HttpSession session = request.getSession();
-				session.setAttribute("paymoney", paymoney);
+				//session.setAttribute("paymoney", paymoney);
 				
 				MemberVO loginuser = (MemberVO) session.getAttribute("loginuser");
 				String user_id = loginuser.getUser_id();
@@ -66,9 +70,11 @@ public class CartAddAction extends AbstractController {
 				Map<String, String> paraMap = new HashMap<>();
 				paraMap.put("g_code", g_code);
 				paraMap.put("oqty", oqty);
+				paraMap.put("optno", optno);
 				paraMap.put("user_id", user_id);
 				
 				try {
+					
 					int n = goptdao.addCart(paraMap);  // 장바구니에 기존 제품이 없을경우 insert 하고,
 													// 장바구니에 기존 제품이 있을경우 update 한다.
 					
