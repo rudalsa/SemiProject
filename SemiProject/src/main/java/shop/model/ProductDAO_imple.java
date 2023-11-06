@@ -216,28 +216,28 @@ public class ProductDAO_imple implements ProductDAO {
 		return result;
 	}
 
+	
 	// 로그인한 사용자의 장바구니 목록을 조회하기
 	@Override
-	public List<CartVO> selectProductCart(String user_id, String paymoney) throws SQLException {
+	public List<CartVO> selectProductCart(String user_id) throws SQLException {
 		
 		List<CartVO> cartList = null;
 		
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " SELECT C.cartno, C.fk_userid, C.fk_g_code, C.oqty, p.g_name, P.g_img_1, o.opt_name, o.opt_sale_price, p.g_coin, p.g_qty "
-					+ "    FROM ( "
-					+ "    SELECT cartno, fk_userid, fk_g_code, registerday, oqty "
-					+ "    FROM tbl_game_cart "
-					+ "    WHERE fk_userid = ? "
-					+ "    ) C "
-					+ "    JOIN tbl_game_product P ON C.fk_g_code = P.g_code "
-					+ "    JOIN TBL_PRODUCT_OPTINFO O ON o.opt_sale_price = ?" ;
+			String sql = " SELECT C.cartno, C.fk_userid, C.fk_g_code, C.oqty, p.g_name, P.g_img_1, o.opt_name, o.opt_sale_price, p.g_coin, p.g_qty, C.fk_optno, o.IMGFILE, g_content, opt_price, opt_qty "
+					+ " FROM ( "
+					+ " SELECT cartno, fk_userid, fk_g_code, registerday, oqty, fk_optno "
+					+ " FROM tbl_game_cart "
+					+ " WHERE fk_userid = ? "
+					+ " ) C "
+					+ " JOIN TBL_PRODUCT_OPTINFO O ON C.fk_optno = O.OPTINFONO "
+					+ " JOIN  tbl_game_product P ON O.fk_g_code = p.g_code " ;
 			
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user_id);
-			pstmt.setString(2, paymoney);
 			
 			rs = pstmt.executeQuery();
 			
@@ -252,7 +252,6 @@ public class ProductDAO_imple implements ProductDAO {
 				
 			
 				int cartno = rs.getInt("CARTNO");
-				
 				String fk_userid = rs.getString("FK_USERID");
 				String fk_g_code = rs.getString("FK_G_CODE");
 				int oqty = rs.getInt("OQTY"); // 주문량
@@ -262,6 +261,12 @@ public class ProductDAO_imple implements ProductDAO {
 				int opt_sale_price = rs.getInt("OPT_SALE_PRICE");
 				int g_coin = rs.getInt("G_COIN"); 
 				int g_qty = rs.getInt("g_qty"); // 잔고량
+				int fk_optno = rs.getInt("fk_optno");	
+				String imgfile = rs.getString("IMGFILE");
+				String g_content = rs.getString("g_content");
+				int opt_price = rs.getInt("opt_price");
+				int opt_qty = rs.getInt("opt_qty");
+				
 				
 				GameVO gvo = new GameVO();
 				gvo.setG_code(fk_g_code);
@@ -269,6 +274,7 @@ public class ProductDAO_imple implements ProductDAO {
 				gvo.setG_img_1(g_img_1);
 				gvo.setG_coin(g_coin);
 				gvo.setG_qty(g_qty);
+				gvo.setG_content(g_content);
 				
 				// ***** !!!! 중요함 !!!! ***** //
 				gvo.setTotalPriceTotalPoint(oqty);
@@ -279,6 +285,13 @@ public class ProductDAO_imple implements ProductDAO {
 				OptVO ovo = new OptVO();
 				ovo.setOpt_sale_price(opt_sale_price);
 				ovo.setOpt_name(opt_name);
+				ovo.setImgfile(imgfile);
+				ovo.setOpt_price(opt_price);
+				ovo.setOpt_qty(opt_qty);;
+				
+				// ***** !!!! 중요함 !!!! ***** //
+				ovo.setTotalPriceTotalPoint(oqty);
+				// ***** !!!! 중요함 !!!! ***** //
 				// 나중에 더 추가 //
 				
 				CartVO cvo = new CartVO();
@@ -286,6 +299,7 @@ public class ProductDAO_imple implements ProductDAO {
 				cvo.setFk_userid(fk_userid);
 				cvo.setFk_g_code(fk_g_code);
 				cvo.setOqty(oqty);
+				cvo.setFk_optno(fk_optno);
 				
 				cvo.setGavo(gvo);
 				cvo.setOpvo(ovo);
@@ -302,6 +316,58 @@ public class ProductDAO_imple implements ProductDAO {
 		
 		
 	}
+	
+	
+	   // 로그인한 사용자의 장바구니에 담긴 주문총액합계 및 총포인트합계 알아오기 
+	   @Override
+	   public Map<String, String> selectCartSumPricePoint(String userid) throws SQLException {
+	      
+	      Map<String, String> sumMap = new HashMap<>();
+	      
+	      try {
+	         conn = ds.getConnection();
+	         
+	         String sql = " SELECT NVL(SUM(C.oqty * O.opt_sale_price), 0) AS SUMTOTALPRICE, "
+	         		+ "       NVL(SUM(C.oqty * P.g_coin), 0) AS SUMTOTALPOINT "
+	         		+ " FROM ( "
+	         		+ "    SELECT FK_OPTNO, oqty, fk_g_code "
+	         		+ "    FROM tbl_game_cart "
+	         		+ "    WHERE fk_userid = ? "
+	         		+ " ) C "
+	         		+ " JOIN TBL_PRODUCT_OPTINFO O ON C.FK_OPTNO = O.optinfono "
+	         		+ " JOIN TBL_game_product P ON C.FK_g_code = P.g_code ";
+	                  
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setString(1, userid);
+	         
+	         rs = pstmt.executeQuery();
+	         rs.next();
+	         
+	         sumMap.put("SUMTOTALPRICE", rs.getString("SUMTOTALPRICE"));
+	         sumMap.put("SUMTOTALPOINT", rs.getString("SUMTOTALPOINT"));
+	         
+	         
+	      } finally {
+	         close();
+	      }
+	      
+	      
+	      return sumMap;
+	   }// end of public Map<String, String> selectCartSumPricePoint(String userid) throws SQLException-----------
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	// 장바구니 테이블에서 특정제품을 장바구니에서 비우기
 	@Override
@@ -391,62 +457,103 @@ public class ProductDAO_imple implements ProductDAO {
 	// 하나의 스펙에 몇개의 게임이있는지 알아오는 것
 	
 	@Override
-	public int totalSpecCount(String fk_s_code) throws SQLException {
+	public int totalCateGoryCount(String c_code) throws SQLException {
 		
-	int SpecCount = 0;
+	int CateGoryCount = 0;
 		
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " select count(*) "
+			String sql = " select count(*)"
 					   + " from tbl_game_product "
-					   + " where fk_s_code = ? ";
+					   + " where fk_c_code = ? ";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, fk_s_code);
+			pstmt.setString(1, c_code);
 			
 			rs = pstmt.executeQuery();
 			
 			rs.next();
 			
-			SpecCount = rs.getInt(1);
+			CateGoryCount = rs.getInt(1);
 			
 		} finally {
 			close();
 		}
 		
-		return SpecCount;
+		return CateGoryCount;
 		
 	}
+	
+	
+	@Override
+	public int CateGoryno(String c_code) throws SQLException {
+	
+		int CateGoryno = 0;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " select c_no "
+					+ " from TBL_GAME_CATEGORY "
+					+ " where C_CODE = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, c_code);
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			CateGoryno = rs.getInt(1);
+			
+		} finally {
+			close();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return CateGoryno;
+	
+	
+	}
+
+	
+	
 	
 	// 더보기 방식(페이징처리)으로 상품정보를 8개씩 잘라(start ~ end) 조회해오기
 	@Override
 	
-	public List<GameVO> selectBySpecName(Map<String, String> paraMap) throws SQLException {
+	public List<GameVO> selectByno(Map<String, String> paraMap) throws SQLException {
 		
 		List<GameVO> gameList = new ArrayList<>();
 		
 		try {
 			conn = ds.getConnection();
 			
-			String sql = "\r\n"
-					+ " SELECT g_no, g_code, g_name, c_name, G_COMPANY, G_IMG_1, G_IMG_2, g_qty, g_price, g_sale_price, s_name, g_content, g_coin, G_INPUTDATE "
-					+ "	FROM "
-					+ "	( " 
-					+ "	select row_number() over(order by g_no desc) AS RNO "
+			String sql = " SELECT g_no, g_code, g_name, c_name, G_COMPANY, G_IMG_1, G_IMG_2, g_qty, g_price, g_sale_price, s_name, g_content, g_coin, G_INPUTDATE "
+					+ " FROM "
+					+ "	( "
+					+ " select row_number() over(order by g_no desc) AS RNO "
 					+ "	, g_no, g_code, g_name, C.c_name, G_COMPANY, G_IMG_1, G_IMG_2, g_qty, g_price, g_sale_price, S.s_name, g_content, g_coin "
 					+ "	, to_char(G_INPUTDATE, 'yyyy-mm-dd') AS G_INPUTDATE "
 					+ "	from tbl_game_product P "
-					+ "	JOIN TBL_GAME_CATEGORY C "
-					+ "	ON P.fk_c_code = C.c_code "
 					+ "	JOIN tbl_game_spec S "
-					+ "	ON P.fk_s_code = S.s_code "
-					+ "	where S.s_name = ? "
+					+ "    ON P.fk_s_code = S.s_code "
+					+ "    JOIN TBL_GAME_CATEGORY C "
+					+ "	ON P.fk_c_code = C.c_code "
+					+ "    where C.c_no = ? "
 					+ "	) V "
-					+ "	WHERE RNO between ? and ? " ;
+					+ "	WHERE RNO between ? and ? ";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, paraMap.get("s_name"));
+			pstmt.setString(1, paraMap.get("c_no"));
 			pstmt.setString(2, paraMap.get("start"));
 			pstmt.setString(3, paraMap.get("end"));
 			
@@ -533,19 +640,22 @@ public class ProductDAO_imple implements ProductDAO {
 	           // 3. 주문상세 테이블에 채번해온 주문전표, 제품번호, 주문량, 주문금액을 insert 하기(수동커밋처리)
 	           if(n1 == 1) {
 	           //   주문코드(명세서번호) --> (String)paraMap.get("odrcode");
-	              String[] g_code_arr = (String[])paraMap.get("g_code_arr");             // 제품번호
+	              String[] optinfono_arr = (String[])paraMap.get("optinfono_arr");             // 제품번호
+	              System.out.println(optinfono_arr.toString());
+	              
 	              String[] oqty_arr = (String[])paraMap.get("oqty_arr");             // 주문량
 	              String[] totalPrice_arr = (String[])paraMap.get("totalPrice_arr"); // 주문가격
 	             
 	              int cnt = 0;
-	              for(int i=0; i<g_code_arr.length; i++) {
+	              for(int i=0; i<optinfono_arr.length; i++) {
 	              
-	                  sql = " insert into tbl_orderdetail(odrseqno , fk_odrcode , fk_g_code , oqty , odrprice , deliverStatus )"
+	                  sql = " insert into tbl_orderdetail(odrseqno , fk_odrcode , FK_OPTINFONO , oqty , odrprice , deliverStatus )"
 	                		+ " values(seq_tbl_orderdetail.nextval, ?, to_number(?), to_number(?), to_number(?), default) ";
 	                
 	                  pstmt = conn.prepareStatement(sql);
 	                  pstmt.setString(1, (String)paraMap.get("odrcode"));
-	                  pstmt.setString(2, g_code_arr[i]);
+	                  pstmt.setString(2, optinfono_arr[i]);
+	                  
 	                  pstmt.setString(3, oqty_arr[i]);
 	                  pstmt.setString(4, totalPrice_arr[i]);
 	                
@@ -554,7 +664,7 @@ public class ProductDAO_imple implements ProductDAO {
 	                  cnt++;
 	               }// end of for----------------------
 	             
-	               if(cnt == g_code_arr.length) {
+	               if(cnt == optinfono_arr.length) {
 	                   n2 = 1;
 	               }
 	               	   System.out.println("~~~~ 확인용 n2 : " + n2);
@@ -565,26 +675,50 @@ public class ProductDAO_imple implements ProductDAO {
 	          // 4. 제품 테이블에서 제품번호에 해당하는 잔고량을 주문량 만큼 감하기(수동커밋처리)
 	          if(n2==1) {
 	             
-	              String[] g_code_arr = (String[])paraMap.get("g_code_arr"); // 제품번호
+	              String[] optinfono_arr = (String[])paraMap.get("optinfono_arr"); // 제품번호
 	              String[] oqty_arr = (String[])paraMap.get("oqty_arr"); // 주문량
 	             
 	              int cnt = 0;
-	              for(int i=0; i<g_code_arr.length; i++) {
+	              for(int i=0; i<optinfono_arr.length; i++) {
 	                  
-	            	  sql = " update tbl_game_product set g_qty = g_qty - ? "
-	                		+ " where g_code = ? ";
-	                
+	            	  sql = "UPDATE tbl_game_product "
+	            	  		+ "SET g_qty = g_qty- ? "
+	            	  		+ "WHERE g_code IN ( "
+	            	  		+ "    SELECT fk_g_code "
+	            	  		+ "    FROM TBL_PRODUCT_OPTINFO"
+	            	  		+ "    WHERE optinfono = ?"
+	            	  		+ ")";
+	            	  
+	            	  
 	                  pstmt = conn.prepareStatement(sql);
 	                  pstmt.setInt(1, Integer.parseInt(oqty_arr[i]));
-	                  pstmt.setString(2, g_code_arr[i]);
+	                  pstmt.setString(2, optinfono_arr[i]);
 	                
 	                  pstmt.executeUpdate();
+	                  
+	                  
+	                  String sql_1 = " UPDATE TBL_PRODUCT_OPTINFO SET opt_qty = opt_qty - ? "
+		                		+ " WHERE optinfono = ? ";
+		            	  
+		            	  
+		              pstmt = conn.prepareStatement(sql_1);
+		              pstmt.setInt(1, Integer.parseInt(oqty_arr[i]));
+		              pstmt.setString(2, optinfono_arr[i]);
+		                
+		              pstmt.executeUpdate();
+	                  
+	                  
+	                  
+	                  
+	                  
+	                  
+	                  
 	                  
 	                  cnt++;
 	             
 	              }// end of for--------
 	              
-	              if(cnt == g_code_arr.length) {
+	              if(cnt == optinfono_arr.length) {
 	                  n3 = 1;
 	              }
 	              System.out.println("~~~~ 확인용 n3 : " + n3);
@@ -691,19 +825,24 @@ public class ProductDAO_imple implements ProductDAO {
 	    
 	    }// end of public int orderAdd(Map<String, Object> paraMap) throws SQLException--------
 
-	 // 주문한 제품에 대해 email 보내기시 email 내용에 넣을 주문한 제품번호들에 대한 제품정보를 얻어오는 것
+	// 주문한 제품에 대해 email 보내기시 email 내용에 넣을 주문한 제품번호들에 대한 제품정보를 얻어오는 것
 	@Override
-	public List<GameVO> getJumungameList(String g_noes) throws SQLException {
+	public List<GameVO> getJumungameList(String optnoes) throws SQLException {
 		
 		List<GameVO> jumunProductList = new ArrayList<>();
 	      
 	      try {
 	         conn = ds.getConnection();
 	         
-	         String sql = " select g_no, g_code, g_name, fk_c_code, g_company, G_IMG_1, G_IMG_2, g_qty, g_price, g_sale_price, fk_s_code, g_content, g_coin "+
-	                    "      , to_char(g_inputdate, 'yyyy-mm-dd') as g_inputdate "+
-	                    " from tbl_game_product "+
-	                    " where g_no in("+ g_noes +") ";
+	         String sql = "  SELECT "
+	           		+ " G.g_no, G.g_code, G.g_name, G.fk_c_code, G.g_company, G.G_IMG_1, G.G_IMG_2, G.g_qty, G.g_price, G.g_sale_price, G.fk_s_code, G.g_content, G.g_coin, "
+	          		+ " TO_CHAR(G.g_inputdate, 'yyyy-mm-dd') AS g_inputdate, "
+	          		+ " IMGFILE,OPT_NAME,OPT_SALE_PRICE,OPT_CONTENT, optinfono "
+	          		+ " FROM tbl_game_product G\r\n"
+	          		+ " INNER JOIN TBL_PRODUCT_OPTINFO P ON G.g_code = P.fk_g_code "
+	          		+ " where optinfono in ("+ optnoes +")  ";
+	         
+
 	         // prdmanual_systemFileName, prdmanual_orginFileName 할꺼면 추가하세요
 	         
 	         pstmt = conn.prepareStatement(sql);
@@ -711,25 +850,35 @@ public class ProductDAO_imple implements ProductDAO {
 	         rs = pstmt.executeQuery();
 	                  
 	         while(rs.next()) {
-	                        
-	             int g_no = rs.getInt("g_no");
-	             String g_code = rs.getString("g_code");
-	             String g_name = rs.getString("g_name");
-	             String fk_c_code = rs.getString("fk_c_code");
-	             String g_company = rs.getString("g_company");
-	             String G_IMG_1 = rs.getString("G_IMG_1");
-	             String G_IMG_2 = rs.getString("G_IMG_2");
-	             int g_qty = rs.getInt("g_qty");
-	             int g_price = rs.getInt("g_price");
-	             int g_sale_price = rs.getInt("g_sale_price");
-	             String fk_s_code = rs.getString("fk_s_code");
-	             String g_content = rs.getString("g_content");
-	             int g_coin = rs.getInt("g_coin");
-	             String g_inputdate = rs.getString("g_inputdate");
-	             
-	             GameVO gamevo = new GameVO(g_no, g_code, g_name, fk_c_code, g_company, G_IMG_1, G_IMG_2, g_qty, g_price, g_sale_price, fk_s_code, g_content, g_coin, g_inputdate); 
-	             
-	             jumunProductList.add(gamevo);
+	                                   
+	             GameVO gavo = new GameVO();
+					
+	             gavo.setG_no(rs.getInt(1));              // 제품번호 
+	             gavo.setG_code(rs.getString(2));	     // 제품코드
+				 gavo.setG_name(rs.getString(3));	     // 제품명
+				 gavo.setFk_c_code(rs.getString(4));
+				 gavo.setG_company(rs.getString(5));
+				 gavo.setG_img_1(rs.getString(6));
+				 gavo.setG_img_2(rs.getString(7));
+				 gavo.setG_qty(rs.getInt(8));
+				 gavo.setG_price(rs.getInt(9));
+				 gavo.setG_sale_price(rs.getInt(10));
+				 gavo.setFk_s_code(rs.getString(11));
+				 gavo.setG_content(rs.getString(12));
+				 gavo.setG_coin(rs.getInt(13));
+				 gavo.setG_inputdate(rs.getString(14));
+				 
+				 OptVO optvo = new OptVO();
+				 optvo.setImgfile(rs.getString(15));
+				 optvo.setOpt_name(rs.getString(16));
+				 optvo.setOpt_sale_price(rs.getInt(17));
+				 optvo.setOpt_content(rs.getString(18));
+				 optvo.setOptinfono(rs.getInt(19));
+				 
+				 gavo.setOptvo(optvo);
+				 	             
+	              
+	             jumunProductList.add(gavo);
 	            
 	         } // end of while----------------------------------
 	                  
@@ -739,6 +888,8 @@ public class ProductDAO_imple implements ProductDAO {
 	      
 	      return jumunProductList;
 	}
+
+
 
 	    
 	    

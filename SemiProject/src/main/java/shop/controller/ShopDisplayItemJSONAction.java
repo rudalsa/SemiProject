@@ -19,9 +19,12 @@ public class ShopDisplayItemJSONAction extends AbstractController {
 		public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			
 			// js 안의 json 데이터들을 파라미터로 받아온 것
-			String s_name = request.getParameter("s_name"); // 이거 뭘로 할지 의논
+			String c_no = request.getParameter("c_no"); // 씨크드 받아옴
 			String start = request.getParameter("start");
 			String amount = request.getParameter("amount");
+			
+			System.out.println("뜨나?"+c_no);
+			
 			/*
 	        맨 처음에는 s_name("???")상품을  start("1") 부터 amount("8")개를 보여준다.
 	        더보기... 버튼을 클릭하면  s_name("???")상품을  start("9") 부터 amount("8")개를 보여준다.
@@ -31,14 +34,14 @@ public class ShopDisplayItemJSONAction extends AbstractController {
 			ProductDAO pdao = new ProductDAO_imple();
 			
 			Map<String, String> paraMap = new HashMap<>();
-			paraMap.put("s_name", s_name); 
+			paraMap.put("c_no", c_no); 
 			paraMap.put("start", start); // start    "1"   "9"   "17"    "24"
 			
 			String end = String.valueOf(Integer.parseInt(start) + Integer.parseInt(amount) - 1);
 			paraMap.put("end", end); // end => start + len - 1    
 									 // end     "8"   "16"   "24"   "32"   "40"
 			
-			List<GameVO> gameList = pdao.selectBySpecName(paraMap);
+			List<GameVO> gameList = pdao.selectByno(paraMap);
 			
 			JSONArray jsonArr = new JSONArray(); // [] 이모양임.
 			

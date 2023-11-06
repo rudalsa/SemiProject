@@ -12,4 +12,6 @@ public interface MainpageDAO {
 
 	List<VideoSetVO> videoimageSelectAll() throws SQLException;
 
+	List<CategoryVO> selectallCategory() throws SQLException;
+
 }

@@ -62,7 +62,7 @@
   
 </head>
 
-<body style="background-color:#0d0d0d; width:100%">
+<body width:100%">
 <!-- background-repeat: no-repeat;를 적용하면 배경 이미지가 한 번만 표시됩니다: -->
 
 <div class="mx-auto"  style=" width: 97%;">

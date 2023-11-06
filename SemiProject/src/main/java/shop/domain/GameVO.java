@@ -1,5 +1,7 @@
 package shop.domain;
 
+import gameopt.domain.OptVO;
+
 public class GameVO {
 
 	private int 	g_no;       // 게임번호
@@ -19,15 +21,28 @@ public class GameVO {
 	private String 	g_info; // 게임정보
 	
 
-
+	
 	private CategoryVO categvo; // 카테고리VO 
 	private SpecVO spvo;        // 스펙VO 
+	private OptVO optvo; // 카테고리VO 
+	
+	
+	public OptVO getOptvo() {
+		return optvo;
+	}
+
+
+
+	public void setOptvo(OptVO optvo) {
+		this.optvo = optvo;
+	}
+
 	/*
 	    제품판매가와 포인트점수 컬럼의 값은 관리자에 의해서 변경(update)될 수 있으므로
 	    해당 제품의 판매총액과 포인트부여 총액은 판매당시의 제품판매가와 포인트 점수로 구해와야 한다.  
 	*/
-	private int totalPrice;         // 판매당시의 제품판매가 * 주문량
-	private int totalPoint;         // 판매당시의 포인트점수 * 주문량 
+	private int g_totalPrice;         // 판매당시의 제품판매가 * 주문량
+	private int g_totalPoint;         // 판매당시의 포인트점수 * 주문량 
 		
 	
 	public GameVO() { }
@@ -53,6 +68,8 @@ public class GameVO {
 		this.g_content = g_content;
 		this.g_coin = g_coin;
 		this.g_inputdate = g_inputdate;
+	
+	
 	}
 
 	
@@ -215,16 +232,16 @@ public class GameVO {
 	public void setTotalPriceTotalPoint(int oqty) {   
 		// int oqty 이 주문량이다.
 	
-		totalPrice = g_sale_price * oqty; // 판매당시의 제품판매가 * 주문량
-		totalPoint = g_coin * oqty;     // 판매당시의 포인트점수 * 주문량 
+		g_totalPrice = g_sale_price * oqty; // 판매당시의 제품판매가 * 주문량
+		g_totalPoint = g_coin * oqty;     // 판매당시의 포인트점수 * 주문량 
 	}
 	
-	public int getTotalPrice() {
-		return totalPrice;
+	public int getG_totalPrice() {
+		return g_totalPrice;
 	}
 	
-	public int getTotalPoint() {
-		return totalPoint;
+	public int getG_totalPoint() {
+		return g_totalPoint;
 	}
 	
 }
