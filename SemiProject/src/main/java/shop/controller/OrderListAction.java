@@ -165,10 +165,10 @@ public class OrderListAction extends AbstractController {
 			
 			// **** [맨처음][이전] 만들기 **** //
 			// 
-			pageBar += "<li class='page-item'><a class='page-link' href='orderList.up?currentShowPageNo=1'>[맨처음]</a></li>"; 
+			pageBar += "<li class='page-item'><a class='page-link' href='orderList.bz?currentShowPageNo=1'>[맨처음]</a></li>"; 
 			
 			if( pageNo != 1 ) {
-				pageBar += "<li class='page-item'><a class='page-link' href='orderList.up?currentShowPageNo="+(pageNo-1)+"'>[이전]</a></li>";
+				pageBar += "<li class='page-item'><a class='page-link' href='orderList.bz?currentShowPageNo="+(pageNo-1)+"'>[이전]</a></li>";
 			}
 			
 			while( !(loop > blockSize || pageNo > totalPage) ) {
@@ -177,7 +177,7 @@ public class OrderListAction extends AbstractController {
 					pageBar += "<li class='page-item active'><a class='page-link' href='#'>"+pageNo+"</a></li>"; 
 				}
 				else {
-					pageBar += "<li class='page-item'><a class='page-link' href='orderList.up?currentShowPageNo="+pageNo+"'>"+pageNo+"</a></li>"; 
+					pageBar += "<li class='page-item'><a class='page-link' href='orderList.bz?currentShowPageNo="+pageNo+"'>"+pageNo+"</a></li>"; 
 				}
 				
 				loop++;    //  1 2 3 4 5 6 7 8 9 10
@@ -192,9 +192,9 @@ public class OrderListAction extends AbstractController {
 			// **** [다음][마지막] 만들기 **** //
 			// pageNo ==> 11
 			if( pageNo <= totalPage ) {
-				pageBar += "<li class='page-item'><a class='page-link' href='orderList.up?currentShowPageNo="+pageNo+"'>[다음]</a></li>"; 
+				pageBar += "<li class='page-item'><a class='page-link' href='orderList.bz?currentShowPageNo="+pageNo+"'>[다음]</a></li>"; 
 			}
-			pageBar += "<li class='page-item'><a class='page-link' href='orderList.up?currentShowPageNo="+totalPage+"'>[마지막]</a></li>";
+			pageBar += "<li class='page-item'><a class='page-link' href='orderList.bz?currentShowPageNo="+totalPage+"'>[마지막]</a></li>";
 
 			// *** ====== 페이지바 만들기 끝 ====== *** //
                   
