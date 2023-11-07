@@ -242,7 +242,9 @@ document.getElementById('accountDetailsLink').addEventListener('click', function
             </div>
 <div id="accountDetails" style="display: none;" class="col-lg-12 mt-6">
     <div class="col-lg-12 mt-6" >
-            	
+        	     <div>
+            		<h2 style="color:white;">계정정보</h2>
+				</div>
 				<div class="row">
 					<table class="col-md-11 table table-dark"style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg');">
 					  <thead>

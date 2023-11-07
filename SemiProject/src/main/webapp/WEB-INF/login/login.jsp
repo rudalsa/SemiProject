@@ -31,8 +31,8 @@ $(document).ready(function(){
 });// end of $(document).ready(function(){})--------------
 </script>
 
-
-<section class="backgroundimg mt-3" style="background-image: url('<%= ctxPath %>/img/vm.jpg'); background-size: 90% auto; background-position: center 5%; background-repeat: no-repeat; height: 80%;">
+   
+<section class="backgroundimg mt-3" style="background-image: url('<%= ctxPath %>/img/tbl_game_product_image/ovwt_sm_9.jpg'); background-size: 90% auto; background-position: center 5%; background-repeat: no-repeat; height: 80%;">
     <div class="container">
         <div class="row justify-content-center align-items-center" style="min-height: 300px; ">
             <div class="col-lg-12 text-center">

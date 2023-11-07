@@ -105,7 +105,6 @@ function displayitem(start) { 	 // start가  1 이라면    1~8 까지 상품 8�
 				// JQuery 를 사용하는 경우
 			    $.each(json, function(index, item) {
 	                v_html += `<div class="item">
-<<<<<<< HEAD
           								<a href='/SemiProject/gameopt.bz?g_code=${item.g_code}'>
      						       <div class="imgBox">
           						    <img src="/SemiProject/img/tbl_game_product_image/${item.g_img_1}" alt="${item.g_img_1}" />
@@ -115,16 +114,15 @@ function displayitem(start) { 	 // start가  1 이라면    1~8 까지 상품 8�
           								<p class="textBox__price">${item.g_sale_price.toLocaleString('en')} 원 ~</p>
         							</div>
           								</a>
-=======
      						       <div class="imgBox">
           						    <img src="/SemiProject/img/tbl_game_product_image/${item.g_img_1}" alt="${item.g_img_1}" />
         							</div>
         					   		<div class="textBox">
+        					   		<a href='/SemiProject/gameopt.bz?g_code=${item.g_code}'>
           								<p class="textBox__name">${item.g_content}</p>
           								<p class="textBox__price">${item.g_sale_price.toLocaleString('en')} 원 ~</p>
-          								<a href='/SemiProject/gameopt.bz?g_code=${item.g_code}'>왜 안열리노</a>
+          								</a>
         							</div>
->>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
       							</div> `;
       							
       						
