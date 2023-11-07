@@ -1,6 +1,7 @@
 package member.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,10 +28,12 @@ public class MemberEditAction extends AbstractController {
 			System.out.println("확인용"+loginuser.getUser_id());
 			if(loginuser.getUser_id()!=null) {
 			// 로그인한 사용자가 자신의 정보를 수정하는 경우
-				String paymoney = (String) session.getAttribute("paymoney");
 				ProductDAO pdao = new ProductDAO_imple();
-				List<CartVO> cartList = pdao.selectProductCart(loginuser.getUser_id(), paymoney);
+				Map<String,String> sumMap = pdao.selectCartSumPricePoint(loginuser.getUser_id());
+				List<CartVO> cartList = pdao.selectProductCart(loginuser.getUser_id());
 				request.setAttribute("cartList", cartList);
+				request.setAttribute("sumMap", sumMap);
+
 			
 			super.setRedirect(false);
 			super.setViewPage("/WEB-INF/member/mypage.jsp");

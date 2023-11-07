@@ -8,7 +8,17 @@
 %>
 <jsp:include page="../header_suc.jsp"></jsp:include>
 
-<script type="text/javascript" src="<%= ctxPath%>/js/mypage.js"></script>
+<style type="text/css">
+#maininfo > div:nth-child(3) > table > tbody > tr > td > div:nth-child(1) > table > tbody > tr{
+	cursor: pointer;
+}
+#sideinfo > div > div > ul > li:hover{
+	cursor: pointer;
+	background-color:gray;
+}
+
+</style>
+
 <script type="text/javascript">
 function goResignation(){
 	const frm = document.memberResignation_frm;
@@ -16,6 +26,11 @@ function goResignation(){
     frm.method = "POST";
     frm.submit();   	
 }
+
+function redirectToGamePage(url) {
+    window.location.href = url;
+}
+
 
 $(document).ready(function(){
 
@@ -48,7 +63,7 @@ document.getElementById('accountDetailsLink').addEventListener('click', function
 		<div class="col-md-2 offset-md-1" id="sideinfo" style="background-image: url('<%= ctxPath %>/img/bg_blz.jpg') ;">
           
                <div class="col-lg-12" >
-            	<div>
+            	<div class="mt-5">
             		<ul class="nav flex-column mt-2 ">
 					  <li class="nav-item ">
 					    <a class="nav-link text-white active" id="accountMainLink"> <span class="rounded-sm">계정 정보</span></a>
@@ -58,12 +73,6 @@ document.getElementById('accountDetailsLink').addEventListener('click', function
 					  </li>
 					  <li class="nav-item">
 					    <a class="nav-link text-white" href="<%= ctxPath%>/mainShop.bz">게임 & 요금제</a>
-					  </li>
-					  <li class="nav-item">
-					    <a class="nav-link text-white" href="#">보안</a>
-					  </li>
-					  <li class="nav-item">
-					    <a class="nav-link text-white" href="#">결제 수단</a>
 					  </li>
 					  <li class="nav-item">
 					    <a class="nav-link text-white" href="<%= ctxPath%>/buy/cartList.bz">결제 및 주문 내역</a>
@@ -138,84 +147,87 @@ document.getElementById('accountDetailsLink').addEventListener('click', function
 					<td colspan="3">
 
    <div>
-       <table id="tblCartList" class="mx-auto" style="width: 100%">
-         <thead>
-
-         
-            <tr style="background-color: #cfcfcf;">
-              <th style="width:10%; text-align: center; height: 30px;">제품번호</th>
-              <th style="width:23%; text-align: center;">제품명</th>
-                 <th style="width:17%; text-align: center;">현재주문수량</th>
-                 <th style="width:30%; text-align: center;">판매가/포인트(개당)</th>
-                 <th style="width:30%; text-align: center;">주문총액/총포인트</th>
-            </tr>   
-         </thead>
-       
-         <tbody>
-            <c:if test="${empty requestScope.cartList}">
-               <tr>
-                    <td colspan="6" align="center">
-                      <span style="color: red; font-weight: bold;">
-                         장바구니에 담긴 상품이 없습니다.
-                      </span>
-                    </td>   
-               </tr>
-            </c:if>   
-            
-            <c:if test="${not empty requestScope.cartList}">
-               <c:forEach var="cartvo" items="${requestScope.cartList}" varStatus="status"> 
-                   <tr>
-                        <td> <%-- 체크박스 및 제품번호 --%>
-                             <%-- c:forEach 에서 선택자 id를 고유하게 사용하는 방법  
-                                  varStatus="status" 을 이용하면 된다.
-                                  status.index 은 0 부터 시작하고,
-                                  status.count 는 1 부터 시작한다. 
-                             --%> 
-                             <input type="checkbox" name="pnum" class=".chkbox_g_code" id="pnum${status.index}" value="${cartvo.fk_g_code}" /> &nbsp;<label for="pnum${status.index}">${cartvo.fk_g_code}</label>   
-                        </td>
-                        <td align="center"> <%-- 제품이미지1 및 제품명 --%> 
-                           <a href="<%= ctxPath%>>shop/prodView.?pnum=${cartvo.fk_g_code}">
-                              <img src="<%= ctxPath%>/images/${cartvo.gavo.g_img_1}" class="img-thumbnail" width="130px" height="100px" />
-                           </a> 
-                           <br/><span class="cart_g_code">${cartvo.gavo.g_name}:${cartvo.opvo.opt_name}</span> 
-                        </td>
-                        <td align="center"> 
-                            <%-- 현재주문수량 --%>
-                              <input class="spinner oqty" name="oqty" value="${cartvo.oqty}" style="width: 30px; height: 20px;">개
-                              <button type="button" class="btn btn-outline-secondary btn-sm updateBtn" onclick="goOqtyEdit(this)">수정</button>
-                              
-                              <%-- 장바구니 테이블에서 특정제품의 현재주문수량을 변경하여 적용하려면 먼저 장바구니번호(시퀀스)를 알아야 한다 --%>
-                              <input type="hidden" class="cartno" value="${cartvo.cartno}" /> 
+ 	    <table class="cart__list  w-100">
+	
+	        <thead>
+	            <tr>
+	               <td colspan="2" class="center">상품정보</td>
+	               <td>옵션</td>
+	               <td>상품금액</td>
+	        	</tr>
+	        </thead>
+	        
+	        <tbody>
+	            
+	    <c:if test="${empty requestScope.cartList}">
+	 		<tr>
+	 			<td colspan="7" align="center">
+	   			<span style="color: red; font-weight: bold;">
+	      		장바구니에 담긴 상품이 없습니다.
+	   			</span>
+	 			</td>   
+	 		</tr>
+	 	</c:if>   
+	 	
+	 	<c:if test="${not empty requestScope.cartList}">
+	 		<c:forEach var="cartvo" items="${requestScope.cartList}" varStatus="status"> 
+			
+			  <tr class="cart__list__detail" onclick="redirectToGamePage('<%= ctxPath%>/gameopt.bz?g_code=${cartvo.gavo.g_code}')">
+						
+						
+                        
+                		<td><img src="<%= ctxPath%>/img/tbl_game_product_image/${cartvo.opvo.imgfile}" style="width:150px" alt=""></td> 
+                                               
+                        <td><span style="font-size:14pt; font-weight:bold;">${cartvo.gavo.g_name}</span>
+	                        <span class="cart__list__smartstore cart_optinfono">${cartvo.gavo.g_content}</span>
+	                      
                         </td>
                         
-                        <td align="right"> <%-- 판매가/포인트(개당) --%> 
-                            <fmt:formatNumber value="${cartvo.opvo.opt_sale_price}" pattern="###,###" /> 원<br>
-                            <fmt:formatNumber value="${cartvo.gavo.g_coin}" pattern="###,###" /> POINT
+                  
+                        <td class="cart__list__option">
+                            <p><input class="spinner oqty" name="oqty" value="${cartvo.oqty}" style="width: 14px; height: 14px;">&nbsp;개</p>
+                            <%--<button class="cart__list__optionbtn updateBtn" onclick="goOqtyEdit(this)">주문수량 추가/변경${cartvo.fk_optno}</button>
+                        	 잔고량 --%>                        	
+                        	<input type="hidden" class="opt_qty" value="${cartvo.opvo.opt_qty}" /> 
+                              
+                        	<%-- 장바구니 테이블에서 특정제품의 현재주문수량을 변경하여 적용하려면 먼저 장바구니번호(시퀀스)를 알아야 한다 --%>
+                        	<input type="hidden" class="cartno" value="${cartvo.cartno}" /> 
+                        
                         </td>
-                        <td align="right"> <%-- 주문총액/총포인트 --%> 
-                            <fmt:formatNumber value="${cartvo.gavo.totalPrice}" pattern="###,###" /> 원<br>
-                            <fmt:formatNumber value="${cartvo.gavo.totalPoint}" pattern="###,###" /> POINT
-                            <input type="hidden" class="totalPrice" value="${cartvo.gavo.totalPrice}" />
-                            <input type="hidden" class="totalPoint" value="${cartvo.gavo.totalPoint}" />
+                        
+                        <td>
+                        	<fmt:formatNumber value="${cartvo.opvo.opt_sale_price}" pattern="###,###" />원
+                        	<br><br>
+                        	<fmt:formatNumber value="${cartvo.gavo.g_coin}" pattern="###,###" />POINT
                         </td>
-                     
+                       
                     </tr>
-                 </c:forEach>
-            </c:if>   
-            <tr>
-                 <td colspan="3" align="left">
-                     <span style="font-weight: bold;">장바구니 총액 :</span>
-                  <span style="color: red; font-weight: bold;"><fmt:formatNumber value="${requestScope.sumMap.SUMTOTALPRICE}" pattern="###,###" /></span> 원  
-                  </td>
-                  <td colspan="2" align="left">
-                     <span style="font-weight: bold;">총 포인트 :</span> 
-                  <span style="color: red; font-weight: bold;"><fmt:formatNumber value="${requestScope.sumMap.SUMTOTALPOINT}" pattern="###,###" /></span> POINT 
-                 </td>
+                    
+			</c:forEach>		   	
+		</c:if>
+		
+		</tbody>
+			
+           <tfoot>
+               <tr>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                    
+	                		
+                  	<td colspan="2" align="center">
+            		<span style="font-weight: bold;">장바구니 총액 :</span>
+         			<span style="color: red; font-weight: bold;"><fmt:formatNumber value="${requestScope.sumMap.SUMTOTALPRICE}" pattern="###,###" /></span> 원  
+            		<br>
+            		<span style="font-weight: bold;">총 포인트 :</span> 
+         			<span style="color: red; font-weight: bold;"><fmt:formatNumber value="${requestScope.sumMap.SUMTOTALPOINT}" pattern="###,###" /></span> POINT 
+        		</td>
 
-            </tr>
-  
-         </tbody>
-      </table> 
+			
+               </tr>
+           </tfoot>
+	
+        </table> 
    </div>
    
     <div>
@@ -301,12 +313,7 @@ document.getElementById('accountDetailsLink').addEventListener('click', function
 					    </tr>
 					  </tbody>
 					</table>
-						
-				</div>
-				
-              </div>
-			</div>
-           			<table class="col-md-11 table table-dark" style="background-image: url('<%= ctxPath%>/img/bg_blz.jpg');">
+					<table class="col-md-11 table table-dark" style="background-image: url('<%= ctxPath%>/img/bg_blz.jpg');">
 					  <thead>
 					    <tr>
 					      <th style="width:150px">회원 비밀번호 변경</th>
@@ -335,6 +342,12 @@ document.getElementById('accountDetailsLink').addEventListener('click', function
 					    </tr>
 					  </tbody>
 					</table>
+						
+				</div>
+				
+              </div>
+			</div>
+           			
 				</div>
 				
             </div>
