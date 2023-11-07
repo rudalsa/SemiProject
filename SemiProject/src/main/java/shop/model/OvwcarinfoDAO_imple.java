@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 
 import shop.domain.GameCarinfoVO;
 
-public class WowcarinfoDAO_imple implements WowcarinfoDAO {
+public class OvwcarinfoDAO_imple implements OvwcarinfoDAO {
 	
 	private DataSource ds; // DataSource ds 는 아파치톰캣이 제공하는 DBCP(DB Connection Pool)이다.  
 	private Connection conn;
@@ -22,7 +22,7 @@ public class WowcarinfoDAO_imple implements WowcarinfoDAO {
 	private ResultSet rs;
 	
 	// 생성자
-	public  WowcarinfoDAO_imple() {
+	public  OvwcarinfoDAO_imple() {
 		
 		try {
 			Context initContext = new InitialContext();
@@ -47,21 +47,19 @@ public class WowcarinfoDAO_imple implements WowcarinfoDAO {
 		}
 	}
 	
-	
 	@Override
-	public List<GameCarinfoVO> wowCarinfoListSelectAll(String g_code) throws SQLException {
+	public List<GameCarinfoVO> ovwCarinfoListSelectAll(String g_code) throws SQLException {
 		
-		
-		List<GameCarinfoVO> wciList = new ArrayList<>();
+		List<GameCarinfoVO> ociList = new ArrayList<>();
 		
 		try {
 			conn = ds.getConnection();
 			
 			String sql = " select carinfo_no, fk_g_code, carinfo_bg_gif, carinfo_bg_img1, carinfo_bg_img2, carinfo_bg_img3, carinfo_bg_img4 "
 					+ "    , carinfo_bg_img5, carinfo_bg_img6, carinfo_bg_img7, carinfo_bg_img8, carinfo_bg_img9, carinfo_fr_img1, carinfo_fr_img2 "
-					+ "    , carinfo_card_img1, carinfo_card_img2, carinfo_card_img3, carinfo_card_img4 "
+					+ "    , carinfo_card_img1, carinfo_card_img2, carinfo_card_img3, carinfo_card_img4, carinfo_card_img5,  carinfo_card_img6 "
 					+ " from tbl_carinfo_img "
-					+ " where FK_G_CODE = ?"
+					+ " where FK_G_CODE = ? "
 					+ " order by carinfo_no asc ";
 			
 			pstmt = conn.prepareStatement(sql);
@@ -71,35 +69,39 @@ public class WowcarinfoDAO_imple implements WowcarinfoDAO {
 			
 			if(rs.next()) {
 				
-				GameCarinfoVO wcivo = new GameCarinfoVO();
+				GameCarinfoVO ocivo = new GameCarinfoVO();
 				
-				wcivo.setCarinfo_no(rs.getInt(1));
-				wcivo.setFk_g_code(rs.getString(2));
-				wcivo.setCarinfo_bg_gif(rs.getString(3));
-				wcivo.setCarinfo_bg_img1(rs.getString(4));
-				wcivo.setCarinfo_bg_img2(rs.getString(5));
-				wcivo.setCarinfo_bg_img3(rs.getString(6));
-				wcivo.setCarinfo_bg_img4(rs.getString(7));
-				wcivo.setCarinfo_bg_img5(rs.getString(8));
-				wcivo.setCarinfo_bg_img6(rs.getString(9));
-				wcivo.setCarinfo_bg_img7(rs.getString(10));
-				wcivo.setCarinfo_bg_img8(rs.getString(11));
-				wcivo.setCarinfo_bg_img9(rs.getString(12));
-				wcivo.setCarinfo_fr_img1(rs.getString(13));
-				wcivo.setCarinfo_fr_img2(rs.getString(14));
-				wcivo.setCarinfo_card_img1(rs.getString(15));
-				wcivo.setCarinfo_card_img2(rs.getString(16));
-				wcivo.setCarinfo_card_img3(rs.getString(17));
-				wcivo.setCarinfo_card_img4(rs.getString(18));
+				ocivo.setCarinfo_no(rs.getInt(1));
+				ocivo.setFk_g_code(rs.getString(2));
+				ocivo.setCarinfo_bg_gif(rs.getString(3));
+				ocivo.setCarinfo_bg_img1(rs.getString(4));
+				ocivo.setCarinfo_bg_img2(rs.getString(5));
+				ocivo.setCarinfo_bg_img3(rs.getString(6));
+				ocivo.setCarinfo_bg_img4(rs.getString(7));
+				ocivo.setCarinfo_bg_img5(rs.getString(8));
+				ocivo.setCarinfo_bg_img6(rs.getString(9));
+				ocivo.setCarinfo_bg_img7(rs.getString(10));
+				ocivo.setCarinfo_bg_img8(rs.getString(11));
+				ocivo.setCarinfo_bg_img9(rs.getString(12));
+				ocivo.setCarinfo_fr_img1(rs.getString(13));
+				ocivo.setCarinfo_fr_img2(rs.getString(14));
+				ocivo.setCarinfo_card_img1(rs.getString(15));
+				ocivo.setCarinfo_card_img2(rs.getString(16));
+				ocivo.setCarinfo_card_img3(rs.getString(17));
+				ocivo.setCarinfo_card_img4(rs.getString(18));
+				ocivo.setCarinfo_card_img5(rs.getString(19));
+				ocivo.setCarinfo_card_img6(rs.getString(20));
 				
-				wciList.add(wcivo);
+				ociList.add(ocivo);
 
 			}// end of if(rs.next())-----------------
 			
 		} finally {
 			close();
 		}
-		return wciList;
+		return ociList;
 	}
 	
+
+
 }
