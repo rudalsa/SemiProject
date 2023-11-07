@@ -75,8 +75,8 @@
                                      	<div style="margin-top: -5%">
                                         	<a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage"  class="btn btn-primary btnBlue mr-3" style="padding-top: 2%;
                                         	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
-                                        	 <a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage"  class="btn btnGray" style="padding-top: 2%; color:white;
-                                        	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
+                                        	 <a href="wowcarinfo.bz?g_code=${sdvo.fk_g_code}" id="car_info"  class="btn btnGray" style="padding-top: 2%; color:white;
+                                        	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">자세히 보기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
                                         </div>
                                     </div>
                                 </div>
@@ -91,8 +91,8 @@
                                      	<div>
                                         	<a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage"  class="btn btn-primary btnBlue mt-5" style="padding-top: 2%;
                                         	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
-                                        	 <a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage"  class="btn btnGray mt-5" style="padding-top: 2%; color:white;
-                                        	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
+                                        	 <a href="ovwcarinfo.bz?g_code=${sdvo.fk_g_code}" id="car_info"  class="btn btnGray mt-5" style="padding-top: 2%; color:white;
+                                        	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">자세히 보기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
                                         </div>
                                     
                                     </div>
@@ -108,8 +108,8 @@
                                      	<div style="margin-top: -5%">
                                         	<a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage"  class="btn btn-primary btnBlue mr-3" style="padding-top: 2%;
                                         	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
-                                        	 <a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage"  class="btn btnGray" style="padding-top: 2%; color:white;
-                                        	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
+                                        	 <a href="ovwcarinfo.bz?g_code=${sdvo.fk_g_code}" id="car_info"  class="btn btnGray" style="padding-top: 2%; color:white;
+                                        	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">자세히 보기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
                                         </div>
                                     </div>
                                 </div>
@@ -124,8 +124,8 @@
                                      	<div style="margin-top: -5%">
                                         	<a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage"  class="btn btn-primary btnBlue mr-3" style="padding-top: 2%;
                                         	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
-                                        	 <a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage"  class="btn btnGray" style="padding-top: 2%; color:white;
-                                        	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
+                                        	 <a href="ovwcarinfo.bz?g_code=${sdvo.fk_g_code}" id="car_info"  class="btn btnGray" style="padding-top: 2%; color:white;
+                                        	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">자세히 보기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
                                         </div>
                                     </div>
                                 </div>
@@ -140,8 +140,8 @@
                                      	<div style="margin-top: -5%">
                                         	<a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage"  class="btn btn-primary btnBlue mr-3" style="padding-top: 2%;
                                         	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
-                                        	 <a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage"  class="btn btnGray" style="padding-top: 2%; color:white;
-                                        	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
+                                        	 <a href="ovwcarinfo.bz?g_code=${sdvo.fk_g_code}" id="car_info"  class="btn btnGray" style="padding-top: 2%; color:white;
+                                        	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">자세히 보기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
                                         </div>
                                     </div>
                                 </div>
@@ -156,6 +156,8 @@
                                      	<div>
                                         	<a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage"  class="btn btn-primary btnBlue mt-5" style="padding-top: 2%;
                                         	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
+                                        	 <a href="ovwcarinfo.bz?g_code=${sdvo.fk_g_code}" id="car_info"  class="btn btnGray mt-5" style="padding-top: 2%; color:white;
+                                        	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">자세히 보기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
                                         </div>
                                     </div>
                                 </div>
