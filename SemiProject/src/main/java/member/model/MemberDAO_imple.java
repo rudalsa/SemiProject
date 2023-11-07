@@ -753,7 +753,50 @@ int result = 0;
 		return result;	
 	}
 	
-	
+	// 계정 인증하고 휴면 풀어주는 메소드 
+		@Override
+		public boolean idleremove(Map<String, String> paraMap) throws SQLException {
+			
+			boolean idleremove = false;
+			
+			try {
+				conn = ds.getConnection();
+				
+				String sql = " select user_id "
+				           + " from tbl_user "
+				           + " where user_status = 1 and user_id = ? and user_email = ? ";
+
+				
+				pstmt = conn.prepareStatement(sql); 
+				pstmt.setString(1, paraMap.get("user_id"));
+				pstmt.setString(2, aes.encrypt(paraMap.get("user_email")));
+				
+				  rs = pstmt.executeQuery();
+
+				  idleremove = rs.next();
+
+		           if (idleremove) {
+		               // 계정 확인 후 휴면 상태를 해제하는 UPDATE 쿼리를 실행하도록 코드를 추가
+		               
+		        	   String updateSql = " UPDATE tbl_user " 
+		                               +  " SET USER_IDLE = 0 " 
+		                               +  " WHERE user_status = 1 AND user_id = ? AND user_email = ? ";
+		               pstmt = conn.prepareStatement(updateSql);
+		               pstmt.setString(1, paraMap.get("user_id"));
+		               pstmt.setString(2, aes.encrypt(paraMap.get("user_email")));
+		               
+		               pstmt.executeUpdate();
+		           }
+
+		       } catch (GeneralSecurityException | UnsupportedEncodingException e) {
+		           e.printStackTrace();
+		       } finally {
+		           close();
+		       }
+
+		       return idleremove;
+		       
+		}// end of public boolean idleremove(Map<String, String> paraMap) throws SQLException
 	
 	
 }
