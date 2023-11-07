@@ -144,6 +144,7 @@
 	    			  </a>	
 		              <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: black; text-align:center;">
 		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/member/memberList.bz">회원관리</a>
+		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/shop/orderList.bz">주문관리</a>
 		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath %>/shop/admin/productRegister.bz">제품추가</a>
 		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/login/logout.bz">로그아웃</a>
 		              </div>

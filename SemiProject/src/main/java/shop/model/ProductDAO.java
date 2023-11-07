@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import member.domain.MemberVO;
 import shop.domain.*;
 public interface ProductDAO {
 
@@ -66,7 +67,17 @@ public interface ProductDAO {
 	// 주문한 제품에 대해 email 보내기시 email 내용에 넣을 주문한 제품번호들에 대한 제품정보를 얻어오는 것
 	List<GameVO> getJumungameList(String g_noes) throws SQLException;
 
+	List<Map<String, String>> getOrderList(Map<String, String> paraMap) throws SQLException;
 
+	int getTotalCountOrder(String user_id) throws SQLException;
+
+	MemberVO odrcodeOwnerMemberInfo(String odrcode)throws SQLException;
+
+	
+	int updateDeliverStart(String odrcodePnum) throws SQLException;
+	
+	
+	int updateDeliverEnd(String odrcodePnum) throws SQLException;
 
 
 	
