@@ -4,6 +4,7 @@
     String ctxPath = request.getContextPath(); // MyMVC
 %>
 
+<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/index/index.css">
 
 <script>
     // JavaScript를 사용하기 위해 해당 코드를 추가해 주세요.
@@ -66,6 +67,15 @@
                     <c:if test="${not empty requestScope.sdList}">
                         <c:forEach var="sdvo" items="${requestScope.sdList}" varStatus="status">
                             <c:if test="${status.index == 0}">
+<<<<<<< HEAD
+                                <div class="carousel-item active" style="height: 600px; margin-top:11%; background-image: url('<%= ctxPath %>/img/${sdvo.ms_bg_file}'); background-size: 100% 100%; background-position: center;">
+                                    <div class="carousel-caption d-none d-md-block" style="display: flex; align-items: center;">
+                                    	
+                                        <img src="<%= ctxPath%>/img/${sdvo.ms_logo_file}" class="d-flex img-fluid" style="width: 25%; height: auto; margin-right: 20px;" alt="하...">
+                                        <div>
+                                        	<a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage" class="btn btn-info">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
+                                        	<a href="wowcarinfo.bz?imgsetno=${sdvo.ms_img_no}" id="car_info" class="btn btn-danger">자세히보기</a>
+=======
                                 <div class="carousel-item active" style="height: 700px; background-image: url('<%= ctxPath %>/img/${sdvo.ms_bg_file}'); background-position: center;">
                                     <div class=" d-none d-md-block" style="display: flex; margin: 15% 0 0 10%;">
                                        <img src="<%= ctxPath%>/img/${sdvo.ms_logo_file}" class="d-flex img-fluid" style="width: 28%; height: auto;" alt="...">
@@ -77,10 +87,21 @@
                                         	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
                                         	 <a href="wowcarinfo.bz?g_code=${sdvo.fk_g_code}" id="car_info"  class="btn btnGray" style="padding-top: 2%; color:white;
                                         	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">자세히 보기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
                                         </div>
                                     </div>
                                 </div>
                             </c:if>
+<<<<<<< HEAD
+                            <c:if test="${status.index > 0}">
+                                <div class="carousel-item" style="height: 600px; background-image: url('<%= ctxPath %>/img/${sdvo.ms_bg_file}'); background-size: 100% 100%; background-position: center;">
+                                    <div class="carousel-caption d-none d-md-block" style="display: flex; align-items: center;">
+                                        <img src="<%= ctxPath%>/img/${sdvo.ms_logo_file}" class="d-flex img-fluid" style="width: 25%; height: auto; margin-right: 20px;" alt="...">
+                                    	<div>
+                                        
+                                        	<a href="gameopt.bz?g_code=${sdvo.fk_g_code}" id="purchasepage" class="btn btn-info">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
+                                        	<a href="wowcarinfo.bz?imgsetno=${sdvo.ms_img_no}" id="car_info" class="btn btn-danger">자세히보기</a>
+=======
                             <c:if test="${status.index == 1}">
                                 <div class="carousel-item bgimg" style="height: 700px; background-image: url('<%= ctxPath %>/img/${sdvo.ms_bg_file}'); background-position: center;">
                                     <div class="d-none d-md-block" style="display: flex; margin: 15% 0 0 10%; align-items: center;">
@@ -93,6 +114,7 @@
                                         	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">구매하기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
                                         	 <a href="ovwcarinfo.bz?g_code=${sdvo.fk_g_code}" id="car_info"  class="btn btnGray mt-5" style="padding-top: 2%; color:white;
                                         	 border: none; border-radius: 50px; font-size: 14pt; font-weight: bold;">자세히 보기</a> <%-- ?g_code=${sdvo.fk_g_code} --%>
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
                                         </div>
                                     
                                     </div>
@@ -176,13 +198,25 @@
                 </a>
             </div>
         </div>
+<<<<<<< HEAD
+    
+ <%-- 캐러셀 끝 --%>
+=======
     </div>
     <h1 class="text-white my-5" style="font-weight: bold">추천게임</h1>
 	 <%-- 캐러셀 끝 --%>
 	
 	
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
 
+<<<<<<< HEAD
+</div>
+    <h1 class="text-white mt-5" style="font-weight: bold">추천게임</h1>
+</div>
+<div class="row mb-5 pl-1" style="margin: 0px 5%;">  
+=======
     <div class="row mb-5">
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
         <c:if test="${not empty requestScope.videoList}">
             <c:forEach var="videovo" items="${requestScope.videoList}" varStatus="status">
             <c:if test="${status.index >= 0}">

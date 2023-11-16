@@ -56,7 +56,8 @@
 	  
 	  // === 인증하기 버튼 클릭시 이벤트 처리해주기 === //
 	  $("button.btn-info").click(function(){
-		  
+		  alert("인증코드 입력");
+		 const input_confirmCode = $("input:text[name='input_confirmCode']").val().trim(); 
 		  const input_confirmCode = $("input:text[user_name='input_confirmCode']").val().trim(); 
 		  
 		  if(input_confirmCode == "") {
@@ -70,7 +71,7 @@
 		  
 		  frm.action = "<%= ctxPath%>/login/verifyCertification.bz";
 		  frm.method = "post";
-		  frm.submit();
+		  frm.submit(); 
 	  });
 	  
   });// end of $(document).ready(function(){})-------------

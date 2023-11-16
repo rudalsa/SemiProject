@@ -85,4 +85,37 @@ public class MainShopDAO_imple implements MainShopDAO {
 	
 	}// public List<MainShopVO> ShopListSelectAll() throws SQLException ------
 
+
+	
+	// tbl_game_category 테이블을 모두 조회(select)하는 메소드
+	@Override
+	public List<CategoryVO> ShopListSelect() throws SQLException {
+		
+		List<CategoryVO> categoryList = new ArrayList<>();
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " select c_no, c_code, c_name "
+					   + " from tbl_game_category ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				CategoryVO cvo = new CategoryVO();
+				cvo.setC_no(rs.getInt(1));
+				cvo.setC_code(rs.getString(2));
+				cvo.setC_name(rs.getString(3));
+				
+				categoryList.add(cvo);
+			}// end of while(rs.next())-----------------
+			
+		} finally {
+			close();
+		}
+		return categoryList;
+	} // end of public List<CategoryVO> ShopListSelect() throws SQLException ------------
 }
