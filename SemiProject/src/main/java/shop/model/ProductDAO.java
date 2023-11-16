@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import member.domain.MemberVO;
 import shop.domain.*;
 public interface ProductDAO {
 
@@ -23,16 +24,18 @@ public interface ProductDAO {
 	// tbl_product_imagefile 테이블에 제품의 추가이미지 파일명 insert 하기
 	int tbl_product_optinfo_insert(Map<String, String> paraMap) throws SQLException;
 	
+	
 	// 로그인한 사용자의 장바구니 목록을 조회하기
 	List<CartVO> selectProductCart(String user_id) throws SQLException;
 	
+	// 총값
 	Map<String, String> selectCartSumPricePoint(String userid) throws SQLException;
-	
-	
 	
 	// 장바구니 테이블에서 특정제품을 장바구니에서 비우기
 	int delCart(String cartno) throws SQLException;
 	
+	////////////////////////////////////////////////////////////
+
 	// 장바구니 테이블에서 특정제품 수량을 수정하기
 	int updateCart(Map<String, String> paraMap) throws SQLException;
 	
@@ -61,13 +64,46 @@ public interface ProductDAO {
     // 더하기(update)(수동커밋처리)
     // 7. **** 모든처리가 성공되었을시 commit 하기(commit) ****
     // 8. **** SQL 장애 발생시 rollback 하기(rollback) ****   
-	int orderAdd(Map<String, Object> paraMap) throws SQLException;
+	int orderAdd(Map<String, Object> paraMap,Map<String, String> zipMap) throws SQLException;
 	
 	// 주문한 제품에 대해 email 보내기시 email 내용에 넣을 주문한 제품번호들에 대한 제품정보를 얻어오는 것
 	List<GameVO> getJumungameList(String g_noes) throws SQLException;
 
+	// 특정 사용자가 특정 제품에 대해 상품후기를 입력하기(insert) 
+	int addReview(PurchaseReviewsVO reviewsvo) throws SQLException;
 
+	
+	// 특정 제품의 사용후기를 조회(select)하기
+	List<PurchaseReviewsVO> reviewList(String fk_g_code) throws SQLException;
 
+	// 특정 제품의 사용후기를 삭제(delete)하기
+	int reviewDel(String review_seq) throws SQLException;
+
+	// 특정 제품의 사용후기를 수정(update)하기
+	int reviewUpdate(Map<String, String> paraMap) throws SQLException;
+	   
+	// tbl_game_product, tbl_game_category JOIN 문
+	List<GameVO> CarouselList(String c_code)  throws SQLException;
+	
+	// 경민이가 한거
+	int oneOrderAdd(Map<String, String> paraMap) throws SQLException;
+	
+	
+	// 주문내역 조회
+	List<Map<String, String>> getOrderList(Map<String, String> paraMap) throws SQLException;
+
+	// 주문 총 개수 조회
+	int getTotalCountOrder(String user_id) throws SQLException;
+
+	// 주문자 정보 조회
+	MemberVO odrcodeOwnerMemberInfo(String odrcode)throws SQLException;
+
+	// 배송시작 처리
+	int updateDeliverStart(String odrcodePnum) throws SQLException;
+		
+	// 배송완료 처리
+	int updateDeliverEnd(String odrcodePnum) throws SQLException;
+	
 
 	
 

@@ -3,6 +3,7 @@
 <%
     String ctxPath = request.getContextPath(); // tempSemi
 %>
+
 <!DOCTYPE html>
 <div id="p_tag" class="text-center mt-5 mb-5" style="width: 50%; margin: 0 auto; color: #999999;">
 	<h2 class="mb-4" style="font-weight: bold; color:white;">이용 연령</h2>

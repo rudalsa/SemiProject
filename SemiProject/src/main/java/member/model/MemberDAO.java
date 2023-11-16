@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import member.domain.MemberVO;
+import member.domain.OrderViewVO;
 
 public interface MemberDAO {
 
@@ -55,6 +56,12 @@ public interface MemberDAO {
 		
 	// 회원상태 탈퇴시키기, DB에는 남아있지만 Status = 0 으로 변경
 	public int deleteUser(String user_id) throws SQLException ;
+	
+	// 계정 인증하고 휴면 풀어주는 메소드 
+	boolean idleremove(Map<String, String> paraMap) throws SQLException;
+	
+	// 회원의 구매내역
+	List<OrderViewVO> Buyremember(String user_id) throws SQLException;
 
 
 		

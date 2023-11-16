@@ -6,7 +6,6 @@
 
 <%
    String ctxPath = request.getContextPath();
-    //     /MyMVC
 %>
 
 
@@ -31,13 +30,13 @@ body {
 
    $(document).ready(function(){
       
-	  $("div.loader").hide(); // CSS 로딩화면 감추기            
-	  $("p#order_error_msg").css({'display':'none'}); // 코인잔액 부족시 주문이 안된다는 표시를 해주는 곳.
+     $("div.loader").hide(); // CSS 로딩화면 감추기            
+     $("p#order_error_msg").css({'display':'none'}); // 코인잔액 부족시 주문이 안된다는 표시를 해주는 곳.
                         
       
       $(".spinner").spinner({
          
-    	  spin: function(event, ui) {
+         spin: function(event, ui) {
             if(ui.value > 100) {
                $(this).spinner("value", 10);
                return false;
@@ -48,7 +47,7 @@ body {
                return false;
             }
          
-    	  }
+         }
       
       });// end of $(".spinner").spinner({});-----------------
       
@@ -100,7 +99,7 @@ body {
       alert(cartno);   
       
       const oqty = $("input.oqty").eq(index).val();
-   	  alert(oqty);
+        alert(oqty);
       
       const regExp = /^[0-9]+$/g; // 숫자만 체크하는 정규표현식
       const bool = regExp.test(oqty);
@@ -113,35 +112,35 @@ body {
       
       const opt_qty = $("input.opt_qty").eq(index).val();  // 잔고개수
       alert("주문량 : "+ oqty + ", 잔고량 : " + opt_qty);
-  	  alert(typeof oqty + " , " + typeof opt_qty)	
+       alert(typeof oqty + " , " + typeof opt_qty)   
       
-  	  //   !!! 조심할 것 !!! //
-  	  //   if(oqty > pqty) { 으로 하면 꽝됨!! 왜냐하면 string 타입으로 비교하기에
-  	  //   if("2" > "19") {  참이됨
-  	  //   if(2 > 19) {  거짓이됨     
+       //   !!! 조심할 것 !!! //
+       //   if(oqty > pqty) { 으로 하면 꽝됨!! 왜냐하면 string 타입으로 비교하기에
+       //   if("2" > "19") {  참이됨
+       //   if(2 > 19) {  거짓이됨     
       if(Number(oqty) > Number(opt_qty)) {
          alert("주문개수가1"+ oqty +"잔고개수1" +opt_qty+ "보다 더 커서 진행할 수 없습니다.");
          location.href="javascript:history.go(0)";
          return; // goOqtyEdit 함수 종료
       }
-  	  
+       
             
- 	  alert("장바구니번호 "+cartno+"을 "+oqty+"개로 수정합니다.");
+      alert("장바구니번호 "+cartno+"을 "+oqty+"개로 수정합니다.");
       if(oqty == "0") {
-    	  goDel(cartno);
+         goDel(cartno);
       }
       
       else {
          $.ajax({
                
-        	   url:"<%= ctxPath%>/buy/cartEdit.bz",
+              url:"<%= ctxPath%>/buy/cartEdit.bz",
                type:"POST",
                data:{"cartno":cartno,
                     "oqty":oqty},
                dataType:"JSON",
                success:function(json){
                   
-            	   // console.log("~~~ 확인용 ", JSON.stringify(json));
+                  // console.log("~~~ 확인용 ", JSON.stringify(json));
                    // ~~~ 확인용 {"n":1}
                
                   if(json.n == 1) {
@@ -165,8 +164,8 @@ body {
    // === 장바구니에서 특정 제품을 비우기 === //  
    function goDel(cartno) {
       
-	  alert("클릭되었습니다.");
-	   
+     alert("클릭되었습니다.");
+      
       const g_name = $(event.target).parent().parent().find("span.cart_optinfono").text();
    
       if(confirm(`\${g_name}을(를) 장바구니에서 제거하시는 것이 맞습니까?`)) {
@@ -204,7 +203,7 @@ body {
    // === 장바구니에서 제품 주문하기 === // 
    function goOrder() {
        
-   	   alert("클릭되었습니다.");
+         alert("클릭되었습니다.");
        ///// == 체크박스의 체크된 갯수(checked 속성이용) == /////
        const checkCnt = $("input:checkbox[name='optinfono']:checked").length;
        
@@ -226,32 +225,32 @@ body {
              
            for(let i=0; i<allCnt; i++) {
                 
-        	   if( $("input:checkbox[name='optinfono']").eq(i).prop("checked") ) {
-					
-        		   
-        		   console.log("제품번호 : " , $("input:checkbox[name='optinfono']").eq(i).val() ); 
-        		   console.log("주문량 : " , $("").eq(i).val() );
-        		   console.log("잔고량 : " ,  $("input.opt_qty").eq(i).val() );
-        		   console.log("삭제해야할 장바구니 번호 : " + $("input.cartno").eq(i).val() ); 
+              if( $("input:checkbox[name='optinfono']").eq(i).prop("checked") ) {
+               
+                 <%--
+                 console.log("제품번호 : " , $("input:checkbox[name='optinfono']").eq(i).val() ); 
+                 console.log("주문량 : " , $("").eq(i).val() );
+                 console.log("잔고량 : " ,  $("input.opt_qty").eq(i).val() );
+                 console.log("삭제해야할 장바구니 번호 : " + $("input.cartno").eq(i).val() ); 
                    console.log("주문한 제품의 개수에 따른 가격합계 : " , $("input.totalPrice").eq(i).val() );
                    console.log("주문한 제품의 개수에 따른 포인트합계 : " , $("input.totalPoint").eq(i).val() );
                    console.log("======================")
-          		               <%--윗 줄 불린타입이 나온다.       
+                               <%--윗 줄 불린타입이 나온다.       
                    
-          		   제품번호 : 300 옵션번호?
-			       주문량 :  1    옵션재고도 있어야되고?
-				   삭제해야할 장바구니 번호 : 24 건들거 없음
-				   주문한 제품의 개수에 따른 가격합계 :  230000 세션값이라서 자꾸 동기화됨 옵션 가격도 있어야함?
-				   주문한 제품의 개수에 따른 포인트합계 :  0 옵션재고 포인트 있어야되고?
-				   ======================
-				   제품번호 :  332
-				   주문량 :  5
-				   장바구니 번호 : 17
-				   주문한 제품의 개수에 따른 가격합계 :  230000
-				   주문한 제품의 개수에 따른 포인트합계 :  100
-				   ======================
-				   
-          		--%> 
+                   제품번호 : 300 옵션번호?
+                주문량 :  1    옵션재고도 있어야되고?
+               삭제해야할 장바구니 번호 : 24 건들거 없음
+               주문한 제품의 개수에 따른 가격합계 :  230000 세션값이라서 자꾸 동기화됨 옵션 가격도 있어야함?
+               주문한 제품의 개수에 따른 포인트합계 :  0 옵션재고 포인트 있어야되고?
+               ======================
+               제품번호 :  332
+               주문량 :  5
+               장바구니 번호 : 17
+               주문한 제품의 개수에 따른 가격합계 :  230000
+               주문한 제품의 개수에 따른 포인트합계 :  100
+               ======================
+               
+                --%> 
                    
                   optinfonoArr.push( $("input:checkbox[name='optinfono']").eq(i).val() );
                   oqtyArr.push( $("input.oqty").eq(i).val() );
@@ -268,8 +267,8 @@ body {
            for(let i=0; i<checkCnt; i++) {
                console.log("확인용 제품번호: " + optinfonoArr[i] + " 잔고량: " + opt_qtyArr[i] + 주문량: " + oqtyArr[i] + ", 장바구니번호 : " + cartnoArr[i] + ", 주문금액: " + totalPriceArr[i] + ", 포인트: " + totalPointArr[i]);
             /*
-				확인용 제품번호: 300, 주문량: 1, 장바구니번호 : 24, 주문금액: 230000, 포인트: 0
-				확인용 제품번호: 332, 주문량: 5, 장바구니번호 : 17, 주문금액: 230000, 포인트: 100
+            확인용 제품번호: 300, 주문량: 1, 장바구니번호 : 24, 주문금액: 230000, 포인트: 0
+            확인용 제품번호: 332, 주문량: 5, 장바구니번호 : 17, 주문금액: 230000, 포인트: 100
             */
             
            }// end of for---------------------------
@@ -293,7 +292,7 @@ body {
           const cartno_join = cartnoArr.join();
           const totalPrice_join = totalPriceArr.join();
           const totalPoint_join = totalPointArr.join();
-		  
+        
           let sum_totalPrice = 0;
           for(var i=0; i<totalPriceArr.length; i++) {
               sum_totalPrice += parseInt(totalPriceArr[i]);
@@ -305,7 +304,7 @@ body {
           }
           
           const currentcoin = ${sessionScope.loginuser.user_coin};
-      	  <%--
+           <%--
           console.log("확인용 optinfono_join : " + optinfono_join);         // 확인용 optinfonojoin : 300,332
           console.log("확인용 oqty_join : " + oqty_join);             // 확인용 oqtyjoin : 1,5
           console.log("확인용 cartno_join : " + cartno_join);         // 확인용 cartnojoin : 24,17
@@ -314,7 +313,7 @@ body {
           console.log("확인용 sum_totalPrice : " + sum_totalPrice);   // 확인용 sumtotalPrice : 460000
           console.log("확인용 sum_totalPoint : " + sum_totalPoint);   // 확인용 sumtotalPoint : 100
           console.log("확인용 currentcoin : " + currentcoin);       // 확인용 currentcoin : 6100
-		  --%>      
+        --%>      
           
           const str_sum_totalPrice = sum_totalPrice.toLocaleString('en'); // 자바스크립트에서 숫자 3자리마다 콤마 찍어주기  
           const str_currentcoin = currentcoin.toLocaleString('en');     // 자바스크립트에서 숫자 3자리마다 콤마 찍어주기 
@@ -329,17 +328,17 @@ body {
           
           //else {
               
-        	  $("p#order_error_msg").css('display','none'); 
+             $("p#order_error_msg").css('display','none'); 
               const bool = confirm("총주문액 : "+str_sum_totalPrice+"원 결제하시겠습니까?");
               
-              if(bool) {	
+              if(bool) {   
                     $("div.loader").show(); // CSS 로딩화면 보여주기
                   
                     $.ajax({
                         url:"<%= request.getContextPath()%>/buy/orderAdd.bz",
                         type:"POST",
                         data:{
-                           	"sum_totalPrice":sum_totalPrice,
+                              "sum_totalPrice":sum_totalPrice,
                             "sum_totalPoint":sum_totalPoint,
                             "optinfono_join":optinfono_join,
                             "oqty_join":oqty_join, 
@@ -376,171 +375,229 @@ body {
    }// end of function goOrder()----------------------
    
    
-   function goOrderinfo() {
-	   const ctxPath = '<%= ctxPath %>';
-	   const url = ctxPath+'/buy/orderinfo.bz';
-	   window.open(url, "goOrderinfo");
-   
-   }
-	   
-   
-   
-   
-   
-   
-   
-   
- 
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-</script>
+   function goOrderEdit() {
+           
+       //=== 장바구니에서 제품 주문하기 === // 
+      //// === 체크박스의 체크된 개수(checked 속성이용) == ////
 
+      const checkCnt = $("input:checkbox[name='optinfono']:checked").length;
+      if (checkCnt < 1) {
+          alert("주문하실 제품을 선택하세요!!");
+          return; //종료
+      } // end of if -----
+      else {
+          //// === 체크박스의 체크된 개수(checked 속성이용) == //// 
+          //// === 체크가 된 것만 읽어와서 배열에 넣어준다. === ////
+          const allCnt = $("input:checkbox[name='optinfono']").length;
+         const editorderArray = []; // 제품 정보를 저장할 배열 생성
+         for (let i = 0; i < allCnt; i++) {
+             if ($("input:checkbox[name='optinfono']").eq(i).prop("checked")) {
+                const optionno = $("input.optionno").eq(i).val();
+                  const optionimgfile = $("input.optionimgfile").eq(i).val();
+                  const gamename = $("input.gamename").eq(i).val();
+                  const gamecontent = $("input.gamecontent").eq(i).val();
+                  const optionname = $("input.optionname").eq(i).val();
+                  const optionsaleprice = $("input.optionsaleprice").eq(i).val();
+                  const optionprice = $("input.optionprice").eq(i).val();
+                  const oqty = $("input.oqty").eq(i).val();
+                  const optionqty = $("input.optionqty").eq(i).val();
+                  const cartnumber = $("input.cartnumber").eq(i).val();
+                  const gcoin = $("input.gcoin").eq(i).val();
+                  const totalprice = $("input.totalprice").eq(i).val();
+                  const totalpoint = $("input.totalpoint").eq(i).val();
+                  const alltotalprice = $("input.alltotalprice").eq(i).val();
+                  const alltotalpoint = $("input.alltotalpoint").eq(i).val();
+                  //const optionnumber = $("input.optionnumber").eq(i).val();
+                  
+                  /*  console.log("optionno : " , optionno)
+                  console.log("optionimgfile : " , optionimgfile)
+                  console.log(optionno, optionimgfile, gamename, gamecontent, gamecontent, optionname, optionsaleprice, optionprice, oqty, optionnumber, optionqty, cartnumber, gcoin, totalprice, totalpoint) */
+                  
+                  
+                  const productInfo = {
+                     'optionno' : optionno,
+                        'optionimgfile' : optionimgfile,
+                        'gamename' : gamename,
+                        'gamecontent' : gamecontent,
+                        'optionname' : optionname,
+                        'optionsaleprice' : optionsaleprice,
+                        'optionprice' : optionprice,
+                        'oqty':oqty,
+                        'optionqty':optionqty,
+                        'cartnumber':cartnumber,
+                        'gcoin':gcoin,
+                        'totalprice':totalprice,
+                        'totalpoint':totalpoint,
+                        'alltotalprice':alltotalprice,
+                        'alltotalpoint':alltotalpoint
+                        };
+                  
+                  editorderArray.push(productInfo);
+                  
+             }   // end of if -----
+             
+         } // end of for -----
+         
+         sessionStorage.setItem("editorderArray", JSON.stringify(editorderArray));
+          console.log("확인용 editorderArray =>", editorderArray);
+          $("form#orderEditfrm").submit();
+               
+         }
+      }
+   
+</script>   
 
-
-
-
-
-	
-	<div class="container-fluid mt-5" style="border: solid 0px red">
-	
-	  	<%-- 캐러셀 시작 --%>
-		<div id="carousel_slide" class="carousel slide carousel-fade mt-5" data-ride="carousel" style="width:100%; margin:0 0 0 0">
-			<%-- 캐러셀 이너 --%>
-		<div class="row col-12 mx-auto mt-5">
-			<div class="carousel-inner mt-5">
-		
-			<div class="carousel-item active">
-				<img style="height:400px; width:100%;" src="<%= ctxPath %>/img/tbl_game_product_image/cartmain.jpg" class="img-fluid">
-			</div>
-			
-			<div class="carousel-item">
-		    	<img style="height:400px; width:100%;" src="<%= ctxPath%>/img/tbl_game_product_image/ovwt_sm_5.jpg" class="img-fluid">
-		    </div>
-			
-			<div class="carousel-item">
-		    	<img style="height:400px; width:100%;" src="<%= ctxPath%>/img/tbl_game_product_image/ovwt_sm_6.jpg" class="img-fluid">
-		    </div>
-		         
-		</div>
-			
-		<%-- 캐러셀 이너 끝 --%>
-		<%--캐러셀(Carousel)의 화살표 컨트롤--%>	
-		<a class="carousel-control-prev" href="#carousel_slide" role="button" data-slide="prev">
-	    	<span class="carousel-control-prev-icon"></span>
-	        <span class="sr-only">Previous</span>
-	    </a>
-	    <a class="carousel-control-next" href="#carousel_slide" role="button" data-slide="next">
-	    	<span class="carousel-control-next-icon"></span>
-	        <span class="sr-only">Next</span>
-	    </a>
-		<%--캐러셀(Carousel)의 화살표 컨트롤--%>
-				
-		</div>
-	</div>
-	<%-- 캐러셀 끝 --%>
-	
-	
-	<div class="my-3 text-center">
-		<a class="h3 ">${(sessionScope.loginuser).user_name}님 이런 상품은 어떠세요? 다시 상점으로 이동합니다.</a>
-		<br><br>
-		<p class="h4 text-center">${(sessionScope.loginuser).user_name} [${(sessionScope.loginuser).user_id}]님 장바구니 목록</p>
-	</div>
-	
-	
-	
-	<section class="cart">
-	    
-	    <div class="cart__information">
-	        <ul>
-	            <li>장바구니 상품은 최대 30일간 저장됩니다.</li>
-	            <li>가격, 옵션 등 정보가 변경된 경우 주문이 불가할 수 있습니다.</li>
-	            <li>오늘출발 상품은 판매자 설정 시점에 따라 오늘출발 여부가 변경될 수 있으니 주문 시 꼭 다시 확인해 주시기 바랍니다.</li>
-	        </ul>
-	    </div>
-	    <table class="cart__list">
-	
-	        <thead>
-	            <tr>
-	               <td><input type="checkbox" id="allCheckOrNone" onclick="allCheckBox();"></td>
-	               <td colspan="2">상품정보</td>
-	               <td>옵션</td>
-	               <td>상품금액</td>
-	               <td>주문총액/총포인트</td>
-	               <td>삭제하기</td>
-	        	</tr>
-	        </thead>
-	        
-	        <tbody>
-	            
-	    <c:if test="${empty requestScope.cartList}">
-	 		<tr>
-	 			<td colspan="7" align="center">
-	   			<span style="color: red; font-weight: bold;">
-	      		장바구니에 담긴 상품이 없습니다.
-	   			</span>
-	 			</td>   
-	 		</tr>
-	 	</c:if>   
-	 	
-	 	<c:if test="${not empty requestScope.cartList}">
-	 		<c:forEach var="cartvo" items="${requestScope.cartList}" varStatus="status"> 
-			
-			  <tr class="cart__list__detail">
-						
-						<td><input type="checkbox" name="optinfono" class="chkbox_optinfono optinfono" id="optinfono${status.index}" value="${cartvo.fk_optno}" /></td>
+   <div class="container-fluid mt-5" style="border: solid 0px red">
+   
+        <%-- 캐러셀 시작 --%>
+      <div id="carousel_slide" class="carousel slide carousel-fade mt-5" data-ride="carousel" style="width:100%; margin:0 0 0 0">
+         <%-- 캐러셀 이너 --%>
+      <div class="row col-12 mx-auto mt-5">
+         <div class="carousel-inner mt-5">
+      
+         <div class="carousel-item active">
+            <img style="height:400px; width:100%;" src="<%= ctxPath %>/img/tbl_game_product_image/cartmain.jpg" class="img-fluid">
+         </div>
+         
+         <div class="carousel-item">
+             <img style="height:400px; width:100%;" src="<%= ctxPath%>/img/tbl_game_product_image/ovwt_sm_5.jpg" class="img-fluid">
+          </div>
+         
+         <div class="carousel-item">
+             <img style="height:400px; width:100%;" src="<%= ctxPath%>/img/tbl_game_product_image/ovwt_sm_6.jpg" class="img-fluid">
+          </div>
+               
+      </div>
+         
+      <%-- 캐러셀 이너 끝 --%>
+      <%--캐러셀(Carousel)의 화살표 컨트롤--%>   
+      <a class="carousel-control-prev" href="#carousel_slide" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+           <span class="sr-only">Previous</span>
+       </a>
+       <a class="carousel-control-next" href="#carousel_slide" role="button" data-slide="next">
+          <span class="carousel-control-next-icon"></span>
+           <span class="sr-only">Next</span>
+       </a>
+      <%--캐러셀(Carousel)의 화살표 컨트롤--%>
+            
+      </div>
+   </div>
+   <%-- 캐러셀 끝 --%>
+   
+   
+   <div class="my-3 text-center">
+      <br><br>
+      <p class="h4 text-center">${(sessionScope.loginuser).user_name} [${(sessionScope.loginuser).user_id}]님 장바구니 목록</p>
+   </div>
+   
+   
+   
+   <section class="cart">
+       
+       <div class="cart__information">
+           <ul>
+               <li>장바구니 상품은 최대 30일간 저장됩니다.</li>
+               <li>가격, 옵션 등 정보가 변경된 경우 주문이 불가할 수 있습니다.</li>
+               <li>오늘출발 상품은 판매자 설정 시점에 따라 오늘출발 여부가 변경될 수 있으니 주문 시 꼭 다시 확인해 주시기 바랍니다.</li>
+           </ul>
+       </div>
+       <table class="cart__list">
+   
+           <thead>
+               <tr>
+                  <td><input type="checkbox" id="allCheckOrNone" onclick="allCheckBox();"><label for="allCheckOrNone" style="color: lightgrey; font-size: 8pt;">전체선택</label></td>
+                  <td colspan="2">상품정보</td>
+                  <td>옵션</td>
+                  <td>상품금액</td>
+                  <td>주문총액/총포인트</td>
+                  <td>삭제하기</td>
+              </tr>
+           </thead>
+           
+           <tbody>
+               
+       <c:if test="${empty requestScope.cartList}">
+          <tr>
+             <td colspan="7" align="center">
+               <span style="color: red; font-weight: bold;">
+               장바구니에 담긴 상품이 없습니다.
+               </span>
+             </td>   
+          </tr>
+       </c:if>   
+       
+       <c:if test="${not empty requestScope.cartList}">
+          <c:forEach var="cartvo" items="${requestScope.cartList}" varStatus="status"> 
+         
+           <tr class="cart__list__detail">
+                  
+                  <td><input type="checkbox" name="optinfono" class="chkbox_optinfono optinfono" id="optinfono${status.index}" value="${cartvo.fk_optno}" /></td>
                         
                         <td><img src="<%= ctxPath%>/img/tbl_game_product_image/${cartvo.opvo.imgfile}" alt=""></td> 
                                                
                         <td><a href="#">${cartvo.gavo.g_name}</a>
-	                        <span class="cart__list__smartstore cart_optinfono">${cartvo.gavo.g_content}</span>
-	                        <p>${cartvo.opvo.opt_name}</p>
-	                        <span class="price">${cartvo.opvo.opt_sale_price}</span>
-	                        <span style="text-decoration: line-through; color: lightgray;">${cartvo.opvo.opt_price}</span>
+                           <span style="color: lightgrey; border-left: none;" class="cart__list__smartstore cart_optinfono">&nbsp;&nbsp;${cartvo.gavo.g_content}</span>
+                           <p style="color: gray; border-left: none;">${cartvo.opvo.opt_name}</p>
+                           <span style="color: white; border-left: none;" class="price"><fmt:formatNumber value="${cartvo.opvo.opt_sale_price}" pattern="###,###" /></span>
+                           <span style="text-decoration: line-through; border-left: none; color: lightgray;"><fmt:formatNumber value="${cartvo.opvo.opt_price}" pattern="###,###" /></span>
                         </td>
                         
                   
                         <td class="cart__list__option">
-                            <p><input class="spinner oqty" name="oqty" value="${cartvo.oqty}" style="width: 14px; height: 14px;">&nbsp;개</p>
-                            <button class="cart__list__optionbtn updateBtn" onclick="goOqtyEdit(this)">주문수량 추가/변경${cartvo.fk_optno}</button>
-                        	<%-- 잔고량 --%>                        	
-                        	<input type="text" class="opt_qty" value="${cartvo.opvo.opt_qty}" /> 
+                            <p style="border-left: none;"><input class="spinner oqty" name="oqty" value="${cartvo.oqty}" style="width: 14px; height: 14px;">&nbsp;개</p>
+                            <button class="cart__list__optionbtn updateBtn" onclick="goOqtyEdit(this)">수량변경</button>
+                           <%-- 잔고량 --%>                           
+                           <input type="hidden" class="opt_qty" value="${cartvo.opvo.opt_qty}" /> 
                               
-                        	<%-- 장바구니 테이블에서 특정제품의 현재주문수량을 변경하여 적용하려면 먼저 장바구니번호(시퀀스)를 알아야 한다 --%>
-                        	<input type="text" class="cartno" value="${cartvo.cartno}" /> 
+                           <%-- 장바구니 테이블에서 특정제품의 현재주문수량을 변경하여 적용하려면 먼저 장바구니번호(시퀀스)를 알아야 한다 --%>
+                           <input type="hidden" class="cartno" value="${cartvo.cartno}" /> 
                         
                         </td>
                         
                         <td>
-                        	<fmt:formatNumber value="${cartvo.opvo.opt_sale_price}" pattern="###,###" />원
-                        	<br><br>
-                        	<fmt:formatNumber value="${cartvo.gavo.g_coin}" pattern="###,###" />POINT
+                           <fmt:formatNumber value="${cartvo.opvo.opt_sale_price}" pattern="###,###" />원
+                           <br><br>
+                           <fmt:formatNumber value="${cartvo.gavo.g_coin}" pattern="###,###" />POINT
                         </td>
                        
                         <td> <%-- 주문총액/총포인트 --%> 
-	                		<fmt:formatNumber value="${cartvo.opvo.opt_totalPrice}" pattern="###,###" /> 원<br>
-	                    	<fmt:formatNumber value="${cartvo.gavo.g_totalPoint}" pattern="###,###" /> POINT
-	                   		<input type="hidden" class="totalPrice" value="${cartvo.opvo.opt_totalPrice}" />
-	                    	<input type="hidden" class="totalPoint" value="${cartvo.gavo.g_totalPoint}" />
-	                	</td>
+                           <fmt:formatNumber value="${cartvo.opvo.opt_totalPrice}" pattern="###,###" /> 원<br>
+                           <fmt:formatNumber value="${cartvo.gavo.g_totalPoint}" pattern="###,###" /> POINT
+                           <input type="hidden" class="totalPrice" value="${cartvo.opvo.opt_totalPrice}" />
+                           <input type="hidden" class="totalPoint" value="${cartvo.gavo.g_totalPoint}" />
+                      </td>
           
                         <td><button type="button" class="cart__list__optionbtn" onclick="goDel('${cartvo.cartno}')">삭제</button></td>
                     </tr>
                     
-			</c:forEach>		   	
-		</c:if>
-		
-		</tbody>
-			
+                    <input type="hidden" class="optionno" value="${cartvo.fk_optno}" />
+                    <input type="hidden" class="optionimgfile" value="${cartvo.opvo.imgfile}" />
+                    
+                    <input type="hidden" class="gamename" value="${cartvo.gavo.g_name}" />
+                    <input type="hidden" class="gamecontent" value="${cartvo.gavo.g_content}" />
+                    <input type="hidden" class="optionname" value="${cartvo.opvo.opt_name}" />
+                    
+                    <input type="hidden" class="optionsaleprice" value="${cartvo.opvo.opt_sale_price}" />
+                    <input type="hidden" class="optionprice" value="${cartvo.opvo.opt_price}" />
+                    
+                    
+                    <%-- <input type="hidden" class="oqty" value="${cartvo.oqty}" /> --%>
+                    <input type="hidden" class="optionnumber" value="${cartvo.fk_optno}" />
+                    
+                    <input type="hidden" class="optionqty" value="${cartvo.opvo.opt_qty}" />
+                    <input type="hidden" class="cartnumber" value="${cartvo.cartno}" />
+                    <input type="hidden" class="gcoin" value="${cartvo.gavo.g_coin}" />
+                    <input type="hidden" class="totalprice" value="${cartvo.opvo.opt_totalPrice}" />
+                    <input type="hidden" class="totalprice" value="${cartvo.gavo.g_totalPoint}" />
+                <input type="hidden" class="alltotalprice" value="${requestScope.sumMap.SUMTOTALPRICE}" />
+                    <input type="hidden" class="alltotalpoint" value="${requestScope.sumMap.SUMTOTALPOINT}" />
+                    
+         </c:forEach>            
+      </c:if>
+      
+      </tbody>
+         
            <tfoot>
                <tr>
                    <td></td>
@@ -548,39 +605,40 @@ body {
                    <td></td>
                    <td></td>
                    <td></td>
-                  	<td colspan="2" align="center">
-            		<span style="font-weight: bold;">장바구니 총액 :</span>
-         			<span style="color: red; font-weight: bold;"><fmt:formatNumber value="${requestScope.sumMap.SUMTOTALPRICE}" pattern="###,###" /></span> 원  
-            		<br>
-            		<span style="font-weight: bold;">총 포인트 :</span> 
-         			<span style="color: red; font-weight: bold;"><fmt:formatNumber value="${requestScope.sumMap.SUMTOTALPOINT}" pattern="###,###" /></span> POINT 
-        		</td>
-			
+                   <td colspan="2" align="center">
+                       <span style="font-weight: bold;">장바구니 총액 :</span>
+                     <span style="color: red; font-weight: bold;"><fmt:formatNumber value="${requestScope.sumMap.SUMTOTALPRICE}" pattern="###,###" /></span> <span style="color:white;">원</span>  
+                     <br>
+                     <span style="font-weight: bold;">총 포인트 :</span> 
+                     <span style="color: red; font-weight: bold;"><fmt:formatNumber value="${requestScope.sumMap.SUMTOTALPOINT}" pattern="###,###" /></span> <span style="color:white;">POINT</span>
+                   </td>
+         
                </tr>
            </tfoot>
-	
+   
         </table> 
-	
-        <div class="cart__mainbtns">         	
-        	<button class="cart__bigorderbtn left">쇼핑 계속하기</button>
-        	<button type="button" class="cart__bigorderbtn right" onclick="goOrder()">주문하기</button>
-	   		<button type="button" class="cart__bigorderbtn right" onclick="goOrderinfo()">주문정보입력하기</button>
+   
+        <div class="cart__mainbtns">            
+           <button style="background-color: gray;" class="cart__bigorderbtn left">쇼핑 계속하기</button>
+           <button style="background-color: gray; color:black; margin-left: 3%" type="button" class="cart__bigorderbtn right" onclick="goOrder()">주문하기</button>
+            <button style="background-color: gray; color:black; margin-top: 3%" type="button" class="cart__bigorderbtn left" onclick="goOrderEdit()">주문정보입력하기</button>
         </div>
         
+        <form id="orderEditfrm" action="<%= ctxPath %>/buy/editorder.bz" method="post"></form>
         
-	</section>
-	
+   </section>
+   
     <div>
-  		<p id="order_error_msg" class="text-center text-danger font-weight-bold h4"></p>
+        <p id="order_error_msg" class="text-center text-danger font-weight-bold h4"></p>
     </div>
     
     <%-- CSS 로딩화면 구현한것--%>
     <div style="display: flex">
-    	<div class="loader" style="margin: auto"></div>
+       <div class="loader" style="margin: auto"></div>
     </div>
-    
     
  </div>
     
 <jsp:include page="../footer_suc.jsp" />  
+
   

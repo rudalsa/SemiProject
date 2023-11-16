@@ -174,7 +174,7 @@ public class MainPage_imple implements MainpageDAO {
 	    
 				  categoryList.add(categovo);
 		 
-			  }// end of while(rs.next())-----------------
+			  }// end of while(rs.next())————————
 		     
 		  
 		  } finally {

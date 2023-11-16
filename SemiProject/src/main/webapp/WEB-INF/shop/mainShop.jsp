@@ -8,13 +8,10 @@
 %>
 <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/shop/main_shop.css"> 
 
-<jsp:include page="header_shop.jsp" />
 
 <jsp:include page="slide.jsp" />
 
-    
-    
-    
+
 <%-- 추천게임 시작 --%> 
 <h2 class="mt-5 mb-5 text-white" style="font-weight: bold; margin-left: 6%;">추천상품</h2>
 <div class="mt-5" style="">
@@ -27,7 +24,6 @@
 			         <div class="col-md-3 img">
 			     	 	<a href="gameopt.bz?g_code=${gamevo.g_code}"> 
 				     	   	<div class="img-container">
-			        			${gamevo.g_code}
 			        			<img src="<%= ctxPath %>/img/tbl_game_product_image/${gamevo.g_img_1}" alt="이미지 5" class="img-fluid" style="width: 100%; height: 200px;">
 					        
 					            <ul class="list-unstyled text-white text-left" style="font-weight:bold; ">
@@ -61,6 +57,7 @@
   			<c:forEach var="gamevo" items="${requestScope.gameList}" varStatus="status">
   			
 			         <c:if test="${gamevo.fk_s_code eq '101'}">
+			         	<a href="gameopt.bz?g_code=${gamevo.g_code}"> 
 				         <div class="col-md-3 img"> 
 				         	<a href="gameopt.bz?g_code=${gamevo.g_no}" ></a>
 				     	   	<div class="img-container">
@@ -73,6 +70,7 @@
 					                <li><span style="font-size: 14pt;"><fmt:formatNumber value="${gamevo.g_sale_price}" pattern="#,###" /> 원</span></li>
 					            </ul>
 				        	</div>
+				        	  </a>
 				        </div>
 			        </c:if>
 			        
@@ -94,6 +92,7 @@
   			<c:forEach var="gamevo" items="${requestScope.gameList}" varStatus="status">
   			
 			         <c:if test="${gamevo.fk_s_code eq '102'}">
+			           <a href="gameopt.bz?g_code=${gamevo.g_code}"> 
 				         <div class="col-md-3 img"> 
 				         	<a href="gameopt.bz?g_code=${gamevo.g_no}" ></a>
 				     	   	<div class="img-container">
@@ -106,6 +105,7 @@
 					                <li><span style="font-size: 14pt;"><fmt:formatNumber value="${gamevo.g_sale_price}" pattern="#,###" /> 원</span></li>
 					            </ul>
 				        	</div>
+				          </a>
 				        </div>
 			        </c:if>
 			        
@@ -191,7 +191,6 @@
         </div>
     </div>
 </section>
-<%-- =============== PS5 홍보창 끝 =============== --%>
 
 <jsp:include page="age_of_use.jsp" />
 

@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>열심히 만들겠음</title>
+<title>마지막연습중......</title>
 </head>
 <body>
-	이벤트페이지 만들것임
+	연습끝
 </body>
 </html>

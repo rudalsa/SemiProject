@@ -96,9 +96,10 @@
   }// end of function goFind()-----------------
   
 </script>
+<body style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 
     
-<form name="pwdFindFrm">
+<form name="pwdFindFrm" class="text-white">
 
    <ul style="list-style-type: none;">
       <li style="margin: 25px 0">

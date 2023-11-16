@@ -39,7 +39,7 @@ public class PwdUpdateEndAction extends AbstractController {
 			request.setAttribute("n", n); 
 			//  n ==> 1 또는 n ==> 0
  			
-		}// end of if("POST".equalsIgnoreCase(method))-------
+		}// end of if("POST".equalsIgnoreCase(method))———
 		
 		request.setAttribute("user_id", user_id);
 		request.setAttribute("method", method);

@@ -1,7 +1,6 @@
 
 /*변수 선언*/
 
-
 var id = document.querySelector('#id');
 
 var pw1 = document.querySelector('#pswd1');

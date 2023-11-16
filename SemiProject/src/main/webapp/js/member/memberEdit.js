@@ -472,7 +472,7 @@ function goEdit(){
 		frm.submit();
 	}
 	
-}// end of function goEdit()-----------------------
+}// end of function goEdit()———————————
 
 
 
