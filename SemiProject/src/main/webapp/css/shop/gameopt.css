@@ -1,0 +1,211 @@
+@charset "UTF-8";
+
+/* 버튼 관련 라디오 */
+  input[type="radio"] {
+  	display: none;
+  }
+  
+body > div > div.col-4 > div > div > div.table-responsive > table > tbody > tr > td  label {
+    text-align: left;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+  .custom-transparent-button {
+    background-color: transparent;
+    border: none;
+    width: 250px;
+  }
+
+  .custom-transparent-button:focus {
+    outline: none; /* 클릭 포커스 효과 제거 */
+  }
+
+  .custom-transparent-button:active {
+    opacity: 0.5; /* 클릭 시 투명도 조절 (0.5은 예시, 필요에 따라 조절 가능) */
+  }
+  
+   .custom-transparent-button.active {
+    border-left:  solid 10px #007bff !important; /* 클릭된 버튼의 배경 색상을 지정 */
+    color: #fff; /* 클릭된 버튼의 텍스트 색상을 지정 */
+  }
+  
+   body > div > div.col-8.mr-auto > div.row.mt-3 > div:nth-child(4) > img:focus  {
+    background-color: transparent;
+    border: none;
+ 
+  }
+
+/* 버튼 관련 라디오 */
+
+a>i{
+
+    color: white;
+    font-size:20pt;
+    font-weight: bold;  
+}
+
+
+div.imgsm img {
+	width: 100%;
+	height: 200px;
+	transition: transform 0.25s;
+	border-radius: 10px; 
+}
+
+div.imgsm img:focus {
+        border: 5px solid blue; /* 클릭 시 빨간색 보더로 변경 */
+
+    }
+
+
+div.imgsm img:hover {
+	transform: scale(1.1); /* 호버시 크기를 1.25배로 확대 */
+}
+
+div.carousel-item.active img,
+div.carousel-item img {
+	
+	/* border: solid 1px white; */
+	width: 100%; 
+	height: 600px;
+	
+}
+
+.game_logo{
+	width: 75px;
+	height:75px;
+
+}
+
+tr.price{
+	height: 70px;
+	border-bottom: 1px solid rgba(192, 192, 192, 0.5);
+
+}
+
+
+span.per{
+	background-color:#00FF00;
+	font-size: 12pt;
+	float: right;
+	border-radius: 3px;
+	
+}
+
+body > div > div.col-4 > div > div > div.table-responsive > table > thead > tr > th > span:nth-child(2){
+
+	float: right;
+}
+
+
+span.opttitle{
+	
+	font-weight:bold;
+	font-size: 15pt;
+	font-weight:bold;
+	color:white;
+	text-align: left;
+}
+
+span.panmaeprice{
+	
+	font-weight:bold;
+	font-size: 16pt;
+	font-weight:bold;
+	color:#00FF00;
+
+}
+
+span.saleprice{
+	
+	text-decoration: line-through;
+	color:#ccc;
+	font-size: 14pt;
+	font-weight:bold;
+} 
+
+td#error {
+  vertical-align: middle;
+  text-align: center; /* 텍스트를 수평 중앙에 배치하기 위해서 */
+  color: red;
+ 
+  font-size: 14pt;
+  font-weight:bold;
+}
+
+.col-6.imgsm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+
+
+li.btn {
+  width: 100%;
+  height: 60px;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18pt;
+  transition: all 0.3s; /* 호버 효과를 부드럽게 만듭니다. */
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  
+}
+
+li.btn:hover {
+	filter: brightness(150%);
+}
+
+
+#purchase {
+
+    color: #7AFF7A;
+    font-weight: 900;
+    box-sizing: border-box;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 30.73%, rgba(0, 51, 1, 0.3) 72.92%, rgba(0, 134, 3, 0.3) 100%), #151515;
+    background-size: cover;
+    background-blend-mode: lighten, normal, normal;
+    border: 1px solid #00FF00;
+    border-radius: 4px;
+    font-family: "Eurostile Extd";
+    text-shadow: 0px 1px 5px #000000, 0px 1px 23px rgba(112, 255, 0, 0.29);
+	
+}
+
+#cart {
+    box-sizing: border-box;
+    background: linear-gradient(180deg, rgba(30, 134, 176, 0) 0%, rgba(30, 134, 176, 0.3) 100%), #000000;
+    background-size: cover;
+    background-blend-mode: lighten, normal, normal;
+    border: 1px solid #1E86B0;
+    box-shadow: 0px 2px 20px #000000, 0px 0px 15px 4px rgba(0, 110, 134, 0.35);
+    border-radius: 4px;
+    color: #4BE8F2;
+    font-family: "Eurostile Extd";
+    text-shadow: 0px 1px 5px #000000, 0px 1px 23px rgba(0, 240, 255, 0.29);
+}
+
+#like {
+    box-sizing: border-box;
+    background: linear-gradient(180deg, rgba(255, 192, 203, 0) 0%, rgba(255, 192, 203, 0.3) 100%), #000000;
+    background-size: cover;
+    background-blend-mode: lighten, normal, normal;
+    border: 1px solid #FF69B4;
+    box-shadow: 0px 2px 20px #000000, 0px 0px 15px 4px rgba(255, 105, 180, 0.35);
+    border-radius: 4px;
+    color: #FF69B4; /* 텍스트 색상을 핑크색으로 변경 */
+    font-family: "Eurostile Extd";
+    text-shadow: 0px 1px 5px #000000, 0px 1px 23px rgba(0, 240, 255, 0.29);
+}

@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+.error{
+	display:none;
+}
+div.hideInput {
+	display:none;
+}
+
+div#container {
+	margin-bottom: 10%;
+}
+
+form {
+	text-align: center;
+	width: 100%;
+	margin: 0 auto;
+}
+
+div.div1 {
+	border: solid 1px black;
+	width: 45%;
+	/*height: 100px;*/
+	
+	text-align: left;
+	margin: 0 auto;
+	padding: 10px;
+	border-bottom: none;
+}
+
+div.div3 {
+	border-bottom: solid 1px black;
+}
+
+input.inputFocus {
+	border: none;
+}
+
+input.inputFocus:focus {
+	outline: none;
+}
+
+div.div2 {
+	margin-top: 20px;
+}
+
+span#gender {
+	margin-left: 200px;
+}
+
+p.error {
+	color: red;
+}
+
+span#emailcheck {
+	border: solid 1px gray;
+	border-radius: 5px;
+	font-size: 8pt;
+	display: inline-block;
+	width: 80px;
+	height: 30px;
+	text-align: center;
+	margin-left: 10px;
+	cursor: pointer;
+}
