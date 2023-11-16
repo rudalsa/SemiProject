@@ -65,16 +65,16 @@
 	   window.open(url, "buygame", 
 	              `left=${left}, top=${top}, width=${width}, height=${height}`);   //\을 빼면 저장소인 request.scope로 인식하기 때문에 앞에다 넣어줘야 한다. 변수로 인식해야한다.
 	
-	   
+	   window.close 
 	 }
-		  		 
+	  		 
 	 
  }
  
   // ==== DB 상의 tbl_member 테이블에 해당 사용자의 코인금액 및 포인트를 증가(update)시켜주는 함수 === //
  function buy_DB_Update(user_id, coinmoney) {
    
- 	console.log(`~~ 확인용 userid : ${user_id}, coinmoney : ${coinmoney}원`);
+ 	//console.log(`~~ 확인용 userid : ${user_id}, coinmoney : ${coinmoney}원`);
  	
     const frm = document.coin_DB_Update_Frm;
     frm.user_id.value = user_id;
@@ -207,6 +207,52 @@
       }
 
 //////////////////////////////////////////////////////////////////     
+<<<<<<< HEAD
+   
+     const checked_cnt = $("input:radio[name='coinmoney']:checked").length;
+     
+     if(checked_cnt==0){
+         // 결제금액을 선택하지 않았을 경우
+        $("td#error").show();
+    
+    }
+    
+    else{
+      
+       const g_code = frm.g_code.value;   
+         
+         frm.paymoney.value = coinmoney; // id 로 받아온값
+         frm.optno.value = optno;      // 클래스로 받아온값
+         
+         let paymoney = frm.paymoney.value;
+         
+       alert("주문연결" + oqty+ opt_name + g_code+ paymoney+"이거"+optno);    
+        alert("결제금액"+ paymoney );    
+      
+         // 주문개수가 1개 이상인 경우
+    
+        frm.method = "POST";
+        frm.action = `/SemiProject/buy/oneOrder.bz`;
+        frm.submit();
+      
+      }
+   
+   }// end of function goCart()-------------------------
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+	
+=======
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
    
      const checked_cnt = $("input:radio[name='coinmoney']:checked").length;
      
@@ -251,7 +297,81 @@
 
 	
    
+    function goOneOrder() {
+	   
+      // === 주문량에 대한 유효성 검사하기 === //
+     const frm = document.goCartFrm;
+     
+/////////////////////////////////////////////////////////////////     
+     
+     const regExp = /^[0-9]+$/;  // 숫자만 체크하는 정규표현식
+     let oqty = frm.oqty.value;
+     const bool = regExp.test(oqty);
+     let g_qty = frm.g_qty.value;
+     
+     
+     // 숫자 이외의 값이 들어온 경우  
+     if(!bool) {
+         alert("숫자만 입력하세요");
+         frm.oqty.value = "1";
+         frm.oqty.focus();
+         return; // 종료 
+      }
+      
+      // 음수가 들어온 경우
+      oqty = parseInt(oqty);
+      g_qty = parseInt(g_qty);
+      
+      if(oqty < 1) {
+         alert("주문갯수는 1개 이상이어야 합니다.");
+         frm.oqty.value = "1";
+         frm.oqty.focus();
+         return; // 종료 
+      }
+      
+
+      if(g_qty < oqty) {
+         // 주문개수가 잔고개수 보다 클 경우
+         alert("주문개수가 잔고개수 보다 더 커서 진행할 수 없습니다.");
+//       alert(g_qty);
+//       alert(oqty);
+         frm.oqty.value = "1";
+         frm.oqty.focus();
+         return; // 종료 
+      }
+
+//////////////////////////////////////////////////////////////////     
+	
+	  const checked_cnt = $("input:radio[name='coinmoney']:checked").length;
+ 	 
+	  if(checked_cnt==0){
+	      // 결제금액을 선택하지 않았을 경우
+		  $("td#error").show();
+	 
+	 }
+    
+    else{
+		
+	    const g_code = frm.g_code.value;	
+	   	
+	   	frm.paymoney.value = coinmoney; // id 로 받아온값
+	   	frm.optno.value = optno;		// 클래스로 받아온값
+	   	
+	   	let paymoney = frm.paymoney.value;
+	   	
+	    alert("주문연결" + oqty+ opt_name + g_code+ paymoney+"이거"+optno); 	
+	  	alert("결제금액"+ paymoney ); 	
+      
+  	    // 주문개수가 1개 이상인 경우
+    
+        frm.method = "POST";
+        frm.action = `/SemiProject/buy/oneOrder.bz`;
+        frm.submit();
+      
+      }
    
+   }// end of function goCart()-------------------------
+  
    
  
  

@@ -47,7 +47,7 @@ public class GameoptAction extends AbstractController {
 				
 				List<OptVO> OptiList = gameoptidao.SelectAllOpti(g_code);
 				
-				System.out.println("같으면 안된다."+ OptiList);
+			//	System.out.println("같으면 안된다."+ OptiList);
 				
 				request.setAttribute("OptiList", OptiList);
 				

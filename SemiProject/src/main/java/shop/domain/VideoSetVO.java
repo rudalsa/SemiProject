@@ -58,6 +58,10 @@ public class VideoSetVO {
    public String getVideo_set_gif() {
       return video_set_gif;
    }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
 
    public void setVideo_set_gif(String video_set_gif) {
       this.video_set_gif = video_set_gif;
@@ -81,3 +85,38 @@ public class VideoSetVO {
    
    
 }
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
+
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
+   public void setVideo_set_gif(String video_set_gif) {
+      this.video_set_gif = video_set_gif;
+   }
+
+   public GameVO getGvo() {
+      return gvo;
+   }
+
+   public void setGvo(GameVO gvo) {
+      this.gvo = gvo;
+   }
+
+   public CategoryVO getCvo() {
+      return cvo;
+   }
+
+   public void setCvo(CategoryVO cvo) {
+      this.cvo = cvo;
+   }
+   
+   
+<<<<<<< HEAD
+}
+=======
+}
+=======
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git

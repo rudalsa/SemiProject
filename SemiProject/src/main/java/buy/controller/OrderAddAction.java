@@ -195,7 +195,7 @@ public class OrderAddAction extends AbstractController {
 			// " 5 ' , 4 ' , 61 ' " 띄워쓰기는 잘보이게 하려고 한 것 임
 			// " ' 5 ' , ' 4 ' , ' 61 ' " 띄워쓰기는 잘보이게 하려고 한 것 임
 			
-			System.out.println("확인용 주문한 제품번호 optnoes "+ optnoes);
+			//System.out.println("확인용 주문한 제품번호 optnoes "+ optnoes);
 			
 			// 주문한 제품에 대해 email 보내기시 email 내용에 넣을 주문한 제품번호들에 대한 제품정보를 얻어오는 것
 			List<GameVO> jumungameList = pdao.getJumungameList(optnoes);

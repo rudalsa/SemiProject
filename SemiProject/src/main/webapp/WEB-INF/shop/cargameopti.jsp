@@ -98,6 +98,9 @@ div#viewComments {
      });// end of $("input#spinner").spinner({});----------------    
     
   });
+
+
+ 
 </script>
 
 
@@ -435,7 +438,7 @@ function updateMyReview(index, review_seq) {
      </div>
      
      <div class="purchase-btn text-center">
-	 	
+	 	 
 	 	 <%-- ==== 장바구니 주문 개수 폼 ==== --%>
          <form name="goCartFrm">       
             <ul class="list-unstyled mt-3">
@@ -454,7 +457,15 @@ function updateMyReview(index, review_seq) {
 		  
 	 	<ul class="list-unstyled">
 	    	
+<<<<<<< HEAD
 	    	<%-- <li id="purchase" class="btn" onclick="buygame('<%=ctxPath %>','${sessionScope.loginuser.user_id}')" >
+=======
+<<<<<<< HEAD
+	    	<%-- <li id="purchase" class="btn" onclick="buygame('<%=ctxPath %>','${sessionScope.loginuser.user_id}')" >
+=======
+	    	<li id="purchase" class="btn" onclick="goOneOrder()" >
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
 	          &nbsp;구매하기
 	    	</li> --%>
 	    	<li id="purchase" class="btn" onclick="goOneOrder()" >

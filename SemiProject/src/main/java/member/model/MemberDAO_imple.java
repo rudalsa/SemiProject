@@ -6,13 +6,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import member.domain.MemberVO;
@@ -753,6 +760,32 @@ int result = 0;
 		
 		return result;	
 	}
+
+
+	// 로그인 1년 경과된 회원을 tbl_user 테이블에서 idle 값을 1로 변경해주기
+	@Override
+	public int updateIdle(Map<String, String> paraMap) throws SQLException {
+		
+		int idle = 0; 
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " update tbl_user set user_idle = 1 "
+					   + " where user_id = ? "; 
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, paraMap.get("user_id"));
+			
+			pstmt.executeUpdate();
+			
+		} 
+		 finally {
+			close();
+		}
+		
+		return idle;
+	} // end of public int updateIdle(Map<String, String> paraMap) throws SQLException ----------
 	
 	// 계정 인증하고 휴면 풀어주는 메소드 
 		@Override
@@ -798,6 +831,7 @@ int result = 0;
 		       return idleremove;
 		       
 		}// end of public boolean idleremove(Map<String, String> paraMap) throws SQLException
+<<<<<<< HEAD
 		
 		
 		
@@ -859,6 +893,72 @@ int result = 0;
 	         }
 	            return rememberList;
 	      }
+=======
+<<<<<<< HEAD
+		
+		
+		
+	      // 회원 구매내역 조회
+	      @Override
+	      public List<OrderViewVO> Buyremember(String user_id) throws SQLException {
+	         
+	         List<OrderViewVO> rememberList = new ArrayList<>();
+	         
+	         try {
+	            conn = ds.getConnection();
+	            
+	            String sql = "  select D.fk_odrcode, fk_optinfono, oqty, odrprice, CASE deliverstatus WHEN 1 THEN '주문완료' WHEN 2 THEN '배송중' WHEN 3 THEN '배송완료'END AS deliverstatus, "
+	                  + " odrdate, imgfile, opt_name, opt_sale_price, opt_content, D.ODRSEQNO, order_zipcode, order_address, order_detailaddress, order_extraaddress, order_name,  order_phone, "
+	                  + " nvl(order_content, '배송요청사항이 없습니다') AS order_content "
+	                  + " from tbl_orderdetail D "
+	                  + " join tbl_order O "
+	                  + " on O.odrcode = D.fk_odrcode "
+	                  + " join TBL_PRODUCT_OPTINFO T "
+	                  + " on T.optinfono = D.fk_optinfono "
+	                  + " join tbl_order_info I "
+	                  + " on I.FK_ODRCODE = D.fk_odrcode "
+	                  + " where O.fk_userid = ? "
+	                  + " order by D.ODRSEQNO desc  "
+	                  + " ";
+	            
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setString(1, user_id);
+	            rs = pstmt.executeQuery();
+	            
+	            while(rs.next()) {
+	               
+	               OrderViewVO viewvo = new OrderViewVO();
+	               
+	               viewvo.setFk_odrcode(rs.getString(1));
+	               viewvo.setFk_optinfono(rs.getInt(2));
+	               viewvo.setOqty(rs.getInt(3));
+	               viewvo.setOdrprice(rs.getInt(4));
+	               viewvo.setDeliverstatus(rs.getString(5));
+	               viewvo.setOdrdate(rs.getString(6));
+	               viewvo.setImgfile(rs.getString(7));
+	               viewvo.setOpt_name(rs.getString(8));
+	               viewvo.setOpt_sale_price(rs.getInt(9));
+	               viewvo.setOpt_content(rs.getString(10));
+	               viewvo.setOrder_zipcode(rs.getString(12));
+	               viewvo.setOrder_address(rs.getString(13));
+	               viewvo.setOrder_detailaddress(rs.getString(14));
+	               viewvo.setOrder_extraaddress(rs.getString(15));
+	               viewvo.setOrder_name(rs.getString(16));
+	               viewvo.setOrder_phone(rs.getString(17));
+	               viewvo.setOrder_content(rs.getString(18));
+	               
+	               
+	               rememberList.add(viewvo);
+	            }// end of while(rs.next())-----------------
+	            
+	         } finally {
+	            close();
+	         }
+	            return rememberList;
+	      }
+=======
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
 	
 	
 }

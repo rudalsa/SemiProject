@@ -157,8 +157,17 @@
 	    			  </a>	
 		              <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: black; text-align:center;">
 		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/member/memberEdit.bz">계정관리</a>
+<<<<<<< HEAD
  		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/buy/cartList.bz">장바구니</a>
                           <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/buy/orderList.bz">구매내역보기</a>
+=======
+<<<<<<< HEAD
+ 		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/buy/cartList.bz">장바구니</a>
+                          <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/buy/orderList.bz">구매내역보기</a>
+=======
+		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/buy/cartList.bz">장바구니</a>
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
 		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/login/logout.bz">로그아웃</a>
 		              </div>
 		          </c:otherwise>

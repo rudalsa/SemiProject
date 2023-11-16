@@ -352,6 +352,14 @@ div.loader {
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<script type="text/javascript" src="<%= ctxPath%>/js/order/order.js"></script>
+
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
 <script type="text/javascript" src="<%= ctxPath%>/js/buy/onebuygame.js"></script>
 
 <script type="text/javascript">
