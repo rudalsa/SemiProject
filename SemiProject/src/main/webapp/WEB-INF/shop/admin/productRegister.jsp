@@ -216,8 +216,7 @@
 	<%-- !!!!! ==== 중요 ==== !!!!! --%>
 <%-- 폼에서 파일을 업로드 하려면 반드시 method 는 POST 이어야 하고 
      enctype="multipart/form-data" 으로 지정해주어야 한다.!! --%>
-<form name="prodInputFrm"
-      action="<%= request.getContextPath()%>/shop/admin/productRegister.bz"
+<form name="prodInputFrm" action="<%= request.getContextPath()%>/shop/admin/productRegister.bz"
       method="POST"                         
       enctype="multipart/form-data"> 
 	      

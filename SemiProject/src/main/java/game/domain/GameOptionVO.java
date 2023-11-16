@@ -8,6 +8,16 @@ public class GameOptionVO {
 	private String imgslidefilename_3;
 	private String imgslidefilename_4;
 	
+	private int oinfo_no;
+	private String fk_odrcode;
+	private String  ;
+	private String  ;
+	private String  ;
+	private String  ; 
+	private String  ;
+	private String  ;
+	private String  ;
+	
 	
 	
 	private String gamegenre;

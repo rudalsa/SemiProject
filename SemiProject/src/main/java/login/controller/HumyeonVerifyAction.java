@@ -6,11 +6,10 @@ import javax.servlet.http.HttpSession;
 
 import common.controller.AbstractController;
 
-public class VerifyCertificationAction extends AbstractController {
+public class HumyeonVerifyAction extends AbstractController {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
 		String method = request.getMethod();
 		
 		if("POST".equalsIgnoreCase(method)) {
@@ -26,11 +25,11 @@ public class VerifyCertificationAction extends AbstractController {
 			
 			if(certification_code.equals(userCertificationCode)) {
 				message = "인증성공 되었습니다.";
-				loc = request.getContextPath()+"/member/pwdUpdateEnd.bz?user_id="+user_id;
+				loc = request.getContextPath()+"/login/pwdUpdateEnd.bz?user_id="+user_id;
 			}
 			else {
 				message = "발급된 인증코드가 아닙니다.\\n인증코드를 다시 발급받으세요!!";
-				loc = request.getContextPath()+"/login/pwdFind.bz";
+				loc = request.getContextPath()+"/login/humyeonPage.bz";
 			}
 			
 			request.setAttribute("message", message);
@@ -44,7 +43,5 @@ public class VerifyCertificationAction extends AbstractController {
 			session.removeAttribute("certification_code");
 			
 		}// end of if("POST".equalsIgnoreCase(method))------------
-		
 	}
-
 }

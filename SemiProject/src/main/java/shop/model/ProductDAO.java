@@ -69,12 +69,44 @@ public interface ProductDAO {
 	// 주문한 제품에 대해 email 보내기시 email 내용에 넣을 주문한 제품번호들에 대한 제품정보를 얻어오는 것
 	List<GameVO> getJumungameList(String g_noes) throws SQLException;
 
+<<<<<<< HEAD
 	// 특정 사용자가 특정 제품에 대해 상품후기를 입력하기(insert) 
 	int addReview(PurchaseReviewsVO reviewsvo) throws SQLException;
+=======
+<<<<<<< HEAD
+	
+	
+	// ===== Transaction 처리하기 ===== // 
+    // 1. 주문 테이블에 입력되어야할 주문전표를 채번(select)하기
+    // 2. 주문 테이블에 채번해온 주문전표, 로그인한 사용자, 현재시각을 insert 하기(수동커밋처리)
+    // 3. 주문상세 테이블에 채번해온 주문전표, 제품번호, 주문량, 주문금액을 insert 하기(수동커밋처리)
+    // 4. 제품 테이블에서 제품번호에 해당하는 잔고량을 주문량 만큼 감하기(수동커밋처리)
+    // 6. 회원 테이블에서 로그인한 사용자의 coin 액을 sum_totalPrice 만큼 감하고, point 를 sum_totalPoint 만큼
+    // 더하기(update)(수동커밋처리)
+    // 7. **** 모든처리가 성공되었을시 commit 하기(commit) ****
+    // 8. **** SQL 장애 발생시 rollback 하기(rollback) **** 
+	int oneOrderAdd(Map<String, String> paraMap) throws SQLException;
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
 
+<<<<<<< HEAD
 	
 	// 특정 제품의 사용후기를 조회(select)하기
 	List<PurchaseReviewsVO> reviewList(String fk_g_code) throws SQLException;
+=======
+=======
+	List<Map<String, String>> getOrderList(Map<String, String> paraMap) throws SQLException;
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
+
+	int getTotalCountOrder(String user_id) throws SQLException;
+
+	MemberVO odrcodeOwnerMemberInfo(String odrcode)throws SQLException;
+
+	
+	int updateDeliverStart(String odrcodePnum) throws SQLException;
+	
+	
+	int updateDeliverEnd(String odrcodePnum) throws SQLException;
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
 
 	// 특정 제품의 사용후기를 삭제(delete)하기
 	int reviewDel(String review_seq) throws SQLException;

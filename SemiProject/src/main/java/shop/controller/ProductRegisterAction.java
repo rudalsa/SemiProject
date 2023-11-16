@@ -16,6 +16,14 @@ import common.controller.AbstractController;
 import member.domain.MemberVO;
 import shop.domain.*;
 import shop.model.*;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+import shop.domain.CategoryVO;
+import shop.domain.SpecVO;
+=======
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
 
 public class ProductRegisterAction extends AbstractController {
 
@@ -78,7 +86,15 @@ public class ProductRegisterAction extends AbstractController {
 	    		  // ==> C:\NCS\workspace_jsp\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\MyMVC\images    
 	    		  
 	    	   // C:\NCS\workspace_jsp\MyMVC\src\main\webapp\images
+<<<<<<< HEAD
 	    	    String uploadFileDir = "C:\\git\\SemiProject\\SemiProject\\src\\main\\webapp\\img\\tbl_game_product_image"; // 주소변경
+=======
+<<<<<<< HEAD
+	    	    String uploadFileDir = "C:\\git\\SemiProject\\SemiProject\\src\\main\\webapp\\img";
+=======
+	    	    String uploadFileDir = "/Users/sub/git/SemiProject/SemiProject/src/main/webapp/img";
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
 	    		  
 	    		  
 	    		  /*

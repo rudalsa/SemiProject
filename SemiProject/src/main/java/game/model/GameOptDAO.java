@@ -32,4 +32,10 @@ public interface GameOptDAO {
 	
 	
 
+	// 바로 주문하기 게임 select 하기
+	GameVO selectOrder(String optno) throws SQLException;
+
+	// 바로구매 총구매금액 select 하기
+	Map<String, String> selectSumPricePoint(String oqty, String optno) throws SQLException;
+
 }
