@@ -1,6 +1,7 @@
 package buy.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,24 +33,25 @@ public class CartListAction extends AbstractController {
 				else {
 					// 로그인을 했을 경우 
 					
+					/*
+					 * 
+					 * 
+					 * String paymoney = (String) session.getAttribute("paymoney");
+					 * 
+					 * System.out.println("확인용 :" + paymoney);
+					 */
+					
 					HttpSession session = request.getSession();
-					
-					String paymoney = (String) session.getAttribute("paymoney");
-					
-					System.out.println("확인용 :" + paymoney);
-					
 					MemberVO loginuser = (MemberVO) session.getAttribute("loginuser");
 					
 					ProductDAO pdao = new ProductDAO_imple();
 					
-					
-					List<CartVO> cartList = pdao.selectProductCart(loginuser.getUser_id(), paymoney);
+					List<CartVO> cartList = pdao.selectProductCart(loginuser.getUser_id());
+					Map<String,String> sumMap = pdao.selectCartSumPricePoint(loginuser.getUser_id());
 					
 					request.setAttribute("cartList", cartList);
+					request.setAttribute("sumMap", sumMap);
 					
-				//	session.removeAttribute("paymoney"); // 이거 수정해야된다.
-					
-				//	super.setRedirect(false);
 					super.setViewPage("/WEB-INF/shop/cartList.jsp");
 				}
 				

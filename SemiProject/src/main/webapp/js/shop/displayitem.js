@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 	
 	$("span#totalCount").hide();
@@ -7,6 +6,12 @@ $(document).ready(function(){
 	// 상품 "스크롤"을 할 때 보여줄 상품의 개수(단위)크기
 	let start = 1;
 	let amount = 8;
+	
+	let input_c_no = document.querySelector('#c_no');
+	
+	let c_no = input_c_no.value;
+	
+	console.log('제발요',c_no)
 	
 	
 	// HIT상품 게시물을 더보기 위하여 "스크롤" 이벤트에 대한 초기값 호출하기 
@@ -53,17 +58,23 @@ $(document).ready(function(){
 // 지역변수라서 설정해줘야한다.
 let amount = 8;
 
+
+
 // display 할 item 정보를 추가 요청하기(Ajax 로 처리함)
 function displayitem(start) { 	 // start가  1 이라면    1~8 까지 상품 8개를 보여준다.
                           	 // start가  9 이라면   9~16 까지 상품 8개를 보여준다.
                           	 // start가 17 이라면  17~24 까지 상품 8개를 보여준다.
                           	 // start가 25 이라면  25~32 까지 상품 8개를 보여준다.
                           	 // start가 33 이라면  33~36 까지 상품 4개를 보여준다.(마지막 상품)  
+	let input_c_no = document.querySelector('#c_no');
+	let c_no = input_c_no.value;
 	
+	console.log("ajax안"+c_no);
+		
 	$.ajax({
 		url:"shopDisplayItemJSON.bz",
 		type:"get", // 생략가능
-		data:{"s_name":"pop",
+		data:{"c_no":c_no,
 			  "start":start, // "1"   "9"   "17"   "25"   "33"
 			  "amount":amount}, //  8     8      8      8      8
 		
@@ -93,22 +104,28 @@ function displayitem(start) { 	 // start가  1 이라면    1~8 까지 상품 8�
 				
 				// JQuery 를 사용하는 경우
 			    $.each(json, function(index, item) {
-	                v_html += `<div class='col-md-6 col-lg-3'>
-	                               <div class="card mb-3"> 
-	                                   <img src='/SemiProject/img/tbl_game_product_image/${item.g_img_1}' class='card-img-top' style='width: 100%;' />
-	                                   <div class='card-body text-left' style='padding: 0; font-size: 11pt;'>
-	                                       <ul class='list-unstyled mt-3 pl-3'>
-	                                           <li><label class='prodInfo'>제품명</label>${item.g_name}</li>
-	                                      	   <li><label class='prodInfo'>정가</label><span style='text-decoration: line-through; color:red;'>${item.g_price.toLocaleString('en')} 원</span></li>
-	                                           <li><label class='prodInfo'>판매가</label><span style='font-weight: bold; color:blue;'>${item.g_sale_price.toLocaleString('en')} 원</li>
-	                                           <li><label class='prodInfo'>할인율</label>[${item.discountPercent}%]할인</li>
-	                                           <li><label class='prodInfo'>포인트</label>${item.g_coin.toLocaleString('en')}<span style='font-weight: bold; color:orange;'>포인트</span></li>
-	                                           <li class='text-center'><a href='/SemiProject/gameopt.bz?g_code=${item.g_code}' class='btn btn-sm btn-outline-dark stretched-link' role='button'>자세히보기</a></li>
-	                                      	   ${''/* 카드 내부의 링크에 .stretched-link 클래스를 추가하면 전체 카드를 클릭할 수 있고 호버링할 수 있습니다(카드가 링크 역할을 함).*/}
-	                                       </ul>
-	                                   </div>
-	                               </div>
-	                           </div>`;
+	                v_html += `<div class="item">
+     						       <div class="imgBox">
+          						    <img src="/SemiProject/img/tbl_game_product_image/${item.g_img_1}" alt="${item.g_img_1}" />
+        							</div>
+        					   		<div class="textBox">
+          								<p class="textBox__name">${item.g_content}</p>
+          								<p class="textBox__price">${item.g_sale_price.toLocaleString('en')} 원 ~</p>
+          								<a href='/SemiProject/gameopt.bz?g_code=${item.g_code}'>왜 안열리노</a>
+        							</div>
+      							</div> `;
+      							
+      						
+      							
+      							
+					
+      							
+      							
+      							
+      							
+      							
+      							
+      							
                 }); // end of $.each(json, function(index, item) {});
                 
 				// HIT 상품 결과 출력하기

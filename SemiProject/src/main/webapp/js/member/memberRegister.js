@@ -604,7 +604,7 @@ function goRegister() {
 	
 	
 	const frm = document.memberRegisterFrm;
-	frm.action = "memberRegister.bz";
+	frm.action = "/buy/oneOrderAdd.bz";
 	frm.method = "post";
 	frm.submit();
 	

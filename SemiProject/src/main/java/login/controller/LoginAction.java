@@ -88,7 +88,7 @@ public class LoginAction extends AbstractController {
 				
 				session.setAttribute("loginuser", loginuser);
 				// session(세션)에 로그인 되어진 사용자 정보인 loginuser 를 키이름을 "loginuser" 으로 저장시켜두는 것이다. 
-				System.out.println("~~~ 확인용 로그인 성공 ^___^"+loginuser.getUser_name());
+				//System.out.println("~~~ 확인용 로그인 성공 ^___^"+loginuser.getUser_name());
 
 				if(loginuser.isRequirePwdChange() == true) {
 					// 비밀번호를 변경한지 3개월 이상된 경우 

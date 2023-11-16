@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-
+import game.domain.GameOptionVO;
 import gameopt.domain.OptVO;
 import shop.domain.GameVO;
 
@@ -141,7 +142,7 @@ public class GameOptDAO_imple implements GameOptDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " select optinfono , fk_g_code, imgfile, opt_name, opt_price, opt_sale_price "
+			String sql = " select optinfono , fk_g_code, imgfile, opt_name, opt_price, opt_sale_price, OPT_CONTENT "
 					+ " from tbl_product_optinfo "
 					+ " where fk_g_code = ? ";
 			
@@ -159,6 +160,7 @@ public class GameOptDAO_imple implements GameOptDAO {
 				optvo.setOpt_name(rs.getString(4));
 				optvo.setOpt_price(rs.getInt(5));
 				optvo.setOpt_sale_price(rs.getInt(6));
+				optvo.setOpt_content(rs.getString(7));
 				OptiList.add(optvo);
 			}// end of while(rs.next())-----------------
 			
@@ -197,11 +199,13 @@ public class GameOptDAO_imple implements GameOptDAO {
 	         
 	         String sql = " select cartno "
 	                  + " from tbl_game_cart "
-	                  + " where fk_userid = ? and fk_g_code = ? "; 
+	                  + " where fk_userid = ? and fk_optno = ? "; 
 	                  
 	         pstmt = conn.prepareStatement(sql);
 	         pstmt.setString(1, paraMap.get("user_id"));
-	         pstmt.setString(2, paraMap.get("g_code"));
+	         pstmt.setInt(2, Integer.parseInt(paraMap.get("optno")));
+	         
+	         System.out.println(paraMap.get("optno"));
 	         
 	         rs = pstmt.executeQuery();
 	         
@@ -222,13 +226,14 @@ public class GameOptDAO_imple implements GameOptDAO {
 	         else {
 	            // 장바구니에 존재하지 않는 새로운 제품을 넣고자 하는 경우
 	            
-	            sql = " insert into tbl_game_cart(cartno, fk_userid, fk_g_code, oqty, registerday)  "
-	               + " values(seq_tbl_cart_cartno.nextval, ?, ?, ?, default) ";
+	            sql = " insert into tbl_game_cart(cartno, fk_userid, fk_g_code, oqty, registerday, fk_optno)  "
+	               + " values(seq_tbl_cart_cartno.nextval, ?, ?, ?, default, ?) ";
 	               
 	               pstmt = conn.prepareStatement(sql);
 	               pstmt.setString(1, paraMap.get("user_id"));
 	               pstmt.setInt(2, Integer.parseInt(paraMap.get("g_code")));
 	               pstmt.setInt(3, Integer.parseInt(paraMap.get("oqty")));
+	               pstmt.setInt(4, Integer.parseInt(paraMap.get("optno")));
 	               
 	               n = pstmt.executeUpdate();
 	            
@@ -244,4 +249,147 @@ public class GameOptDAO_imple implements GameOptDAO {
 		
 	}
 
+
+	@Override
+	public List<GameVO> SelectAllLike(List<String> g_code_arr) throws SQLException {
+		
+		List<GameVO> likeList = new ArrayList<>();
+		
+		try {
+			conn = ds.getConnection();
+			
+			for(int i = 0; i<g_code_arr.size(); i++) {
+				
+				String sql = " select g_no, g_code, g_name, fk_c_code, g_company, g_img_1, g_img_2, g_qty, g_price, g_sale_price, fk_s_code, g_content, g_info "
+						   + " from tbl_game_product "
+						   + " where g_code = ? ";
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, g_code_arr.get(i));
+				
+				System.out.println("확인용"+g_code_arr.get(i));
+				
+				
+				rs = pstmt.executeQuery();
+			
+				if(rs.next()) {
+					
+					GameVO gameVO = new GameVO();
+					
+					gameVO.setG_no(rs.getInt(1));
+					gameVO.setG_code(rs.getString(2));
+					gameVO.setG_name(rs.getString(3));
+					gameVO.setFk_c_code(rs.getString(4));
+					gameVO.setG_company(rs.getString(5));
+					gameVO.setG_img_1(rs.getString(6));
+					gameVO.setG_img_2(rs.getString(7));
+					gameVO.setG_qty(rs.getInt(8));
+					gameVO.setG_price(rs.getInt(9));
+					gameVO.setG_sale_price(rs.getInt(10));
+					gameVO.setFk_s_code(rs.getString(11));
+					gameVO.setG_content(rs.getString(12));
+					gameVO.setG_info(rs.getString(13));
+					
+					likeList.add(gameVO);
+					
+				} // end of if(rs.next())-------------------
+			
+			}
+		
+		} finally {
+			
+			close();
+	
+		}
+		
+		
+		
+		
+		
+		return likeList;
+	}
+
+	// 바로 주문하기 게임 select 하기
+	@Override
+	public GameVO selectOrder(String optno) throws SQLException {
+		
+		GameVO gvo = null;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " SELECT g_code, g_name, g_content, g_img_1, g_coin, g_qty, opt_name, optinfono, imgfile, opt_qty, opt_price, opt_sale_price "
+					   + " FROM tbl_game_product G "
+					   + " JOIN TBL_PRODUCT_OPTINFO O "
+					   + " ON G.g_code = O.fk_g_code "
+					   + " WHERE optinfono = ? ";
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, optno);
+			
+			rs = pstmt.executeQuery();
+		
+			if(rs.next()) {
+				
+				gvo = new GameVO();
+				
+				gvo.setG_code(rs.getString(1));
+				gvo.setG_name(rs.getString(2));
+				gvo.setG_content(rs.getString(3));
+				gvo.setG_img_1(rs.getString(4));
+				gvo.setG_coin(rs.getInt(5));
+				gvo.setG_qty(rs.getInt(6));
+				
+				OptVO ovo = new OptVO();
+				ovo.setOpt_name(rs.getString(7));
+				ovo.setOptinfono(rs.getInt(8));
+				ovo.setImgfile(rs.getString(9));
+				ovo.setOpt_qty(rs.getInt(10));
+				ovo.setOpt_price(rs.getInt(11));
+				ovo.setOpt_sale_price(rs.getInt(12));
+				
+				gvo.setOptvo(ovo);
+			} // end of if(rs.next())-------------------
+		} finally {
+			close();
+		}
+		return gvo;
+	}// end of public GameVO selectOrder(String optno) throws SQLException 
+
+
+	@Override
+	public Map<String, String> selectSumPricePoint(String oqty, String optno) throws SQLException {
+		
+		Map<String, String> sumMap = new HashMap<>();
+
+		try {
+			conn = ds.getConnection();
+
+			String sql = " SELECT NVL(SUM(? * O.opt_sale_price), 0) AS SUMTOTALPRICE, "
+					+ "        NVL(SUM(? * G.g_coin), 0) AS SUMTOTALPOINT " + " FROM tbl_game_product G "
+					+ " JOIN TBL_PRODUCT_OPTINFO O " 
+					+ " ON G.g_code = O.fk_g_code "
+					+ " where optinfono = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, oqty);
+			pstmt.setString(2, oqty);
+			pstmt.setString(3, optno);
+
+			rs = pstmt.executeQuery();
+			rs.next();
+
+			sumMap.put("SUMTOTALPRICE", rs.getString("SUMTOTALPRICE"));
+			sumMap.put("SUMTOTALPOINT", rs.getString("SUMTOTALPOINT"));
+
+		} finally {
+			close();
+		}
+
+		return sumMap;
+	}
+	
+
 }
+
+

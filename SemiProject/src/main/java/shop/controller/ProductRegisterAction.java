@@ -17,7 +17,6 @@ import member.domain.MemberVO;
 import shop.domain.*;
 import shop.model.*;
 import shop.domain.CategoryVO;
-import gameopt.domain.OptVO;
 import shop.domain.SpecVO;
 
 public class ProductRegisterAction extends AbstractController {
@@ -81,7 +80,7 @@ public class ProductRegisterAction extends AbstractController {
 	    		  // ==> C:\NCS\workspace_jsp\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\MyMVC\images    
 	    		  
 	    	   // C:\NCS\workspace_jsp\MyMVC\src\main\webapp\images
-	    	    String uploadFileDir = "C:\\git\\SemiProject\\SemiProject\\src\\main\\webapp\\img\\tbl_game_product_image";
+	    	    String uploadFileDir = "C:\\git\\SemiProject\\SemiProject\\src\\main\\webapp\\img";
 	    		  
 	    		  
 	    		  /*

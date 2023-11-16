@@ -31,6 +31,7 @@
 <%-- jQueryUI CSS 및 JS --%>
 <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/jquery-ui-1.13.1.custom/jquery-ui.min.css" />
 <script type="text/javascript" src="<%= ctxPath%>/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<%= ctxPath%>/js/shop/likeshop.js"></script>
 
 
 <style type="text/css">
@@ -44,14 +45,11 @@
 
 </style>
 
-
-
-
 </head>
 
 
-
-<body style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+<%--style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;" --%>
+<body>
 <!-- background-repeat: no-repeat;를 적용하면 배경 이미지가 한 번만 표시됩니다: -->
 
 <nav class="navbar navbar-expand-lg mx-auto mt-3 bg-dark fixed-top" id="scrollNavbar" style=" width: 97%;  background-color: black; height: 75px">
@@ -72,37 +70,41 @@
    <!-- 네비게이션 메뉴들... -->
    <ul class="navbar-nav d-flex flex-row">
 	    
+	    
+	    
 	    <li class="nav-item active">
-	      <a class="nav-link d-flex align-items-center text-nowrap" href="#">
-	        <img src="<%= ctxPath %>/img/newshop/games_diablo.svg" alt="디아블로" style="width: 45px; height: 45px">
+	      <a class="nav-link d-flex align-items-center text-nowrap" href="<%= ctxPath %>/shop/displayitemshop.bz?c_code=${sessionScope.categoryList0.c_code}">
+	        <img src="<%= ctxPath %>/img/newshop/${sessionScope.categoryList0.category_img}" alt="디아블로" style="width: 45px; height: 45px">
 	        <span class="ml-3" style="color:white; font-weight:bold;">디아블로</span>
 	      </a>
 	    </li>
-	    
 	    <li class="nav-item active">
-	      <a class="nav-link d-flex align-items-center text-nowrap" href="#">
-	        <img src="<%= ctxPath %>/img/newshop/games_hearthstone.svg" alt="하스스톤" style="width: 45px; height: 45px">
+	      <a class="nav-link d-flex align-items-center text-nowrap" href="<%= ctxPath %>/shop/displayitemshop.bz?c_code=${sessionScope.categoryList1.c_code}">
+	        <img src="<%= ctxPath %>/img/newshop/${sessionScope.categoryList1.category_img}" alt="하스스톤" style="width: 45px; height: 45px">
 	        <span class="ml-3" style="color:white; font-weight:bold;">하스스톤</span>
 	      </a>
 	    </li>
 	    
+	    
 	    <li class="nav-item active">
-	      <a class="nav-link d-flex align-items-center text-nowrap" href="#">
-	        <img src="<%= ctxPath %>/img/newshop/games_wow.svg" alt="스타크래프트" style="width: 45px; height: 45px">
+	      <a class="nav-link d-flex align-items-center text-nowrap" href="<%= ctxPath %>/shop/displayitemshop.bz?c_code=${sessionScope.categoryList2.c_code}">
+	        <img src="<%= ctxPath %>/img/newshop/${sessionScope.categoryList2.category_img}" alt="스타크래프트" style="width: 45px; height: 45px">
 	        <span class="ml-3" style="color:white; font-weight:bold;">워크래프트</span>
 	      </a>
 	    </li>
 	    
+	    
 	    <li class="nav-item active">
-	      <a class="nav-link d-flex align-items-center text-nowrap" href="#">
-	        <img src="<%= ctxPath %>/img/newshop/games_overwatch.svg" alt="오버워치" style="width: 40px; height: 40px">
+	      <a class="nav-link d-flex align-items-center text-nowrap" href="<%= ctxPath %>/shop/displayitemshop.bz?c_code=${sessionScope.categoryList3.c_code}">
+	        <img src="<%= ctxPath %>/img/newshop/${sessionScope.categoryList3.category_img}" alt="오버워치" style="width: 40px; height: 40px">
 	        <span class="ml-3" style="color:white; font-weight:bold;">오버워치</span>
 	      </a>
 	    </li>
 	    
+	    
 	    <li class="nav-item active">
-	      <a class="nav-link d-flex align-items-center text-nowrap" href="#">
-	        <img src="<%= ctxPath %>/img/newshop/games_sc2.svg" alt="스타크래프트" style="width: 40px; height: 40px">
+	      <a class="nav-link d-flex align-items-center text-nowrap" href="<%= ctxPath %>/shop/displayitemshop.bz?c_code=${sessionScope.categoryList4.c_code}">
+	        <img src="<%= ctxPath %>/img/newshop/${sessionScope.categoryList4.category_img}" alt="스타크래프트" style="width: 40px; height: 40px">
 	        <span class="ml-3" style="color:white; font-weight:bold;">스타크래프트</span>
 	      </a>
 	    </li>

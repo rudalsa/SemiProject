@@ -186,61 +186,57 @@ public class ProductDAO_imple implements ProductDAO {
 
 	
 	// tbl_product_imagefile 테이블에 제품의 추가이미지 파일명 insert 하기
-	@Override
-	public int tbl_product_optinfo_insert(Map<String, String> paraMap) throws SQLException {
-		
-		int result = 0;
-		
-		try {
-			conn = ds.getConnection();
+		@Override
+		public int tbl_product_optinfo_insert(Map<String, String> paraMap) throws SQLException {
 			
-			String sql = " insert into tbl_product_optinfo(optinfono, fk_g_code, imgfile, opt_name, opt_price, opt_sale_price, opt_content, opt_qty) "
-					   + " values(tbl_product_optinfo_optinfono.nextval, ?, ?, ?, ?, ?, ?, ?) "; 
-					   
+			int result = 0;
 			
-			pstmt = conn.prepareStatement(sql);
-			
-	        pstmt.setInt(1, Integer.parseInt(paraMap.get("g_code")));
-	        pstmt.setString(2, paraMap.get("attachimg"));
-	        pstmt.setString(3, paraMap.get("attachName"));
-	        pstmt.setInt(4, Integer.parseInt(paraMap.get("attachPrice")));
-	        pstmt.setInt(5, Integer.parseInt(paraMap.get("attachSalePrice")));
-	        pstmt.setString(6, paraMap.get("attachContent"));
-	        pstmt.setInt(7, Integer.parseInt(paraMap.get("attachOpty")));
-	        
-			
-	        result = pstmt.executeUpdate();
-			
-		} finally {
-			close();
+			try {
+				conn = ds.getConnection();
+				
+				String sql = " insert into tbl_product_optinfo(optinfono, fk_g_code, imgfile, opt_name, opt_price, opt_sale_price, opt_content, opt_qty) "
+						   + " values(tbl_product_optinfo_optinfono.nextval, ?, ?, ?, ?, ?, ?, ?) "; 
+						   
+				
+				pstmt = conn.prepareStatement(sql);
+				
+		        pstmt.setInt(1, Integer.parseInt(paraMap.get("g_code")));
+		        pstmt.setString(2, paraMap.get("attachimg"));
+		        pstmt.setString(3, paraMap.get("attachName"));
+		        pstmt.setInt(4, Integer.parseInt(paraMap.get("attachPrice")));
+		        pstmt.setInt(5, Integer.parseInt(paraMap.get("attachSalePrice")));
+		        pstmt.setString(6, paraMap.get("attachContent"));
+		        pstmt.setInt(7, Integer.parseInt(paraMap.get("attachOpty")));
+		        
+				
+		        result = pstmt.executeUpdate();
+				
+			} finally {
+				close();
+			}
+
+			return result;
 		}
 
-		return result;
-	}
 	
-
 	// 로그인한 사용자의 장바구니 목록을 조회하기
 	@Override
-	public List<CartVO> selectProductCart(String user_id,String paymoney) throws SQLException {
+	public List<CartVO> selectProductCart(String user_id) throws SQLException {
 		
 		List<CartVO> cartList = null;
 		
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " SELECT G.cartno, G.fk_userid, G.fk_g_code, G.oqty, G.g_name, G.g_img_1, G.g_coin, G.g_qty, O.opt_name, O.optinfono, O.imgfile, O.opt_sale_price "
-					   + " FROM ( "
-					   + "     SELECT C.cartno, C.fk_userid, C.fk_g_code, C.oqty, P.g_code, P.g_name, P.g_img_1, P.g_coin, P.g_qty "
-					   + "     FROM ( "
-					   + "         SELECT cartno, fk_userid, fk_g_code, registerday, oqty "
-					   + "         FROM tbl_game_cart "
-					   + "         WHERE fk_userid = ? "
-					   + "     ) C "
-					   + "     JOIN tbl_game_product P "
-					   + "     ON C.fk_g_code = P.g_code "
-					   + "     )G "
-					   + " JOIN TBL_PRODUCT_OPTINFO O "
-					   + " ON G.g_code = O.fk_g_code ";
+			String sql = " SELECT C.cartno, C.fk_userid, C.fk_g_code, C.oqty, p.g_name, P.g_img_1, o.opt_name, o.opt_sale_price, p.g_coin, p.g_qty, C.fk_optno, o.IMGFILE, g_content, opt_price, opt_qty "
+					+ " FROM ( "
+					+ " SELECT cartno, fk_userid, fk_g_code, registerday, oqty, fk_optno "
+					+ " FROM tbl_game_cart "
+					+ " WHERE fk_userid = ? "
+					+ " ) C "
+					+ " JOIN TBL_PRODUCT_OPTINFO O ON C.fk_optno = O.OPTINFONO "
+					+ " JOIN  tbl_game_product P ON O.fk_g_code = p.g_code " ;
+			
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user_id);
@@ -258,18 +254,20 @@ public class ProductDAO_imple implements ProductDAO {
 				
 			
 				int cartno = rs.getInt("CARTNO");
-				
 				String fk_userid = rs.getString("FK_USERID");
 				String fk_g_code = rs.getString("FK_G_CODE");
 				int oqty = rs.getInt("OQTY"); // 주문량
 				String g_name = rs.getString("G_NAME");
 				String g_img_1 = rs.getString("G_IMG_1");
-				int g_coin = rs.getInt("G_COIN"); 
-				int g_qty = rs.getInt("G_QTY"); // 잔고량
-				String opt_name = rs.getString("OPT_NAME");
-				int optinfono = rs.getInt("OPTINFONO");
-				String imgfile = rs.getString("IMGFILE");
+				String opt_name = rs.getString("opt_name");
 				int opt_sale_price = rs.getInt("OPT_SALE_PRICE");
+				int g_coin = rs.getInt("G_COIN"); 
+				int g_qty = rs.getInt("g_qty"); // 잔고량
+				int fk_optno = rs.getInt("fk_optno");	
+				String imgfile = rs.getString("IMGFILE");
+				String g_content = rs.getString("g_content");
+				int opt_price = rs.getInt("opt_price");
+				int opt_qty = rs.getInt("opt_qty");
 				
 				
 				GameVO gvo = new GameVO();
@@ -278,6 +276,7 @@ public class ProductDAO_imple implements ProductDAO {
 				gvo.setG_img_1(g_img_1);
 				gvo.setG_coin(g_coin);
 				gvo.setG_qty(g_qty);
+				gvo.setG_content(g_content);
 				
 				// ***** !!!! 중요함 !!!! ***** //
 				gvo.setTotalPriceTotalPoint(oqty);
@@ -286,10 +285,15 @@ public class ProductDAO_imple implements ProductDAO {
 				// 우리는 옵션도 해야함 //
 				
 				OptVO ovo = new OptVO();
-				ovo.setOpt_name(opt_name);
-				ovo.setOptinfono(optinfono);
-				ovo.setImgfile(imgfile);
 				ovo.setOpt_sale_price(opt_sale_price);
+				ovo.setOpt_name(opt_name);
+				ovo.setImgfile(imgfile);
+				ovo.setOpt_price(opt_price);
+				ovo.setOpt_qty(opt_qty);;
+				
+				// ***** !!!! 중요함 !!!! ***** //
+				ovo.setTotalPriceTotalPoint(oqty);
+				// ***** !!!! 중요함 !!!! ***** //
 				// 나중에 더 추가 //
 				
 				CartVO cvo = new CartVO();
@@ -297,6 +301,7 @@ public class ProductDAO_imple implements ProductDAO {
 				cvo.setFk_userid(fk_userid);
 				cvo.setFk_g_code(fk_g_code);
 				cvo.setOqty(oqty);
+				cvo.setFk_optno(fk_optno);
 				
 				cvo.setGavo(gvo);
 				cvo.setOpvo(ovo);
@@ -313,6 +318,58 @@ public class ProductDAO_imple implements ProductDAO {
 		
 		
 	}
+	
+	
+	   // 로그인한 사용자의 장바구니에 담긴 주문총액합계 및 총포인트합계 알아오기 
+	   @Override
+	   public Map<String, String> selectCartSumPricePoint(String userid) throws SQLException {
+	      
+	      Map<String, String> sumMap = new HashMap<>();
+	      
+	      try {
+	         conn = ds.getConnection();
+	         
+	         String sql = " SELECT NVL(SUM(C.oqty * O.opt_sale_price), 0) AS SUMTOTALPRICE, "
+	         		+ "       NVL(SUM(C.oqty * P.g_coin), 0) AS SUMTOTALPOINT "
+	         		+ " FROM ( "
+	         		+ "    SELECT FK_OPTNO, oqty, fk_g_code "
+	         		+ "    FROM tbl_game_cart "
+	         		+ "    WHERE fk_userid = ? "
+	         		+ " ) C "
+	         		+ " JOIN TBL_PRODUCT_OPTINFO O ON C.FK_OPTNO = O.optinfono "
+	         		+ " JOIN TBL_game_product P ON C.FK_g_code = P.g_code ";
+	                  
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setString(1, userid);
+	         
+	         rs = pstmt.executeQuery();
+	         rs.next();
+	         
+	         sumMap.put("SUMTOTALPRICE", rs.getString("SUMTOTALPRICE"));
+	         sumMap.put("SUMTOTALPOINT", rs.getString("SUMTOTALPOINT"));
+	         
+	         
+	      } finally {
+	         close();
+	      }
+	      
+	      
+	      return sumMap;
+	   }// end of public Map<String, String> selectCartSumPricePoint(String userid) throws SQLException-----------
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	// 장바구니 테이블에서 특정제품을 장바구니에서 비우기
 	@Override
@@ -402,62 +459,103 @@ public class ProductDAO_imple implements ProductDAO {
 	// 하나의 스펙에 몇개의 게임이있는지 알아오는 것
 	
 	@Override
-	public int totalSpecCount(String fk_s_code) throws SQLException {
+	public int totalCateGoryCount(String c_code) throws SQLException {
 		
-	int SpecCount = 0;
+	int CateGoryCount = 0;
 		
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " select count(*) "
+			String sql = " select count(*)"
 					   + " from tbl_game_product "
-					   + " where fk_s_code = ? ";
+					   + " where fk_c_code = ? ";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, fk_s_code);
+			pstmt.setString(1, c_code);
 			
 			rs = pstmt.executeQuery();
 			
 			rs.next();
 			
-			SpecCount = rs.getInt(1);
+			CateGoryCount = rs.getInt(1);
 			
 		} finally {
 			close();
 		}
 		
-		return SpecCount;
+		return CateGoryCount;
 		
 	}
+	
+	
+	@Override
+	public int CateGoryno(String c_code) throws SQLException {
+	
+		int CateGoryno = 0;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " select c_no "
+					+ " from TBL_GAME_CATEGORY "
+					+ " where C_CODE = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, c_code);
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			CateGoryno = rs.getInt(1);
+			
+		} finally {
+			close();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return CateGoryno;
+	
+	
+	}
+
+	
+	
 	
 	// 더보기 방식(페이징처리)으로 상품정보를 8개씩 잘라(start ~ end) 조회해오기
 	@Override
 	
-	public List<GameVO> selectBySpecName(Map<String, String> paraMap) throws SQLException {
+	public List<GameVO> selectByno(Map<String, String> paraMap) throws SQLException {
 		
 		List<GameVO> gameList = new ArrayList<>();
 		
 		try {
 			conn = ds.getConnection();
 			
-			String sql = "\r\n"
-					+ " SELECT g_no, g_code, g_name, c_name, G_COMPANY, G_IMG_1, G_IMG_2, g_qty, g_price, g_sale_price, s_name, g_content, g_coin, G_INPUTDATE "
-					+ "	FROM "
-					+ "	( " 
-					+ "	select row_number() over(order by g_no desc) AS RNO "
+			String sql = " SELECT g_no, g_code, g_name, c_name, G_COMPANY, G_IMG_1, G_IMG_2, g_qty, g_price, g_sale_price, s_name, g_content, g_coin, G_INPUTDATE "
+					+ " FROM "
+					+ "	( "
+					+ " select row_number() over(order by g_no desc) AS RNO "
 					+ "	, g_no, g_code, g_name, C.c_name, G_COMPANY, G_IMG_1, G_IMG_2, g_qty, g_price, g_sale_price, S.s_name, g_content, g_coin "
 					+ "	, to_char(G_INPUTDATE, 'yyyy-mm-dd') AS G_INPUTDATE "
 					+ "	from tbl_game_product P "
-					+ "	JOIN TBL_GAME_CATEGORY C "
-					+ "	ON P.fk_c_code = C.c_code "
 					+ "	JOIN tbl_game_spec S "
-					+ "	ON P.fk_s_code = S.s_code "
-					+ "	where S.s_name = ? "
+					+ "    ON P.fk_s_code = S.s_code "
+					+ "    JOIN TBL_GAME_CATEGORY C "
+					+ "	ON P.fk_c_code = C.c_code "
+					+ "    where C.c_no = ? "
 					+ "	) V "
-					+ "	WHERE RNO between ? and ? " ;
+					+ "	WHERE RNO between ? and ? ";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, paraMap.get("s_name"));
+			pstmt.setString(1, paraMap.get("c_no"));
 			pstmt.setString(2, paraMap.get("start"));
 			pstmt.setString(3, paraMap.get("end"));
 			
@@ -544,19 +642,22 @@ public class ProductDAO_imple implements ProductDAO {
 	           // 3. 주문상세 테이블에 채번해온 주문전표, 제품번호, 주문량, 주문금액을 insert 하기(수동커밋처리)
 	           if(n1 == 1) {
 	           //   주문코드(명세서번호) --> (String)paraMap.get("odrcode");
-	              String[] g_code_arr = (String[])paraMap.get("g_code_arr");             // 제품번호
+	              String[] optinfono_arr = (String[])paraMap.get("optinfono_arr");             // 제품번호
+	              System.out.println(optinfono_arr.toString());
+	              
 	              String[] oqty_arr = (String[])paraMap.get("oqty_arr");             // 주문량
 	              String[] totalPrice_arr = (String[])paraMap.get("totalPrice_arr"); // 주문가격
 	             
 	              int cnt = 0;
-	              for(int i=0; i<g_code_arr.length; i++) {
+	              for(int i=0; i<optinfono_arr.length; i++) {
 	              
-	                  sql = " insert into tbl_orderdetail(odrseqno , fk_odrcode , fk_g_code , oqty , odrprice , deliverStatus )"
+	                  sql = " insert into tbl_orderdetail(odrseqno , fk_odrcode , FK_OPTINFONO , oqty , odrprice , deliverStatus )"
 	                		+ " values(seq_tbl_orderdetail.nextval, ?, to_number(?), to_number(?), to_number(?), default) ";
 	                
 	                  pstmt = conn.prepareStatement(sql);
 	                  pstmt.setString(1, (String)paraMap.get("odrcode"));
-	                  pstmt.setString(2, g_code_arr[i]);
+	                  pstmt.setString(2, optinfono_arr[i]);
+	                  
 	                  pstmt.setString(3, oqty_arr[i]);
 	                  pstmt.setString(4, totalPrice_arr[i]);
 	                
@@ -565,7 +666,7 @@ public class ProductDAO_imple implements ProductDAO {
 	                  cnt++;
 	               }// end of for----------------------
 	             
-	               if(cnt == g_code_arr.length) {
+	               if(cnt == optinfono_arr.length) {
 	                   n2 = 1;
 	               }
 	               	   System.out.println("~~~~ 확인용 n2 : " + n2);
@@ -576,26 +677,50 @@ public class ProductDAO_imple implements ProductDAO {
 	          // 4. 제품 테이블에서 제품번호에 해당하는 잔고량을 주문량 만큼 감하기(수동커밋처리)
 	          if(n2==1) {
 	             
-	              String[] g_code_arr = (String[])paraMap.get("g_code_arr"); // 제품번호
+	              String[] optinfono_arr = (String[])paraMap.get("optinfono_arr"); // 제품번호
 	              String[] oqty_arr = (String[])paraMap.get("oqty_arr"); // 주문량
 	             
 	              int cnt = 0;
-	              for(int i=0; i<g_code_arr.length; i++) {
+	              for(int i=0; i<optinfono_arr.length; i++) {
 	                  
-	            	  sql = " update tbl_game_product set g_qty = g_qty - ? "
-	                		+ " where g_code = ? ";
-	                
+	            	  sql = "UPDATE tbl_game_product "
+	            	  		+ "SET g_qty = g_qty- ? "
+	            	  		+ "WHERE g_code IN ( "
+	            	  		+ "    SELECT fk_g_code "
+	            	  		+ "    FROM TBL_PRODUCT_OPTINFO"
+	            	  		+ "    WHERE optinfono = ?"
+	            	  		+ ")";
+	            	  
+	            	  
 	                  pstmt = conn.prepareStatement(sql);
 	                  pstmt.setInt(1, Integer.parseInt(oqty_arr[i]));
-	                  pstmt.setString(2, g_code_arr[i]);
+	                  pstmt.setString(2, optinfono_arr[i]);
 	                
 	                  pstmt.executeUpdate();
+	                  
+	                  
+	                  String sql_1 = " UPDATE TBL_PRODUCT_OPTINFO SET opt_qty = opt_qty - ? "
+		                		+ " WHERE optinfono = ? ";
+		            	  
+		            	  
+		              pstmt = conn.prepareStatement(sql_1);
+		              pstmt.setInt(1, Integer.parseInt(oqty_arr[i]));
+		              pstmt.setString(2, optinfono_arr[i]);
+		                
+		              pstmt.executeUpdate();
+	                  
+	                  
+	                  
+	                  
+	                  
+	                  
+	                  
 	                  
 	                  cnt++;
 	             
 	              }// end of for--------
 	              
-	              if(cnt == g_code_arr.length) {
+	              if(cnt == optinfono_arr.length) {
 	                  n3 = 1;
 	              }
 	              System.out.println("~~~~ 확인용 n3 : " + n3);
@@ -702,19 +827,24 @@ public class ProductDAO_imple implements ProductDAO {
 	    
 	    }// end of public int orderAdd(Map<String, Object> paraMap) throws SQLException--------
 
-	 // 주문한 제품에 대해 email 보내기시 email 내용에 넣을 주문한 제품번호들에 대한 제품정보를 얻어오는 것
+	// 주문한 제품에 대해 email 보내기시 email 내용에 넣을 주문한 제품번호들에 대한 제품정보를 얻어오는 것
 	@Override
-	public List<GameVO> getJumungameList(String g_noes) throws SQLException {
+	public List<GameVO> getJumungameList(String optnoes) throws SQLException {
 		
 		List<GameVO> jumunProductList = new ArrayList<>();
 	      
 	      try {
 	         conn = ds.getConnection();
 	         
-	         String sql = " select g_no, g_code, g_name, fk_c_code, g_company, G_IMG_1, G_IMG_2, g_qty, g_price, g_sale_price, fk_s_code, g_content, g_coin "+
-	                    "      , to_char(g_inputdate, 'yyyy-mm-dd') as g_inputdate "+
-	                    " from tbl_game_product "+
-	                    " where g_no in("+ g_noes +") ";
+	         String sql = "  SELECT "
+	           		+ " G.g_no, G.g_code, G.g_name, G.fk_c_code, G.g_company, G.G_IMG_1, G.G_IMG_2, G.g_qty, G.g_price, G.g_sale_price, G.fk_s_code, G.g_content, G.g_coin, "
+	          		+ " TO_CHAR(G.g_inputdate, 'yyyy-mm-dd') AS g_inputdate, "
+	          		+ " IMGFILE,OPT_NAME,OPT_SALE_PRICE,OPT_CONTENT, optinfono "
+	          		+ " FROM tbl_game_product G\r\n"
+	          		+ " INNER JOIN TBL_PRODUCT_OPTINFO P ON G.g_code = P.fk_g_code "
+	          		+ " where optinfono in ("+ optnoes +")  ";
+	         
+
 	         // prdmanual_systemFileName, prdmanual_orginFileName 할꺼면 추가하세요
 	         
 	         pstmt = conn.prepareStatement(sql);
@@ -722,25 +852,35 @@ public class ProductDAO_imple implements ProductDAO {
 	         rs = pstmt.executeQuery();
 	                  
 	         while(rs.next()) {
-	                        
-	             int g_no = rs.getInt("g_no");
-	             String g_code = rs.getString("g_code");
-	             String g_name = rs.getString("g_name");
-	             String fk_c_code = rs.getString("fk_c_code");
-	             String g_company = rs.getString("g_company");
-	             String G_IMG_1 = rs.getString("G_IMG_1");
-	             String G_IMG_2 = rs.getString("G_IMG_2");
-	             int g_qty = rs.getInt("g_qty");
-	             int g_price = rs.getInt("g_price");
-	             int g_sale_price = rs.getInt("g_sale_price");
-	             String fk_s_code = rs.getString("fk_s_code");
-	             String g_content = rs.getString("g_content");
-	             int g_coin = rs.getInt("g_coin");
-	             String g_inputdate = rs.getString("g_inputdate");
-	             
-	             GameVO gamevo = new GameVO(g_no, g_code, g_name, fk_c_code, g_company, G_IMG_1, G_IMG_2, g_qty, g_price, g_sale_price, fk_s_code, g_content, g_coin, g_inputdate); 
-	             
-	             jumunProductList.add(gamevo);
+	                                   
+	             GameVO gavo = new GameVO();
+					
+	             gavo.setG_no(rs.getInt(1));              // 제품번호 
+	             gavo.setG_code(rs.getString(2));	     // 제품코드
+				 gavo.setG_name(rs.getString(3));	     // 제품명
+				 gavo.setFk_c_code(rs.getString(4));
+				 gavo.setG_company(rs.getString(5));
+				 gavo.setG_img_1(rs.getString(6));
+				 gavo.setG_img_2(rs.getString(7));
+				 gavo.setG_qty(rs.getInt(8));
+				 gavo.setG_price(rs.getInt(9));
+				 gavo.setG_sale_price(rs.getInt(10));
+				 gavo.setFk_s_code(rs.getString(11));
+				 gavo.setG_content(rs.getString(12));
+				 gavo.setG_coin(rs.getInt(13));
+				 gavo.setG_inputdate(rs.getString(14));
+				 
+				 OptVO optvo = new OptVO();
+				 optvo.setImgfile(rs.getString(15));
+				 optvo.setOpt_name(rs.getString(16));
+				 optvo.setOpt_sale_price(rs.getInt(17));
+				 optvo.setOpt_content(rs.getString(18));
+				 optvo.setOptinfono(rs.getInt(19));
+				 
+				 gavo.setOptvo(optvo);
+				 	             
+	              
+	             jumunProductList.add(gavo);
 	            
 	         } // end of while----------------------------------
 	                  
@@ -750,6 +890,169 @@ public class ProductDAO_imple implements ProductDAO {
 	      
 	      return jumunProductList;
 	}
+
+
+	
+	// ===== Transaction 처리하기 ===== // 
+    // 1. 주문 테이블에 입력되어야할 주문전표를 채번(select)하기
+    // 2. 주문 테이블에 채번해온 주문전표, 로그인한 사용자, 현재시각을 insert 하기(수동커밋처리)
+    // 3. 주문상세 테이블에 채번해온 주문전표, 제품번호, 주문량, 주문금액을 insert 하기(수동커밋처리)
+    // 4. 제품 테이블에서 제품번호에 해당하는 잔고량을 주문량 만큼 감하기(수동커밋처리)
+    // 6. 회원 테이블에서 로그인한 사용자의 coin 액을 sum_totalPrice 만큼 감하고, point 를 sum_totalPoint 만큼
+    // 더하기(update)(수동커밋처리)
+    // 7. **** 모든처리가 성공되었을시 commit 하기(commit) ****
+    // 8. **** SQL 장애 발생시 rollback 하기(rollback) **** 
+	@Override
+	public int oneOrderAdd(Map<String, String> paraMap) throws SQLException {
+		
+		int isSuccess = 0;
+		int n1 = 0, n2 = 0, n3 = 0, n4 = 0, n5 = 0, n6 = 0, n7 = 0;
+
+		try {
+			conn = ds.getConnection();
+
+			conn.setAutoCommit(false); // 수동커밋으로 전환
+
+			// 2. 주문 테이블에 채번해온 주문전표, 로그인한 사용자, 현재시각을 insert 하기(수동커밋처리)
+			String sql = " insert into tbl_order(odrcode, fk_userid, odrtotalPrice, odrtotalPoint, odrdate) "
+					   + " values(?, ?, ?, ?, default) ";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, paraMap.get("odrcode"));
+			pstmt.setString(2, paraMap.get("user_id"));
+			pstmt.setString(3, paraMap.get("totalPrice"));
+			pstmt.setString(4, paraMap.get("totalPoint"));
+			
+			n1 = pstmt.executeUpdate();
+			
+		//	System.out.println("~~~~ 확인용 n1 : " + n1);
+			
+			
+		// 3. 주문상세 테이블에 채번해온 주문전표, 제품번호, 주문량, 주문금액을 insert 하기(수동커밋처리)
+           if(n1 == 1) {
+              
+	          sql = " insert into tbl_orderdetail(odrseqno , fk_odrcode , FK_OPTINFONO , oqty , odrprice , deliverStatus )"
+	        		+ " values(seq_tbl_orderdetail.nextval, ?, to_number(?), to_number(?), to_number(?), default) ";
+	        
+	          pstmt = conn.prepareStatement(sql);
+	          pstmt.setString(1, paraMap.get("odrcode"));
+	          pstmt.setString(2, paraMap.get("optinfono"));
+	          
+	          pstmt.setString(3, paraMap.get("oqty"));
+	          pstmt.setString(4, paraMap.get("totalPrice"));
+	        
+	          n2= pstmt.executeUpdate();
+                  
+                
+        //   	   System.out.println("~~~~ 확인용 n2 : " + n2);
+           //   ~~~~ 확인용 n2 : 1
+             
+          }// end of if(n1 == 1)----------------
+			
+			
+			
+			// 4. 제품 테이블에서 제품번호에 해당하는 잔고량을 주문량 만큼 감하기(수동커밋처리)
+			if (n2 == 1) {
+		
+					sql = " UPDATE tbl_game_product SET g_qty = g_qty - ? " 
+						+ " WHERE g_code IN ( "
+						+ "    SELECT fk_g_code " 
+						+ "    FROM TBL_PRODUCT_OPTINFO" 
+						+ "    WHERE optinfono = ? "
+						+ " ) ";
+
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, Integer.parseInt(paraMap.get("oqty")));
+					pstmt.setString(2, paraMap.get("optinfono"));
+
+					n3 = pstmt.executeUpdate();
+			//		System.out.println("~~~~ 확인용 n3 : " + n3);
+					String sql_1 = " UPDATE TBL_PRODUCT_OPTINFO SET opt_qty = opt_qty - ? " 
+							     + " WHERE optinfono = ? ";
+
+					pstmt = conn.prepareStatement(sql_1);
+					pstmt.setInt(1, Integer.parseInt(paraMap.get("oqty")));
+					pstmt.setString(2, paraMap.get("optinfono"));
+
+					n4 = pstmt.executeUpdate();
+			//		System.out.println("~~~~ 확인용 n3 : " + n3);
+					if(n3*n4 == 1) {
+						n5 = 1;
+					}
+			//	System.out.println("~~~~ 확인용 n5 : " + n5);
+				// ~~~~ 확인용 n2 : 1
+
+			} // end of if(n1==1)-------------------
+
+			
+			// 6. 회원 테이블에서 로그인한 사용자의 USER_PAYMENT 액을 sum_totalPrice 만큼 더하고, point 를
+			// sum_totalPoint 만큼 더하기(update)(수동커밋처리)
+			if (n5 == 1) {
+				sql = " update tbl_user set USER_PAYMENT = USER_PAYMENT + ? , " // g_coin = g_coin - ? , 이거 우짤거임
+					+ " user_coin = ? " 
+					+ " where user_id = ? ";
+
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setInt(1, Integer.parseInt(paraMap.get("totalPrice")));
+				pstmt.setInt(2, Integer.parseInt(paraMap.get("totalPrice")));
+				pstmt.setString(3, paraMap.get("user_id"));
+
+				n6 = pstmt.executeUpdate();
+
+			} // end of if -----
+
+	//		System.out.println("확인용" + n6);
+			
+			if(n6 == 1) {
+				sql = " insert into tbl_order_info(oinfo_no, fk_odrcode, order_zipcode, order_address, order_detailaddress, order_extraaddress, order_name, order_phone, order_content)"
+					+ " values(seq_tbl_order_info.nextval, ?, ?, ?, ?, ?, ?, ?, ? )"; 
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, paraMap.get("odrcode"));
+				pstmt.setString(2, paraMap.get("order_zipcode"));
+				pstmt.setString(3, paraMap.get("order_address"));
+				pstmt.setString(4, paraMap.get("order_detailaddress"));
+				pstmt.setString(5, paraMap.get("order_extraaddress"));
+				pstmt.setString(6, paraMap.get("order_name"));
+				pstmt.setString(7, paraMap.get("order_phone"));
+				pstmt.setString(8, paraMap.get("order_content"));
+				
+				n7 = pstmt.executeUpdate();
+				
+			}
+	//		System.out.println("확인용" + n7);
+			// 7. **** 모든처리가 성공되었을시 commit 하기(commit) ****
+			if (n1 * n2 * n5 * n6 * n7 == 1) {
+
+				conn.commit();
+				conn.setAutoCommit(true); // 자동커밋으로 전환
+
+				// System.out.println("확인용 n1*n2*n3*n4*n5 : " + n1*n2*n3*n4*n5);
+				// 확인용 n1*n2*n3*n4*n5 : 1
+				
+				isSuccess = 1;
+
+			} // end of if(
+
+		} catch (SQLException e) {
+			// 8. **** SQL 장애 발생시 rollback 하기(rollback) ****
+			conn.rollback();
+			conn.setAutoCommit(true); // 자동커밋으로 전환
+
+			isSuccess = 0;
+
+		} finally {
+
+			close();
+
+		}
+
+		return isSuccess;
+	}// end of public int oneOrderAdd(Map<String, String> paraMap) throws SQLException
+
+
 
 	    
 	    
