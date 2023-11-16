@@ -58,7 +58,7 @@
 	  $("button.btn-info").click(function(){
 		  alert("인증코드 입력");
 		 const input_confirmCode = $("input:text[name='input_confirmCode']").val().trim(); 
-		  
+		  const input_confirmCode = $("input:text[user_name='input_confirmCode']").val().trim(); 
 		  
 		  if(input_confirmCode == "") {
 			  alert("인증코드를 입력하세요!!");
@@ -67,7 +67,7 @@
 		  
 		  const frm = document.verifyCertificationFrm;
 		  frm.userCertificationCode.value = input_confirmCode;
-		  frm.user_id.value = $("input:text[name='user_id']").val();
+		  frm.user_id.value = $("input:text[name='userid']").val();
 		  
 		  frm.action = "<%= ctxPath%>/login/verifyCertification.bz";
 		  frm.method = "post";
@@ -97,9 +97,10 @@
   }// end of function goFind()-----------------
   
 </script>
+<body style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 
     
-<form name="pwdFindFrm">
+<form name="pwdFindFrm" class="text-white">
 
    <ul style="list-style-type: none;">
       <li style="margin: 25px 0">

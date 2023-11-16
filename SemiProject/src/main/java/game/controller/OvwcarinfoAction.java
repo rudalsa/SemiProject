@@ -7,29 +7,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.controller.AbstractController;
-import shop.domain.*;
+import shop.domain.GameCarinfoVO;
 import shop.model.*;
 
-public class WowcarinfoAction extends AbstractController {
+public class OvwcarinfoAction extends AbstractController {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		
 		String g_code = request.getParameter("g_code");
 		
-		WowcarinfoDAO wdao = new WowcarinfoDAO_imple();
-		
-		
+		OvwcarinfoDAO odao = new OvwcarinfoDAO_imple();
 		
 		// System.out.println(g_code);
 		
 		try { 
-		List<GameCarinfoVO> wciList = wdao.wowCarinfoListSelectAll(g_code);
+		List<GameCarinfoVO> ociList = odao.ovwCarinfoListSelectAll(g_code);
 		
-		request.setAttribute("wciList", wciList); 
+		request.setAttribute("ociList", ociList); 
 		//super.setRedirect(false);
-		super.setViewPage("/WEB-INF/shop/wowcarinfo.jsp");
+		super.setViewPage("/WEB-INF/shop/ovwcarinfo.jsp");
 		
 		
 		} catch (SQLException e) { 
@@ -37,10 +34,6 @@ public class WowcarinfoAction extends AbstractController {
 		super.setRedirect(true);
 		super.setViewPage(request.getContextPath()+"/error.bz"); }
 		
-
-		
-	}// end of public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception
-	
-	
+	}
 
 }

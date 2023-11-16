@@ -5,7 +5,8 @@
  let coinmoney = 0; // 충전금액
  
  let opt_name = "";
- 
+
+ let optno = 0; 
  
  $(document).ready(function(){
 	 
@@ -15,11 +16,14 @@
 			
 			coinmoney = $(e.target).val(); // 결제 가격
 			opt_name = $(e.target).attr("id");
+			optno= $(e.target).attr("class");
+   			
+   			console.log('옵션번호',optno);
    });
    
    
    
-  });
+});
   
   
    
@@ -70,7 +74,7 @@
   // ==== DB 상의 tbl_member 테이블에 해당 사용자의 코인금액 및 포인트를 증가(update)시켜주는 함수 === //
  function buy_DB_Update(user_id, coinmoney) {
    
- 	console.log(`~~ 확인용 userid : ${user_id}, coinmoney : ${coinmoney}원`);
+ 	//console.log(`~~ 확인용 userid : ${user_id}, coinmoney : ${coinmoney}원`);
  	
     const frm = document.coin_DB_Update_Frm;
     frm.user_id.value = user_id;
@@ -95,6 +99,7 @@
      let oqty = frm.oqty.value;
      const bool = regExp.test(oqty);
      let g_qty = frm.g_qty.value;
+     
      
      // 숫자 이외의 값이 들어온 경우  
      if(!bool) {
@@ -137,14 +142,15 @@
 	 }
     
     else{
-        let oqty = frm.oqty.value;
+		
 	    const g_code = frm.g_code.value;	
 	   	
-	   	frm.paymoney.value = coinmoney;
+	   	frm.paymoney.value = coinmoney; // id 로 받아온값
+	   	frm.optno.value = optno;		// 클래스로 받아온값
 	   	
 	   	let paymoney = frm.paymoney.value;
 	   	
-	    alert("주문연결" + oqty+ opt_name + g_code+ paymoney ); 	
+	    alert("주문연결" + oqty+ opt_name + g_code+ paymoney+"이거"+optno); 	
 	  	alert("결제금액"+ paymoney ); 	
       
   	    // 주문개수가 1개 이상인 경우

@@ -55,7 +55,7 @@ public class OrderAddAction extends AbstractController {
 		    		
 			String sum_totalPrice = request.getParameter("sum_totalPrice");
 			String sum_totalPoint = request.getParameter("sum_totalPoint");
-			String g_code_join = request.getParameter("g_code_join");
+			String optinfono_join = request.getParameter("optinfono_join");
 			String oqty_join = request.getParameter("oqty_join");
 			String totalPrice_join = request.getParameter("totalPrice_join");
 			String cartno_join = request.getParameter("cartno_join");
@@ -63,7 +63,7 @@ public class OrderAddAction extends AbstractController {
 			
 			System.out.println(sum_totalPrice); // 460000
 			System.out.println(sum_totalPoint); // 100 
-			System.out.println(g_code_join);    // 300,332
+			System.out.println(optinfono_join);    // 300,332
 			System.out.println(oqty_join);		// 3,5
 			System.out.println(totalPrice_join);// 230000,230000
 			System.out.println(cartno_join);	// 24,17
@@ -105,7 +105,7 @@ public class OrderAddAction extends AbstractController {
 		    
 		    // === 주문상세테이블(tbl_orderdetail)에 insert 할 데이터 ===
 		         
-		    String[] g_code_arr = g_code_join.split("\\,"); // 여러개 제품을 주문한 경우          ex) "5,4,61".split("\\,"); ==> ["5","4","61"]
+		    String[] optinfono_arr = optinfono_join.split("\\,"); // 여러개 제품을 주문한 경우          ex) "5,4,61".split("\\,"); ==> ["5","4","61"]
 		                                     				// 장바구니에서 제품 1개만 주문한 경우  ex) "5".split("\\,");      ==> ["5"]
 		                                     			    // 특정제품을 바로주문하기를 한 경우    ex) "5".split("\\,");      ==> ["5"]
 		         							 			    // 
@@ -114,7 +114,7 @@ public class OrderAddAction extends AbstractController {
 		   String[] totalPrice_arr = totalPrice_join.split("\\,");
 		         
 		         
-           paraMap.put("g_code_arr", g_code_arr);
+           paraMap.put("optinfono_arr", optinfono_arr);
            paraMap.put("oqty_arr", oqty_arr);
            paraMap.put("totalPrice_arr", totalPrice_arr);
 		 
@@ -142,7 +142,7 @@ public class OrderAddAction extends AbstractController {
 					
 		   // 세션에 저장되어져 있는 loginuser 정보를 갱신
 		   
-		   loginuser.setUser_payment(loginuser.getUser_payment() - Integer.parseInt(sum_totalPrice) );
+		   loginuser.setUser_payment(loginuser.getUser_payment() + Integer.parseInt(sum_totalPrice) );
 	       loginuser.setUser_coin(loginuser.getUser_coin() + Integer.parseInt(sum_totalPoint) );   
 		   
 	       
@@ -151,15 +151,15 @@ public class OrderAddAction extends AbstractController {
 			
 			// str_pnum_join 5,4,61 "swkm,kjkm,kkk" 우리조는 '' 꼭해줘야함 "'kkk','kdjh','ajls'" ;
 			
-			String g_noes = "'"+String.join("','", g_code_join.split("\\,"))+"'";	// str_pnum_join.split("\\,") ==> ["5","4","61"]
+			String optnoes = "'"+String.join("','", optinfono_join.split("\\,"))+"'";	// str_pnum_join.split("\\,") ==> ["5","4","61"]
 			// ["5","4","61"]
 			// " 5 ' , 4 ' , 61 ' " 띄워쓰기는 잘보이게 하려고 한 것 임
 			// " ' 5 ' , ' 4 ' , ' 61 ' " 띄워쓰기는 잘보이게 하려고 한 것 임
 			
-			System.out.println("확인용 주문한 제품번호 g_noes "+ g_noes);
+			//System.out.println("확인용 주문한 제품번호 optnoes "+ optnoes);
 			
 			// 주문한 제품에 대해 email 보내기시 email 내용에 넣을 주문한 제품번호들에 대한 제품정보를 얻어오는 것
-			List<GameVO> jumungameList = pdao.getJumungameList(g_noes);
+			List<GameVO> jumungameList = pdao.getJumungameList(optnoes);
 			
 			// 주문한 제품에 대해 email 보내기시 email 내용에 넣을 주문한 제품번호들에 대한 제품정보를 얻어오는 것
 			StringBuilder sb = new StringBuilder();
@@ -169,7 +169,7 @@ public class OrderAddAction extends AbstractController {
 	        
 	        for(int i=0; i<jumungameList.size(); i++) {
 	        	
-	        	sb.append(jumungameList.get(i).getG_name()+"&nbsp;"+oqty_arr[i]+"개&nbsp;&nbsp;");
+	        	sb.append(jumungameList.get(i).getOptvo().getOpt_name()+"&nbsp;"+oqty_arr[i]+"개&nbsp;&nbsp;");
 	            sb.append("<img src='http://127.0.0.1:9090/SemiProject/img/상품옵션_디아블로4_2.jpg'/>");
 	            // +jumungameList.get(i).getG_img_1()+"
 	            

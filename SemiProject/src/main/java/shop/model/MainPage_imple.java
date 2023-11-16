@@ -136,4 +136,58 @@ public class MainPage_imple implements MainpageDAO {
 	
 	}
 
+
+	@Override
+	public List<CategoryVO> selectallCategory() throws SQLException {
+		
+		List<CategoryVO> categoryList = new ArrayList<>();
+		  
+		try {
+			     
+			  conn = ds.getConnection();
+		     
+		     
+			  String sql = " select c_no,c_code,c_name,category_img "
+			  		+ "from TBL_GAME_CATEGORY " ;
+						  
+		 
+		 
+			  pstmt = conn.prepareStatement(sql);
+		 
+		 
+			  rs = pstmt.executeQuery();
+		 
+		 
+			  while(rs.next()) {
+		    
+		    
+				  CategoryVO categovo = new CategoryVO();
+		    
+				  categovo.setC_no(rs.getInt(1));
+		    
+				  categovo.setC_code(rs.getString(2));
+		    
+				  categovo.setC_name(rs.getString(3));
+		    
+				  categovo.setCategory_img(rs.getString(4));
+		    
+	    
+				  categoryList.add(categovo);
+		 
+			  }// end of while(rs.next())-----------------
+		     
+		  
+		  } finally {
+		     
+			  close();
+		  
+		  }
+		  
+		  return categoryList;	
+	}
+		  
+		
+		
+		
+
 }

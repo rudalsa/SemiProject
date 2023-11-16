@@ -16,8 +16,12 @@ public class MainShopAction extends AbstractController {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		MainShopDAO sdao = new MainShopDAO_imple();
+		MainpageDAO mpdao = new MainPage_imple();
 		
 		try {
+	         List<MainsdVO> sdList = mpdao.sdimageSelectAll();
+	         request.setAttribute("sdList", sdList);
+
 	         List<GameVO> gameList = sdao.ShopListSelectAll();
 	         
 	         request.setAttribute("gameList", gameList);

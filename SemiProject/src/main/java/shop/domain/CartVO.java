@@ -11,7 +11,16 @@ public class CartVO {
 		private String fk_g_code;        //  제품번호                
 		private int oqty;           //  주문량
 		private String registerday; // 장바구니 입력날짜
+		private int fk_optno;
 		
+		public int getFk_optno() {
+			return fk_optno;
+		}
+
+		public void setFk_optno(int fk_optno) {
+			this.fk_optno = fk_optno;
+		}
+
 		private GameVO gavo;     // 제품정보객체 (오라클로 말하면 부모테이블)
 		private OptVO  opvo;	// 제품욥션객체 (오라클로 말하면 부모테이블)
 		

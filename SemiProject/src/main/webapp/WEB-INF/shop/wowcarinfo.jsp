@@ -25,9 +25,7 @@
 						엘프 유산 방어구로 종족의 유산을<br> 기념해 보세요. 그리고 영웅 난이도 무한의 여명에서 a힘을 합쳐 무한의
 						용군단에 맞서고<br> 아제로스를 수호하세요. 그 외에도 다양한 콘텐츠가 준비되어 있습니다.
 					</p>
-					<button onclick="location.href='mainShop.bz'" type="button" class="mb-3">용군단 구매하기</button><br>
-			
-					<span>최신 소식 & 업데이트</span> <span>새소식 모두 보기</span>
+					<button type="button" onclick="location.href='<%= ctxPath %>/gameopt.bz?g_code=${wcivo.fk_g_code}';"  class="mb-3">용군단 구매하기</button><br>					
 				</div>
 				<div class="row mb-4">
 					<div class="col-md-3 img" style="background-image: url('<%= ctxPath %>/img/wowcarinfo_img/${wcivo.carinfo_card_img1}'); background-size: cover; background-position: center;"  >
@@ -75,41 +73,47 @@
 				<div>
 					<div style="height:350px; background-image: url('<%= ctxPath %>/img/wowcarinfo_img/${wcivo.carinfo_bg_img1}'); background-size: cover;">
 						<br><br>
-						<p style="color: #ebdbc2; font-size: 10pt;">BLIZZCON 2023</p>
-						<h1 style="font-weight: bold; color:white;">블리즈컨® 컬렉션 판매 개시!</h1>
-						<p style="color: #ebdbc2; font-size: 10pt;">
-						월드오브 워크래프트와 기타 블리자드 게임 디지털 상품 등 풍성한 콘텐츠가<br>
-						포함되어있는 세트로 블리즈컨 개최를 기념해 보세요. 지금 바로 Battle.net 샵에서<br>
-						구매하실 수 있습니다.
-						</p>
-						<button onclick="location.href='mainShop.bz'" type="button">지금 구매하기</button>
+						<div style="margin-left:10%;">
+							<p style="color: #ebdbc2; font-size: 10pt;">BLIZZCON 2023</p>
+							<h1 style="font-weight: bold; color:white;">블리즈컨® 컬렉션 판매 개시!</h1>
+							<p style="color: #ebdbc2; font-size: 10pt;">
+							월드오브 워크래프트와 기타 블리자드 게임 디지털 상품 등 풍성한 콘텐츠가<br>
+							포함되어있는 세트로 블리즈컨 개최를 기념해 보세요. 지금 바로 Battle.net 샵에서<br>
+							구매하실 수 있습니다.
+							</p>
+							<button onclick="location.href='mainShop.bz'" type="button">지금 구매하기</button>
+						</div>
 					</div>
 				</div>
 				
 				<div>
 					<div class="text-right" style="height:350px; background-image: url('<%= ctxPath %>/img/wowcarinfo_img/${wcivo.carinfo_bg_img2}'); background-size: cover;">		
 						<br><br>
-						<p style="color: #ebdbc2; font-size: 10pt;">WOW 클래식 하드코어</p>
-						<h1 style="font-weight: bold; color:white;">부활도, 후회도 없습니다!</h1>
-						<p style="color: #ebdbc2; font-size: 10pt;">
-						WoW 클래식 하드코어 서버에서 아제로스에 산적한 위험 요소를 극복하고<br> 
-						얼마나 성장할 수 있는지 스스로를 시험해 보세요. 주어지는 목숨은 단<br> 
-						하나뿐이며,	 산 자의 세계로 돌려보내 줄 영혼의 치유사는 없습니다.
-						</p>
-						<button onclick="location.href='mainShop.bz'" type="button">지금 구매하기</button>
+						<div style="margin-right:10%;">
+							<p style="color: #ebdbc2; font-size: 10pt;">WOW 클래식 하드코어</p>
+							<h1 style="font-weight: bold; color:white;">부활도, 후회도 없습니다!</h1>
+							<p style="color: #ebdbc2; font-size: 10pt;">
+							WoW 클래식 하드코어 서버에서 아제로스에 산적한 위험 요소를 극복하고<br> 
+							얼마나 성장할 수 있는지 스스로를 시험해 보세요. 주어지는 목숨은 단<br> 
+							하나뿐이며,	 산 자의 세계로 돌려보내 줄 영혼의 치유사는 없습니다.
+							</p>
+							<button onclick="location.href='mainShop.bz'" type="button">지금 구매하기</button>
+						</div>
 					</div>
 				</div>
 				
 				<div>
 					<div style="height:350px; background-image: url('<%= ctxPath %>/img/wowcarinfo_img/${wcivo.carinfo_bg_img3}'); background-size: cover;">
 						<br><br>
-						<p style="color: #ebdbc2; font-size: 10pt;">블리즈컨 2023</p>
-						<h1 style="font-weight: bold; color:white;">입장권 추가 판매 실시</h1>
-						<p style="color: #ebdbc2; font-size: 10pt;">
-						2023년 11월 4~5일 개최되는 블리즈컨®에 참여할 마지막 기회를 놓치지<br>
-						마세요. 올해 마지막 입장권 판매입니다. 
-						</p>
-						<button onclick="location.href='mainShop.bz'" type="button" >지금 구매하기</button>
+						<div style="margin-left:10%;">
+							<p style="color: #ebdbc2; font-size: 10pt;">블리즈컨 2023</p>
+							<h1 style="font-weight: bold; color:white;">입장권 추가 판매 실시</h1>
+							<p style="color: #ebdbc2; font-size: 10pt;">
+							2023년 11월 4~5일 개최되는 블리즈컨®에 참여할 마지막 기회를 놓치지<br>
+							마세요. 올해 마지막 입장권 판매입니다. 
+							</p>
+							<button onclick="location.href='mainShop.bz'" type="button" >지금 구매하기</button>
+						</div>
 					</div>
 				</div>
 				
@@ -137,43 +141,49 @@
 				<div>
 					<div style="height:350px; background-image: url('<%= ctxPath %>/img/wowcarinfo_img/${wcivo.carinfo_bg_img4}'); background-size: cover;">
 						<br><br><br>
-						<h1 style="font-weight: bold; color:white;">교역소 영업 개시!</h1>
-						<p style="color: #ebdbc2; font-size: 10pt;">
-						교역소가 본격적인 영업을 개시했습니다. 여행자의 인장으로 온갖 신비롭고<br>
-						환상적인 물품을 수집품에 추가할 수 있죠. 여행자의 인장은 어떻게 얻냐고요?<br>
-						다양한 게임 내 활동을 수행하면 된답니다.
-						</p>
-						<button onclick="location.href='mainShop.bz'" type="button">지금 구매하기</button>
+						<div style="margin-left:10%;">
+							<h1 style="font-weight: bold; color:white;">교역소 영업 개시!</h1>
+							<p style="color: #ebdbc2; font-size: 10pt;">
+							교역소가 본격적인 영업을 개시했습니다. 여행자의 인장으로 온갖 신비롭고<br>
+							환상적인 물품을 수집품에 추가할 수 있죠. 여행자의 인장은 어떻게 얻냐고요?<br>
+							다양한 게임 내 활동을 수행하면 된답니다.
+							</p>
+							<button onclick="location.href='mainShop.bz'" type="button">지금 구매하기</button>
+						</div>
 					</div>
 				</div>
 				
 				<div>
 					<div class="text-right" style="height:350px; background-image: url('<%= ctxPath %>/img/wowcarinfo_img/${wcivo.carinfo_bg_img5}'); background-size: cover;">			
 						<br><br>
-						<p style="color: #ebdbc2; font-size: 10pt;">180일 게임 시간 묶음 상품</p>
-						<h1 style="font-weight: bold; color:white;">신나는 모험을 즐기세요!</h1>
-						<p style="color: #ebdbc2; font-size: 10pt;">
-						멋진 지느러미를 뽐내는 경이로운 파도수염 탈것을 탈것 수집품에 추가하세요!<br>
-						180일 게임 시간을 구매하고 월드 오브 워크래프트: 리치 왕의 분노 클래식 전용<br>
-						깜찍한 글럽 애완동물과 함께 손에 넣으세요.
-						</p>
-						<button onclick="location.href='mainShop.bz'" type="button">지금 구매하기</button>
+						<div style="margin-right:10%;">
+							<p style="color: #ebdbc2; font-size: 10pt;">180일 게임 시간 묶음 상품</p>
+							<h1 style="font-weight: bold; color:white;">신나는 모험을 즐기세요!</h1>
+							<p style="color: #ebdbc2; font-size: 10pt;">
+							멋진 지느러미를 뽐내는 경이로운 파도수염 탈것을 탈것 수집품에 추가하세요!<br>
+							180일 게임 시간을 구매하고 월드 오브 워크래프트: 리치 왕의 분노 클래식 전용<br>
+							깜찍한 글럽 애완동물과 함께 손에 넣으세요.
+							</p>
+							<button onclick="location.href='mainShop.bz'" type="button">지금 구매하기</button>
+						</div>
 					</div>
 				</div>
 				
 				<div>
 					<div style="height:350px; background-image: url('<%= ctxPath %>/img/wowcarinfo_img/${wcivo.carinfo_bg_img6}'); background-size: cover;">
 						<br><br>
-						<p style="color: #ebdbc2; font-size: 10pt;">리치 왕의 분노 클래식</p>
-						<h1 style="font-weight: bold; color:white;">리치 왕이 돌아왔습니다</h1>
-						<p style="color: #ebdbc2; font-size: 10pt;">
-						리치 왕의 분노 클래식이 전 세계에 출시되었습니다. WoW 게임 시간이 남아<br>
-						있다면 추가 요금 없이 이용이 가능합니다. 선택 상품인 노스렌드 업그레이드를<br>
-						구매하고 70 레벨 캐릭터 업그레이드와 모험에 도움이 되는 각종 상품을 받아<br>
-						화려하게 노스렌드로 복귀하세요. 영웅 여러분, 지금 바로 얼어붙은 황무지를<br>
-						정복하세요!
-						</p>
-						<button onclick="location.href='mainShop.bz'" type="button">지금 구매하기</button>
+						<div style="margin-left:10%;">
+							<p style="color: #ebdbc2; font-size: 10pt;">리치 왕의 분노 클래식</p>
+							<h1 style="font-weight: bold; color:white;">리치 왕이 돌아왔습니다</h1>
+							<p style="color: #ebdbc2; font-size: 10pt;">
+							리치 왕의 분노 클래식이 전 세계에 출시되었습니다. WoW 게임 시간이 남아<br>
+							있다면 추가 요금 없이 이용이 가능합니다. 선택 상품인 노스렌드 업그레이드를<br>
+							구매하고 70 레벨 캐릭터 업그레이드와 모험에 도움이 되는 각종 상품을 받아<br>
+							화려하게 노스렌드로 복귀하세요. 영웅 여러분, 지금 바로 얼어붙은 황무지를<br>
+							정복하세요!
+							</p>
+							<button onclick="location.href='mainShop.bz'" type="button">지금 구매하기</button>
+						</div>
 					</div>
 					
 				</div>

@@ -20,5 +20,8 @@ public interface GameOptDAO {
 	
 	// 장바구니에 기존 제품이 없을경우 insert 하고, // 장바구니에 기존 제품이 있을경우 update 한다.
 	int addCart(Map<String, String> paraMap) throws SQLException;
+	
+	// 찜 목록 불러오기
+	List<GameVO> SelectAllLike(List<String> g_code_arr) throws SQLException;
 
 }
