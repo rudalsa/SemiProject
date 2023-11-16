@@ -1,5 +1,7 @@
 package shop.model;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.sql.*;
 import java.util.*;
 
@@ -7,7 +9,10 @@ import javax.naming.*;
 import javax.sql.DataSource;
 
 import gameopt.domain.OptVO;
+import member.domain.MemberVO;
 import shop.domain.*;
+import util.security.AES256;
+import util.security.SecretMyKey;
 
 
 public class ProductDAO_imple implements ProductDAO {
@@ -16,6 +21,8 @@ public class ProductDAO_imple implements ProductDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
+	private AES256 aes;
+
 	
 	// 생성자
 	public ProductDAO_imple() {
@@ -24,8 +31,12 @@ public class ProductDAO_imple implements ProductDAO {
 			Context initContext = new InitialContext();
 		    Context envContext  = (Context)initContext.lookup("java:/comp/env");
 		    ds = (DataSource)envContext.lookup("jdbc/semi_oracle");
+		    aes = new AES256(SecretMyKey.KEY);
+		    // SecretMyKey.KEY 은 우리가 만든 암호화/복호화 키이다.
 		    
 		} catch(NamingException e) {
+			e.printStackTrace();
+		} catch(UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		
@@ -119,27 +130,103 @@ public class ProductDAO_imple implements ProductDAO {
 
 	
 	// 게임순서번호 채번 해오기
-	@Override
-	public int getG_codeOfProduct() throws SQLException {
-		
-		int g_code = 0;
-		
-		try {
-			conn = ds.getConnection();
+		@Override
+		public int getG_codeOfProduct() throws SQLException {
 			
-			String sql = " select seq_tbl_game_product_g_code.nextval AS G_CODE "
-					   + " from dual ";
+			int g_code = 0;
 			
-			pstmt = conn.prepareStatement(sql);
-			
-			rs = pstmt.executeQuery();
-			
-			rs.next();
-			g_code = Integer.parseInt(rs.getString(1));
-		} finally {
-			close();
-		}
+			try {
+				conn = ds.getConnection();
+				
+				String sql = " select seq_tbl_game_product_g_code.nextval AS G_CODE "
+						   + " from dual ";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				rs = pstmt.executeQuery();
+				
+				rs.next();
+				g_code = Integer.parseInt(rs.getString(1));
+			} finally {
+				close();
+			}
 
+			return g_code;
+		}// end of public int getG_noOfProduct() throws SQLException------------------------------
+
+
+		
+		// tbl_product 테이블에 제품정보 insert 하기
+		@Override
+		public int productInsert(GameVO gamevo) throws SQLException {
+			
+			int result = 0;
+			
+			try {
+				conn = ds.getConnection();
+				
+				String sql = " insert into tbl_game_product(g_no, g_code, g_name, fk_c_code, g_company, g_img_1, g_img_2, g_qty, g_price, g_sale_price, fk_s_code, g_content, g_coin) "
+						   + " values(seq_tbl_game_product_g_no.nextval,?,?,?,?,?,?,?,?,?,?,?,?) "; 
+						   
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				
+				pstmt.setString(1, gamevo.getG_code());
+		        pstmt.setString(2, gamevo.getG_name());
+		        pstmt.setString(3, gamevo.getFk_c_code());    
+		        pstmt.setString(4, gamevo.getG_company()); 
+		        pstmt.setString(5, gamevo.getG_img_1());    
+		        pstmt.setString(6, gamevo.getG_img_2());
+		        pstmt.setInt(7, gamevo.getG_qty()); 
+		        pstmt.setInt(8, gamevo.getG_price());
+		        pstmt.setInt(9, gamevo.getG_sale_price());
+		        pstmt.setString(10, gamevo.getFk_s_code());
+		        pstmt.setString(11, gamevo.getG_content());
+		        pstmt.setInt(12, gamevo.getG_coin());
+				
+		        result = pstmt.executeUpdate();
+				
+			} finally {
+				close();
+			}
+
+			return result;
+		}// end of public int productInsert(ProductVO pvo) throws SQLException---------------
+
+
+		
+		// tbl_product_imagefile 테이블에 제품의 추가이미지 파일명 insert 하기
+			@Override
+			public int tbl_product_optinfo_insert(Map<String, String> paraMap) throws SQLException {
+				
+				int result = 0;
+				
+				try {
+					conn = ds.getConnection();
+					
+					String sql = " insert into tbl_product_optinfo(optinfono, fk_g_code, imgfile, opt_name, opt_price, opt_sale_price, opt_content, opt_qty) "
+							   + " values(tbl_product_optinfo_optinfono.nextval, ?, ?, ?, ?, ?, ?, ?) "; 
+							   
+					
+					pstmt = conn.prepareStatement(sql);
+					
+			        pstmt.setInt(1, Integer.parseInt(paraMap.get("g_code")));
+			        pstmt.setString(2, paraMap.get("attachimg"));
+			        pstmt.setString(3, paraMap.get("attachName"));
+			        pstmt.setInt(4, Integer.parseInt(paraMap.get("attachPrice")));
+			        pstmt.setInt(5, Integer.parseInt(paraMap.get("attachSalePrice")));
+			        pstmt.setString(6, paraMap.get("attachContent"));
+			        pstmt.setInt(7, Integer.parseInt(paraMap.get("attachOpty")));
+			        
+					
+			        result = pstmt.executeUpdate();
+					
+				} finally {
+					close();
+				}
+
+<<<<<<< HEAD
 		return g_code;
 	}// end of public int getG_noOfProduct() throws SQLException------------------------------
 
@@ -218,6 +305,10 @@ public class ProductDAO_imple implements ProductDAO {
 			return result;
 		}
 
+=======
+				return result;
+			}
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
 	
 	// 로그인한 사용자의 장바구니 목록을 조회하기
 	@Override
@@ -892,6 +983,7 @@ public class ProductDAO_imple implements ProductDAO {
 	}
 
 
+<<<<<<< HEAD
 	
 	// ===== Transaction 처리하기 ===== // 
     // 1. 주문 테이블에 입력되어야할 주문전표를 채번(select)하기
@@ -1053,8 +1145,248 @@ public class ProductDAO_imple implements ProductDAO {
 	}// end of public int oneOrderAdd(Map<String, String> paraMap) throws SQLException
 
 
+=======
+	// 페이징 처리를 위한 총 주문 수량 알아오기 //
+	// 1. 일반 사용자로 로그인한 경우 자신이 주문한 내역만 조회
+	// 2. 관리자(admin)으로 로그인한 경우 모든 사용자가 주문한 내역을 조회
+	@Override
+	public int getTotalCountOrder(String user_id) throws SQLException {
+		int totalCountOrder =0;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " select count(*) AS CNT "
+					+ " from tbl_order A Join tbl_orderdetail B "
+					+ " on A.odrcode = B.fk_odrcode ";
+			
+			if("admin".equals(user_id)) {
+				pstmt= conn.prepareStatement(sql);
+			}
+			else {
+				sql += " where A.fk_userid = ? ";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, user_id);
+				
+			}
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
 
+			rs = pstmt.executeQuery();
+			rs.next();
+			
+			totalCountOrder = rs.getInt("CNT");
+					
+					
+		}finally {
+			close();
+		}
+		
+		
+		return totalCountOrder;
+	}// end of public int getTotalCountOrder(String userid) throws SQLException {
+
+
+	// *** 관리자가 아닌 일반사용자로 로그인 했을 경우에는 자신이 주문한 내역만 페이징 처리하여 조회를 해오고,
+    //       관리자로 로그인을 했을 경우에는 모든 사용자들의 주문내역을 페이징 처리하여 조회해온다.
+   @Override
+   public List<Map<String, String>> getOrderList(Map<String, String> paraMap) throws SQLException {
+      
+      List<Map<String, String>> order_map_List = new ArrayList<>();
+      
+      try {
+         conn = ds.getConnection();
+         
+        String sql = " SELECT odrcode, fk_userid, odrdate, odrseqno, FK_OPTINFONO, oqty, odrprice "
+         		+ "                 , deliverstatus, FK_G_CODE, G_CONTENT, G_IMG_1, OPT_PRICE, OPT_SALE_PRICE ,OPT_NAME, OPT_QTY"
+         		+ "                  FROM "
+         		+ "                  ( "
+         		+ "                  SELECT ROW_NUMBER() OVER(ORDER BY B.fk_odrcode desc, odrseqno asc) AS RNO "
+         		+ "                    , A.odrcode, A.fk_userid, to_char(A.odrdate, 'yyyy-mm-dd hh24:mi:ss') AS odrdate "
+         		+ "                     , B.ODRSEQNO, B.FK_OPTINFONO, B.oqty, B.odrprice  "
+         		+ "                  , CASE B.deliverstatus  "
+         		+ "                  WHEN 1 THEN '주문완료' "
+         		+ "                  WHEN 2 THEN '배송중' "
+         		+ "                  WHEN 1 THEN '배송완료' "
+         		+ "                  END AS deliverstatus , FK_G_CODE, P.G_CONTENT, P.G_IMG_1, OPT_PRICE, OPT_SALE_PRICE, OPT_NAME, OPT_QTY "
+         		+ "                  FROM tbl_order A JOIN tbl_orderdetail B "
+         		+ "                  ON A.odrcode = B.fk_odrcode  "
+         		+ "                  JOIN tbl_product_OPTINFO O "
+         		+ "                  ON B.FK_OPTINFONO = O.OPTINFONO "
+         		+ "                  JOIN tbl_game_product P "
+         		+ "                  on O.FK_G_CODE = P.G_CODE ";
+                  
+         if (!"admin".equals(paraMap.get("userid"))) {
+            // 관리자가 아닌 일반 사용자로 로그인한 경우
+            sql += " WHERE A.fk_userid = ? ";
+         }
+
+         sql += " ) V " 
+             +  " WHERE V.RNO BETWEEN ? AND ? ";
+         
+         pstmt = conn.prepareStatement(sql);
+         
+         // === 페이징처리의 공식 ===
+           // where RNO between (조회하고자하는페이지번호 * 한페이지당보여줄행의개수) - (한페이지당보여줄행의개수 - 1) and (조회하고자하는페이지번호 * 한페이지당보여줄행의개수);
+
+         int currentShowPageNo = Integer.parseInt(paraMap.get("currentShowPageNo"));
+         int sizePerPage = 10; //  한 페이지당 화면상에 보여줄 주문내역의 개수는 10으로 한다.
+         
+         if (!"admin".equals(paraMap.get("userid"))) {
+            // 관리자가 아닌 일반 사용자로 로그인한 경우
+            pstmt.setString(1, paraMap.get("userid"));
+            pstmt.setInt(2, (currentShowPageNo * sizePerPage) - (sizePerPage - 1)); // 공식이다.
+            pstmt.setInt(3, (currentShowPageNo * sizePerPage)); // 공식이다.
+            
+            
+         } else {
+            // 관리자로 로그인한 경우
+            pstmt.setInt(1, (currentShowPageNo * sizePerPage) - (sizePerPage - 1)); // 공식이다.
+            pstmt.setInt(2, (currentShowPageNo * sizePerPage)); // 공식이다.
+         }
+         
+         rs = pstmt.executeQuery();
+         
+         while(rs.next()) {
+
+            String odrcode = rs.getString("odrcode");
+            String fk_userid = rs.getString("fk_userid");
+            String odrdate = rs.getString("odrdate");
+            String odrseqno = rs.getString("odrseqno");
+            String FK_OPTINFONO = rs.getString("FK_OPTINFONO");
+            String oqty = rs.getString("oqty");
+            String odrprice = rs.getString("odrprice");
+            String deliverstatus = rs.getString("deliverstatus");
+            String FK_G_CODE = rs.getString("FK_G_CODE");
+            String G_CONTENT = rs.getString("G_CONTENT");
+            String G_IMG_1 = rs.getString("G_IMG_1");
+            String OPT_PRICE = rs.getString("OPT_PRICE");
+            String OPT_SALE_PRICE = rs.getString("OPT_SALE_PRICE");
+            String OPT_NAME = rs.getString("OPT_NAME");
+            String OPT_QTY = rs.getString("OPT_QTY");
+            
+            
+            Map<String, String> odrmap = new HashMap<>();
+            odrmap.put("ODRCODE", odrcode);
+            odrmap.put("FK_USERID", fk_userid);
+            odrmap.put("ODRDATE", odrdate);
+            odrmap.put("ODRSEQNO", odrseqno);
+            odrmap.put("FK_OPTINFONO", FK_OPTINFONO);
+            odrmap.put("OQTY", oqty);
+            odrmap.put("ODRPRICE", odrprice);
+            odrmap.put("DELIVERSTATUS", deliverstatus);
+            odrmap.put("FK_G_CODE", FK_G_CODE);
+            odrmap.put("G_CONTENT", G_CONTENT);
+            odrmap.put("G_IMG_1", G_IMG_1);
+            odrmap.put("OPT_PRICE", OPT_PRICE);
+            odrmap.put("OPT_SALE_PRICE", OPT_SALE_PRICE);
+            odrmap.put("OPT_NAME", OPT_NAME);
+            odrmap.put("OPT_QTY", OPT_QTY);
+
+            
+            order_map_List.add(odrmap);
+            
+         }// end of while(rs.next())-------------
+      } finally {
+         close();
+      }
+      
+      return order_map_List;
+   }// end of public List<Map<String, String>> getOrderList(Map<String, String> paraMap) throws SQLException
+	
+	
+	@Override
+	public MemberVO odrcodeOwnerMemberInfo(String odrcode) throws SQLException {
+		MemberVO mvo = null;
 	    
+	    try {
+	       conn = ds.getConnection();
+	       String sql = " select user_id, user_name, user_email, user_phone, user_zipcode, user_address, user_detail_address, user_extraaddress, user_gender "+
+	    		   		" , user_birthday, user_coin, user_payment, to_char(user_registerday, 'yyyy-mm-dd') AS user_registerday "+
+	    		   		"   from tbl_user "+
+	                    " where user_id = (select fk_userid " + 
+	                    "                 from tbl_order " + 
+	                    "                 where odrcode = ? ) ";
+	       
+	       pstmt = conn.prepareStatement(sql);
+	       pstmt.setString(1, odrcode);
+	       
+	       rs = pstmt.executeQuery();
+	       
+	       boolean isExists = rs.next();
+	       
+	       if(isExists) {
+	          mvo = new MemberVO();
+	          mvo.setUser_id(rs.getString(1));
+	          mvo.setUser_name(rs.getString(2));
+	          mvo.setUser_email(aes.decrypt(rs.getString(3)));  
+	          mvo.setUser_phone(aes.decrypt(rs.getString(4))); 
+	          mvo.setUser_zipcode(rs.getString(5));
+	          mvo.setUser_address(rs.getString(6));
+	          mvo.setUser_detail_address(rs.getString(7));
+	          mvo.setUser_extraaddress(rs.getString(8));
+	          mvo.setUser_gender(rs.getString(9));
+	          mvo.setUser_birthday(rs.getString(10));
+	          mvo.setUser_coin(rs.getInt(11));
+	          mvo.setUser_payment(rs.getInt(12));
+	          mvo.setUser_registerday(rs.getString(13));
+	       }
+	       
+	    } catch (GeneralSecurityException | UnsupportedEncodingException e) {
+	       e.printStackTrace();
+	    } finally {
+	       close();
+	    }
+	    
+	    return mvo;  
+	}
+	
+	// tbl_orderdetail 테이블의 deliverstatus(배송상태) 컬럼의 값을 2(배송시작)로 변경하기
+	@Override
+	public int updateDeliverStart(String odrcodeoptno) throws SQLException {
+		int n = 0;
+	      
+	      try {
+	         conn = ds.getConnection();
+	         
+	         String sql = " update tbl_orderdetail set deliverstatus = 2 "
+	                  + " where fk_odrcode || '/' || FK_OPTINFONO in("+odrcodeoptno+") "; 
+	         
+	         pstmt = conn.prepareStatement(sql); 
+	         
+	         n = pstmt.executeUpdate();
+	         
+	      } finally {
+	         close();
+	      }
+	      
+	      return n;
+	}// end of 	public int updateDeliverStart(String odrcodePnum) throws SQLException {
+	
+	
+	// tbl_orderdetail 테이블의 deliverstatus(배송상태) 컬럼의 값을 3(배송완료)로 변경하기
+	@Override
+	public int updateDeliverEnd(String odrcodeoptno) throws SQLException {
+		int n = 0;
+	      
+	      try {
+	         conn = ds.getConnection();
+	         
+	         String sql = " update tbl_orderdetail set deliverstatus = 3, deliverDate = sysdate "
+	                  + " where fk_odrcode || '/' || FK_OPTINFONO in("+odrcodeoptno+") "; 
+	         
+	         pstmt = conn.prepareStatement(sql); 
+	         
+	         n = pstmt.executeUpdate();
+	         
+	      } finally {
+	         close();
+	      }
+	      
+	      return n;
+	}//end of 	public int updateDeliverEnd(String odrcodePnum) throws SQLException {
+	
+	
+		    
 	    
 	    
 

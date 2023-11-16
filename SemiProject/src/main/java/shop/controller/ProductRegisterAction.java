@@ -16,8 +16,11 @@ import common.controller.AbstractController;
 import member.domain.MemberVO;
 import shop.domain.*;
 import shop.model.*;
+<<<<<<< HEAD
 import shop.domain.CategoryVO;
 import shop.domain.SpecVO;
+=======
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
 
 public class ProductRegisterAction extends AbstractController {
 
@@ -72,7 +75,7 @@ public class ProductRegisterAction extends AbstractController {
 	    		  
 	    		  // 1. 첨부되어진 파일을 디스크의 어느 경로에 업로드 할 것인지 그 경로를 설정해야 한다.
 	    		  ServletContext svlCtx = session.getServletContext();
-	    		//  String uploadFileDir = svlCtx.getRealPath("/images");
+	    		 // String uploadFileDir = svlCtx.getRealPath("/images");
 	    		  
 	    		  
 	    	   // System.out.println("=== 첨부되어지는 이미지 파일이 올라가는 절대경로 uploadFileDir ==> " + uploadFileDir);
@@ -80,7 +83,11 @@ public class ProductRegisterAction extends AbstractController {
 	    		  // ==> C:\NCS\workspace_jsp\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\MyMVC\images    
 	    		  
 	    	   // C:\NCS\workspace_jsp\MyMVC\src\main\webapp\images
+<<<<<<< HEAD
 	    	    String uploadFileDir = "C:\\git\\SemiProject\\SemiProject\\src\\main\\webapp\\img";
+=======
+	    	    String uploadFileDir = "/Users/sub/git/SemiProject/SemiProject/src/main/webapp/img";
+>>>>>>> branch 'main' of https://github.com/k971230/SemiProject.git
 	    		  
 	    		  
 	    		  /*
@@ -117,7 +124,6 @@ public class ProductRegisterAction extends AbstractController {
 	    		// === 첨부 이미지 파일, 제품설명서 파일을 올렸으니 그 다음으로 제품정보를 (제품명, 정가, 제품수량,...) DB의 tbl_product 테이블에 insert 를 해주어야 한다.  ===
 	    		// tbl_product 테이블에 insert 를 해주어야 한다. ===
 					String fk_c_code = mtrequest.getParameter("fk_c_code");   // 카테고리 번호
-					String g_no = mtrequest.getParameter("g_no");
 					String g_name = mtrequest.getParameter("g_name");       // 제품명
 					String g_company = mtrequest.getParameter("g_company"); // 제조사회사명
 
@@ -225,26 +231,26 @@ public class ProductRegisterAction extends AbstractController {
 					int g_code = pdao.getG_codeOfProduct(); // 게임순서 채번 해오기
 					
 					
-					GameVO gamevo = new GameVO();										   // 제품번호(Primary Key)
-					gamevo.setG_code(Integer.toString(g_code));
-					gamevo.setG_name(g_name);									   // 제품명
-					gamevo.setFk_c_code(fk_c_code);				   // 카테고리코드(Foreign Key)의 시퀀스번호 참조
-					gamevo.setG_company(g_company); 								   // 제조회사명
-					gamevo.setG_img_1(g_img_1);								   // 제품이미지1   이미지파일명
-					gamevo.setG_img_2(g_img_2);								   // 제품이미지2   이미지파일명 
-					gamevo.setG_qty(Integer.parseInt(g_qty)); 					   // 제품 재고량
-					gamevo.setG_price(Integer.parseInt(g_price)); 					   // 제품 정가
-					gamevo.setG_sale_price(Integer.parseInt(g_sale_price)); 			   // 제품 판매가(할인해서 팔 것이므로)
-					gamevo.setFk_s_code(fk_s_code); 				   // 'HIT', 'NEW', 'BEST' 에 대한 스펙번호인 시퀀스번호를 참조
-					gamevo.setG_content(g_content); 								   // 제품설명 
-					gamevo.setG_coin(Integer.parseInt(g_coin)); 					   // 포인트 점수
+					GameVO pvo = new GameVO();										   // 제품번호(Primary Key)
+					pvo.setG_code(Integer.toString(g_code));
+					pvo.setG_name(g_name);									   // 제품명
+					pvo.setFk_c_code(fk_c_code);				   // 카테고리코드(Foreign Key)의 시퀀스번호 참조
+					pvo.setG_company(g_company); 								   // 제조회사명
+					pvo.setG_img_1(g_img_1);								   // 제품이미지1   이미지파일명
+					pvo.setG_img_2(g_img_2);								   // 제품이미지2   이미지파일명 
+					pvo.setG_qty(Integer.parseInt(g_qty)); 					   // 제품 재고량
+					pvo.setG_price(Integer.parseInt(g_price)); 					   // 제품 정가
+					pvo.setG_sale_price(Integer.parseInt(g_sale_price)); 			   // 제품 판매가(할인해서 팔 것이므로)
+					pvo.setFk_s_code(fk_s_code); 				   // 'HIT', 'NEW', 'BEST' 에 대한 스펙번호인 시퀀스번호를 참조
+					pvo.setG_content(g_content); 								   // 제품설명 
+					pvo.setG_coin(Integer.parseInt(g_coin)); 					   // 포인트 점수
 					
 					
 					// tbl_product 테이블에 제품정보 insert 하기
 					String message = "";
 					String loc = "";
 					try {
-						int n = pdao.productInsert(gamevo);
+						int n = pdao.productInsert(pvo);
 						
 						// === 추가이미지파일이 있다라면 tbl_product_imagefile 테이블에 제품의 추가이미지 파일명 insert 해주기 === // 
 		                   String attachCount = mtrequest.getParameter("attachCount");

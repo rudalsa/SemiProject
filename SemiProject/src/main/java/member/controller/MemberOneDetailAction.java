@@ -33,6 +33,7 @@ public class MemberOneDetailAction extends AbstractController {
 				
 				MemberDAO mdao = new MemberDAO_imple();
 				MemberVO mvo =  mdao.selectOneMember(user_id);
+				
 				request.setAttribute("mvo", mvo);
 				request.setAttribute("goBackURL", goBackURL);
 				

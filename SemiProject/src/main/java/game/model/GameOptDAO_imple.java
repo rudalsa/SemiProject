@@ -267,7 +267,7 @@ public class GameOptDAO_imple implements GameOptDAO {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, g_code_arr.get(i));
 				
-				System.out.println("확인용"+g_code_arr.get(i));
+				// System.out.println("확인용"+g_code_arr.get(i));
 				
 				
 				rs = pstmt.executeQuery();
