@@ -174,7 +174,7 @@ li.btn:hover {
     color: #7AFF7A;
     font-weight: 900;
     box-sizing: border-box;
-    background: url('img/a_psw_img/scan_lines.png'), linear-gradient(180deg, rgba(0, 0, 0, 0.3) 30.73%, rgba(0, 51, 1, 0.3) 72.92%, rgba(0, 134, 3, 0.3) 100%), #151515;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 30.73%, rgba(0, 51, 1, 0.3) 72.92%, rgba(0, 134, 3, 0.3) 100%), #151515;
     background-size: cover;
     background-blend-mode: lighten, normal, normal;
     border: 1px solid #00FF00;
@@ -186,7 +186,7 @@ li.btn:hover {
 
 #cart {
     box-sizing: border-box;
-    background: url('img/a_psw_img/scan_lines.png'), linear-gradient(180deg, rgba(30, 134, 176, 0) 0%, rgba(30, 134, 176, 0.3) 100%), #000000;
+    background: linear-gradient(180deg, rgba(30, 134, 176, 0) 0%, rgba(30, 134, 176, 0.3) 100%), #000000;
     background-size: cover;
     background-blend-mode: lighten, normal, normal;
     border: 1px solid #1E86B0;
@@ -199,7 +199,7 @@ li.btn:hover {
 
 #like {
     box-sizing: border-box;
-    background: url('img/a_psw_img/scan_lines.png'), linear-gradient(180deg, rgba(255, 192, 203, 0) 0%, rgba(255, 192, 203, 0.3) 100%), #000000;
+    background: linear-gradient(180deg, rgba(255, 192, 203, 0) 0%, rgba(255, 192, 203, 0.3) 100%), #000000;
     background-size: cover;
     background-blend-mode: lighten, normal, normal;
     border: 1px solid #FF69B4;

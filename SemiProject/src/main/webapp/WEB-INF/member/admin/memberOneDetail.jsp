@@ -109,6 +109,11 @@ function goResignation(){
 	</c:if>
 
 
+	
+
+
+
+
 <c:if test="${requestScope.method == 'POST'}">
    
    <div style="margin-top:5%; text-align: center; font-size: 14pt; color: red;">

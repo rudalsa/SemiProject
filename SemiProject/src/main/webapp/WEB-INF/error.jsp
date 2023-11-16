@@ -6,7 +6,7 @@
    //      /MyMVC
 %>  
 
-<jsp:include page="header_error.jsp" />  
+<jsp:include page="header_suc.jsp" />  
 
    <div class="container">
    	   <p class="h2 text-danger mt-4">장애발생</p>
@@ -14,5 +14,5 @@
    	   <p class="h4 text-primary mt-3">빠른 복구를 위해 최선을 다하겠습니다</p>
    </div>
 	
-<jsp:include page="footer_error.jsp" />
+<jsp:include page="footer_suc.jsp" />
   

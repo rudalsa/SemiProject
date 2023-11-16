@@ -16,10 +16,16 @@ public class WowcarinfoAction extends AbstractController {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		
+		String g_code = request.getParameter("g_code");
+		
 		WowcarinfoDAO wdao = new WowcarinfoDAO_imple();
 		
+		
+		
+		// System.out.println(g_code);
+		
 		try { 
-		List<WowcarinfoVO> wciList = wdao.wowCarinfoListSelectAll();
+		List<GameCarinfoVO> wciList = wdao.wowCarinfoListSelectAll(g_code);
 		
 		request.setAttribute("wciList", wciList); 
 		//super.setRedirect(false);

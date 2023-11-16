@@ -1,0 +1,85 @@
+@charset "UTF-8";
+
+.video-container {
+      position: relative;
+      width: 100%;
+    }
+
+    /* 비디오 스타일 */
+body > div.video-container > video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      object-fit: cover; /* 비디오 크기를 컨테이너에 맞게 조절 */
+      display: flex;
+
+    }
+	
+	
+
+    /* 첫번째 content 스타일 */
+    
+     div.content-1 {
+	  width: 90%;
+      border: solid 0px red;
+      margin: 0 auto;
+      color: #fff; /* 텍스트 색상 설정 */
+      position: relative; /* 상대 위치로 설정 */
+      z-index: 1; /* 텍스트가 비디오 위에 렌더링되도록 설정 */
+    }
+    
+    div.row {
+	  width: 100%;
+      margin: 0 auto;
+      height: 200px;
+      color: #fff; /* 텍스트 색상 설정 */
+      position: relative; /* 상대 위치로 설정 */
+      z-index: 1; /* 텍스트가 비디오 위에 렌더링되도록 설정 */
+	}
+	
+	div.container-2 {
+		border: solid 0px red;
+	}
+	
+
+	
+	body > div.container-2 > div:nth-child(1) > div > div {
+		border: solid 0px gray;
+	}
+	
+	body > div.container-2 > div:nth-child(2) > div > div.row.card-container > div > div > div > p {
+		text-align: center;
+	}
+	
+	div.card-body2 {
+		background-color: rgba(46, 17, 21, 0.85);
+		height: 400px;
+	}
+
+	 /* 이미지 스타일 */
+  .img {
+    position: relative;
+  }
+
+	body > div.container-2 > div:nth-child(1) > div > img {
+		margin: 5% 0 0 5%;
+		border: solid 0px darkgray;
+		border-radius: 2%;
+	}
+
+
+
+  
+  
+  body > div.container-2 > div:nth-child(2) > div > div.row.card-container > div > div > div > h5 {
+	  text-align: center;
+	  font-weight: bold;
+	  font-size: 18pt;
+  }	
+  
+  
+
+  
+
+  

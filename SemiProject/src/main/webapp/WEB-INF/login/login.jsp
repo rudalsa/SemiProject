@@ -31,8 +31,8 @@ $(document).ready(function(){
 });// end of $(document).ready(function(){})--------------
 </script>
 
-
-<section class="backgroundimg mt-3" style="background-image: url('<%= ctxPath %>/img/vm.jpg'); background-size: 90% auto; background-position: center 5%; background-repeat: no-repeat; height: 80%;">
+   
+<section class="backgroundimg mt-3" style="background-image: url('<%= ctxPath %>/img/tbl_game_product_image/ovwt_sm_9.jpg'); background-size: 90% auto; background-position: center 5%; background-repeat: no-repeat; height: 80%;">
     <div class="container">
         <div class="row justify-content-center align-items-center" style="min-height: 300px; ">
             <div class="col-lg-12 text-center">
@@ -193,10 +193,3 @@ $(document).ready(function(){
 </body>
 </html>
  
- 
-<!--  이 코드는 Bootstrap의 그리드 시스템 및 클래스를 사용하여 섹션의 레이아웃을 구성하고, 섹션의 높이를 최소 250px로 고정하도록 했습니다. 기존 코드와 Bootstrap을 통합하여 웹 페이지를 디자인할 수 있게 되었습니다. 페이지의 다른 부분에 대해서도 Bootstrap을 활용하여 반응형 디자인을 추가할 수 있습니다. -->
-
-
-
-
-

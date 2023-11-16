@@ -10,6 +10,22 @@
 
 <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/shop/gameopt.css"> 
 
+<style type="text/css">
+
+div#viewComments {
+
+				  width: 80%;
+                  margin: 1% 0 0 0; 
+                  text-align: left;
+                  max-height: 300px;
+                  overflow: auto;
+                  /* border: solid 1px red; */
+}
+
+
+
+
+</style>
 
 
 
@@ -23,7 +39,11 @@
 	        
 	        // 캐러셀 이미지 변경
 	        $('.carousel-inner .carousel-item.active img').attr('src', newImageSrc);
+	       
 	    });
+	    
+	    
+	    goReviewListView();
 	
 	    
 	});
@@ -79,6 +99,188 @@
     
   });
 </script>
+
+
+<script type="text/javascript">
+
+function openReviewPopup(g_code) {
+    
+    // 너비 800, 높이 480 인 팝업창을 화면 가운데 위치시키기
+   const width = 800;
+   const height = 480;
+   const left = Math.ceil( (window.screen.width - width)/2 );  // 정수로 만듬
+   const top = Math.ceil( (window.screen.height - height)/2 );   // 정수로 만듬
+   
+   popup = window.open("http://localhost:9090/SemiProject/shop/reviewPopup.bz?g_code="+g_code, "imgInfo",
+                      `left=\${left}, top=\${top}, width=\${width}, height=\${height}`);
+   
+     
+}// end of function openPopup(src)------------------
+
+//특정 제품의 제품후기글들을 보여주는 함수
+function goReviewListView() {
+
+   $.ajax({
+      url:"<%= request.getContextPath()%>/shop/reviewList.bz", <%-- 이 페이지에 요청--%>
+      type:"GET", <%-- GET 방식으로 요청 --%>
+      data:{"fk_g_code":"${requestScope.gameVO.g_code}"}, <%-- 이게 보내주는 데이터 >> json 형태로 주세요 --%> 
+      dataType:"JSON", <%--[{},{},{}]--%>
+      success:function(json){
+         // console.log(JSON.stringify(json));  
+          // [{"contents":"정말 재밌다 코딩","name":"엄정화","writeDate":"2023-11-06 09:06:21","review_seq":5,"userid":"eomjh"},{"contents":"이집 노트북 맛집이네","name":"BaeMinJun","writeDate":"2023-11-03 15:29:57","review_seq":2,"userid":"zxnm46"}]
+         // 또는
+         // []
+         
+       let v_html = "";
+         
+         if (json.length > 0) {    
+            $.each(json, function(index, item){ 
+               let writeuserid = item.userid;
+               let loginuserid = "${sessionScope.loginuser.user_id}";
+               // console.log(writeuserid);
+               // console.log(loginuserid);
+                        // div 마다 index 값을 주어 review0, review1 .. 로 해주기 위함
+               v_html += "<div class='container'>"
+                      + "<div id='review"+index+"'><span class='markColor'>"+(index+1)+"</span>"+':&nbsp;'+item.contents+"</div>"
+                       + "<div class='customDisplay'>"+item.name+"</div>" // item => 배열 요소 (json) 안의 name
+                       + "<div class='customDisplay'>"+item.writeDate+"</div>"
+                       + "</div>";
+                
+                if( loginuserid == "") { 
+                   // 로그인을 안한 경우 
+                   v_html += "<div class='customDisplay spacediv'>&nbsp;</div>";
+                }      
+                else if( loginuserid != "" && writeuserid != loginuserid ) { 
+                   // 로그인을 했으나 후기글이 로그인한 사용자 쓴 글이 아니라 다른 사용자 쓴 후기글 이라면  
+                   v_html += "<div class='customDisplay spacediv'>&nbsp;</div>";
+                }    
+                else if( loginuserid != "" && writeuserid == loginuserid ) {
+                   // 로그인을 했고 후기글이 로그인한 사용자 쓴 글 이라면                                      json 안의 리뷰번호
+                   v_html += "<div class='container'><div class='customDisplay spacediv commentDel' onclick='delMyReview("+item.review_seq+")'>후기삭제</div>"; 
+                   v_html += "<div class='customDisplay spacediv commentDel commentUpdate' onclick='updateMyReview("+index+","+item.review_seq+")'>후기수정</div></div>"; 
+                }
+            } ); 
+         }// end of if -----------------------
+         
+         else {
+            v_html += "<div>등록된 상품후기가 없습니다.</div>";
+         }// end of else ---------------------
+         
+         $("div#viewComments").html(v_html); 
+      },
+      error: function(request, status, error){
+         alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+      }
+   });      
+   
+}
+
+//특정 제품의 제품후기를 삭제하는 함수
+function delMyReview(review_seq) { // 파라미터로 리뷰넘버를 받아온다.
+    
+    if(confirm("제품후기를 삭제하시겠습니까?")) {
+       $.ajax({
+          url:"<%= request.getContextPath()%>/shop/reviewDel.bz",
+          type:"POST",
+          data:{"review_seq":review_seq}, // 키값 : value값
+          dataType:"json",
+          success:function(json){
+           console.log(JSON.stringify(json));
+          // {"n":1} 또는 {"n":0}
+             if(json.n==1) {
+                alert("제품후기가 삭제되었습니다.");
+                goReviewListView(); // 특정 제품의 제품후기글들을 보여주는 함수 호출
+             }
+             else {
+                alert("제품후기 삭제가 실패했습니다..");
+             }
+          
+          },
+          error: function(request, status, error){
+               alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+           }
+          
+       });
+    }
+   
+}// end of function delMyReview(review_seq) {}--------------------------  
+
+//특정 제품의 제품후기를 수정하는 함수
+function updateMyReview(index, review_seq) {
+    
+    const origin_elmt = $("div#review"+index).html(); // 원래의 제품후기 엘리먼트
+ // alert(origin_elmt);
+ // <span class="markColor">▶</span>&nbsp;삭제 함수 만든 후 후기 다시 씀
+ 
+ // alert($("div#review"+index).text());
+ // ▶ 삭제 함수 만든 후 후기 다시 씀
+    
+    const review_contents = $("div#review"+index).text().substring(2); // 원래의 제품후기 내용
+ // alert(review_contents); 
+ // 삭제 함수 만든 후 후기 다시 씀
+ 
+    $("div.commentUpdate").hide(); // "후기수정" 글자 감추기
+    
+    // "후기수정" 을 위한 엘리먼트 만들기
+    let v_html = "<textarea id='edit_textarea' style='font-size: 12pt; width: 40%; height: 50px;'>"+review_contents+"</textarea>";
+    v_html    += "<div style='display: inline-block; position: relative; top: -20px; left: 10px;'><button type='button' class='btn btn-sm btn-outline-secondary' id='btnReviewUpdate_OK'>수정완료</button></div>"; 
+    v_html    += "<div style='display: inline-block; position: relative; top: -20px; left: 20px;'><button type='button' class='btn btn-sm btn-outline-secondary' id='btnReviewUpdate_NO'>수정취소</button></div>";
+    
+    // 원래의 제품후기 엘리먼트에 위에서 만든 "후기수정" 을 위한 엘리먼트로 교체하기 
+    $("div#review"+index).html(v_html);
+    
+    // "수정취소" 버튼 클릭시 
+    $(document).on("click", "button#btnReviewUpdate_NO", function(){ // 선택자를 확실하게 잡아오는 방법
+       $("div#review"+index).html(origin_elmt); // 원래의 제품후기 엘리먼트로 복원하기
+       $("div.commentUpdate").show(); // "후기수정" 글자 보이기
+    }); 
+    
+    // "수정완료" 버튼 클릭시
+    $(document).on("click", "button#btnReviewUpdate_OK", function(){ 
+       
+    // alert(review_seq); // 수정할 제품후기 번호
+       
+    // alert($("textarea#edit_textarea").val()); // 수정할 제품후기 내용
+         
+       $.ajax({
+          url:"<%= request.getContextPath()%>/shop/reviewUpdate.bz",
+          type:"POST",
+          data:{"review_seq":review_seq
+              ,"contents":$("textarea#edit_textarea").val()}, // 키값 : value값
+          dataType:"json",
+          success:function(JSON){
+          // console.log(JSON.stringify(json));
+          // {"n":1} 또는 {"n":0}
+             if(JSON.n==1) {
+                goReviewListView(); // 특정 제품의 제품후기글들을 보여주는 함수 호출
+             }
+             else {
+                alert("제품후기 수정이 실패했습니다.");
+                goReviewListView(); // 특정 제품의 제품후기글들을 보여주는 함수 호출
+             }
+          
+          },
+          error: function(request, status, error){
+               alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+           }
+       });
+       
+    }); 
+    
+} // end of function updateMyReview(index, review_seq){} ---------------------------
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
 
 <jsp:include page="../header_suc.jsp" />
 <%-- 전체 --%>
@@ -252,13 +454,24 @@
 		  
 	 	<ul class="list-unstyled">
 	    	
-	    	<li id="purchase" class="btn" onclick="buygame('<%=ctxPath %>','${sessionScope.loginuser.user_id}')" >
+	    	<%-- <li id="purchase" class="btn" onclick="buygame('<%=ctxPath %>','${sessionScope.loginuser.user_id}')" >
 	          &nbsp;구매하기
-	    	</li>
+	    	</li> --%>
+	    	<li id="purchase" class="btn" onclick="goOneOrder()" >
+             	&nbsp;구매하기
+          	</li>
+	    	
 		    <c:if test="${not empty sessionScope.loginuser}">
 		      	<li id="cart" class="btn mt-3" onclick="goCart()">
 		          	&nbsp;장바구니
 		      	</li>
+		     	
+		     	<li id="like" class="btn mt-3" onclick="openReviewPopup(${requestScope.gameVO.g_code})">
+                	&nbsp;제품후기 작성하기
+                </li>
+		      	
+		      	
+		      	
 	    	</c:if>
 	    	<c:if test="${empty sessionScope.loginuser}">
 		      	<li id="like" class="btn mt-3" onclick="golike('<%= ctxPath%>')">
@@ -302,9 +515,21 @@
 <div class="row mx-auto mt-3" style="width:95%;">
 
 	<div class="col-4">
-        <div class="h2 text-white text-left font-weight-bold mt-3">
+        <div class="h2 text-white text-left font-weight-bold mt-3 mb-5">
            <span >상품비교</span>
+
         </div>
+      	
+      	
+      	<div class="h2 text-white text-left font-weight-bold mt-5 mb-5">
+           <span>제품후기</span>
+        </div>
+      	
+      	
+        <div class="text-white mt-5" id="viewComments">
+         시발 
+ 		</div>
+	
 	</div>
 	
 	<div class="col-8">
