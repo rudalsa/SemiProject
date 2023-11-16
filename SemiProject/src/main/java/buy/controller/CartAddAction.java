@@ -55,8 +55,8 @@ public class CartAddAction extends AbstractController {
 				String optno = request.getParameter("optno"); // 가격  
 				
 				
-				System.out.println("이건 뭐고" + paymoney);
-				System.out.println("이건 뭐고" + optno);
+				/// System.out.println("이건 뭐고" + paymoney);
+				//  System.out.println("이건 뭐고" + optno);
 				
 				
 				HttpSession session = request.getSession();

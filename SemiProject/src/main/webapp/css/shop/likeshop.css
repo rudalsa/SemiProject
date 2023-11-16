@@ -30,19 +30,24 @@ img {
   padding: 30px;
 }
 
+
 .cart ul {
-  background-color: whitesmoke;
+	list-style-type: none;
+  background-color: black;
   padding: 30px;
   margin-bottom: 50px;
-  border: whitesmoke solid 1px;
+  border: whitesmoke solid 0px;
   border-radius: 5px;
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
+  text-align: center;
+  color: whitesmoke;
+ 
 }
-
+/*
 .cart ul :first-child {
   color: limegreen;
-}
+}*/
 
 table {
   border-top: solid 1.5px black;
@@ -54,6 +59,12 @@ table {
 thead {
   text-align: center;
   font-weight: bold;
+  font-size: 12pt;
+}
+
+#optinfono0 {
+	margin-left: 10%;
+	border: solid 1px red;
 }
 
 tbody {
@@ -110,10 +121,18 @@ td {
   padding: 7px;
 }
 
+.cart__list__detail :nth-child(1),
+.cart__list__detail :nth-child(2) {
+	margin-left: 3%;
+}
+
+.cart__list__detail :nth-child(2),
+.cart__list__detail :nth-child(3),
 .cart__list__detail :nth-child(4),
 .cart__list__detail :nth-child(5),
 .cart__list__detail :nth-child(6) {
   border-left: 2px solid whitesmoke;
+  margin-left: 3%;
 }
 
 .cart__list__detail :nth-child(5),
@@ -133,6 +152,23 @@ td {
 
 .price {
   font-weight: bold;
+}
+
+thead > tr {
+	color:white;
+}
+
+td.cart__list__option > p {
+	color: whitesmoke;
+}
+
+tr.cart__list__detail > td:nth-child(5),
+tr.cart__list__detail > td:nth-child(6) {
+	color: whitesmoke;
+}
+tr.cart__list__detail > td:nth-child(7) {
+	position: relative;
+	left: 2%;
 }
 
 .cart__mainbtns {
@@ -161,3 +197,13 @@ td {
   color: white;
   border: none;
 }
+tfoot > tr > td > span:nth-child(1),
+tfoot > tr > td > span:nth-child(5) {
+	color:white;
+}
+
+.cart__mainbtns > button {
+	background-color: gray;
+}
+
+

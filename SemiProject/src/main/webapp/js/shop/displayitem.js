@@ -11,7 +11,7 @@ $(document).ready(function(){
 	
 	let c_no = input_c_no.value;
 	
-	console.log('제발요',c_no)
+	// console.log('제발요',c_no)
 	
 	
 	// HIT상품 게시물을 더보기 위하여 "스크롤" 이벤트에 대한 초기값 호출하기 
@@ -27,7 +27,7 @@ $(document).ready(function(){
 	      
        	if( $(window).scrollTop() + 1 >= $(document).height() - $(window).height() ) {   
 	      		
-	      		alert("기존 문서내용을 끝까지 봤습니다. 이제 새로운 내용을 읽어다가 보여드리겠습니다.");
+	      		// alert("기존 문서내용을 끝까지 봤습니다. 이제 새로운 내용을 읽어다가 보여드리겠습니다.");
       			
       			if($("span#totalCount").text() != $("span#countSum").text() ) {
 					start += amount;
@@ -105,13 +105,23 @@ function displayitem(start) { 	 // start가  1 이라면    1~8 까지 상품 8�
 				// JQuery 를 사용하는 경우
 			    $.each(json, function(index, item) {
 	                v_html += `<div class="item">
+          								<a href='/SemiProject/gameopt.bz?g_code=${item.g_code}'>
      						       <div class="imgBox">
           						    <img src="/SemiProject/img/tbl_game_product_image/${item.g_img_1}" alt="${item.g_img_1}" />
         							</div>
         					   		<div class="textBox">
           								<p class="textBox__name">${item.g_content}</p>
           								<p class="textBox__price">${item.g_sale_price.toLocaleString('en')} 원 ~</p>
-          								<a href='/SemiProject/gameopt.bz?g_code=${item.g_code}'>왜 안열리노</a>
+        							</div>
+          								</a>
+     						       <div class="imgBox">
+          						    <img src="/SemiProject/img/tbl_game_product_image/${item.g_img_1}" alt="${item.g_img_1}" />
+        							</div>
+        					   		<div class="textBox">
+        					   		<a href='/SemiProject/gameopt.bz?g_code=${item.g_code}'>
+          								<p class="textBox__name">${item.g_content}</p>
+          								<p class="textBox__price">${item.g_sale_price.toLocaleString('en')} 원 ~</p>
+          								</a>
         							</div>
       							</div> `;
       							
@@ -152,7 +162,7 @@ function displayitem(start) { 	 // start가  1 이라면    1~8 까지 상품 8�
 	
 	
 	
-} // end of function displayitem(start) {}); ------------------------------------
+} // end of function displayitem(start) {}); ——————————————————
 
 // 맨 위로 가는 기능
 function goTop() {

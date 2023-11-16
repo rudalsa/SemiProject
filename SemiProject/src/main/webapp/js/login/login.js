@@ -57,7 +57,7 @@ function goLogOut(ctx_Path) {
 	
 	// 로그아웃을 처리해주는 페이지로 이동
 	location.href=`${ctx_Path}/login/logout.bz`;
-}// end of function goLogOut(ctx_Path)------------
+}// end of function goLogOut(ctx_Path)——————
 
 
 

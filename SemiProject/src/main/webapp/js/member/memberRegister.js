@@ -619,6 +619,6 @@ function goReset() {
 	$("p#idcheckResult").empty();
 	$("p#emailCheckResult").empty();
 	
-}// end of function goReset()------------------------- 
+}// end of function goReset()———————————— 
 
 

@@ -82,9 +82,10 @@
   }// end of function func_form_reset_empty()----------
   
 </script>
+<body style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 
     
-<form name="idFindFrm">
+<form name="idFindFrm" class="text-white">
 
    <ul style="list-style-type: none;">
       <li style="margin: 25px 0">

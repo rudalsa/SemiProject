@@ -12,7 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import shop.domain.WowcarinfoVO;
+import shop.domain.GameCarinfoVO;
 
 public class WowcarinfoDAO_imple implements WowcarinfoDAO {
 	
@@ -49,10 +49,10 @@ public class WowcarinfoDAO_imple implements WowcarinfoDAO {
 	
 	
 	@Override
-	public List<WowcarinfoVO> wowCarinfoListSelectAll() throws SQLException {
+	public List<GameCarinfoVO> wowCarinfoListSelectAll(String g_code) throws SQLException {
 		
 		
-		List<WowcarinfoVO> wciList = new ArrayList<>();
+		List<GameCarinfoVO> wciList = new ArrayList<>();
 		
 		try {
 			conn = ds.getConnection();
@@ -61,15 +61,17 @@ public class WowcarinfoDAO_imple implements WowcarinfoDAO {
 					+ "    , carinfo_bg_img5, carinfo_bg_img6, carinfo_bg_img7, carinfo_bg_img8, carinfo_bg_img9, carinfo_fr_img1, carinfo_fr_img2 "
 					+ "    , carinfo_card_img1, carinfo_card_img2, carinfo_card_img3, carinfo_card_img4 "
 					+ " from tbl_carinfo_img "
+					+ " where FK_G_CODE = ?"
 					+ " order by carinfo_no asc ";
 			
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, g_code);
 			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
 				
-				WowcarinfoVO wcivo = new WowcarinfoVO();
+				GameCarinfoVO wcivo = new GameCarinfoVO();
 				
 				wcivo.setCarinfo_no(rs.getInt(1));
 				wcivo.setFk_g_code(rs.getString(2));

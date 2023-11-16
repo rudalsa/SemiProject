@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -307,5 +308,101 @@ public class GameOptDAO_imple implements GameOptDAO {
 		
 		return likeList;
 	}
+	
+	
+	// 바로 주문하기 게임 select 하기
+	   @Override
+	   public GameVO selectOrder(String optno) throws SQLException {
+	      
+	      GameVO gvo = null;
+	      
+	      try {
+	         conn = ds.getConnection();
+	         
+	         String sql = " SELECT g_code, g_name, g_content, g_img_1, g_coin, g_qty, opt_name, optinfono, imgfile, opt_qty, opt_price, opt_sale_price "
+	                  + " FROM tbl_game_product G "
+	                  + " JOIN TBL_PRODUCT_OPTINFO O "
+	                  + " ON G.g_code = O.fk_g_code "
+	                  + " WHERE optinfono = ? ";
+	         
+	         pstmt=conn.prepareStatement(sql);
+	         pstmt.setString(1, optno);
+	         
+	         rs = pstmt.executeQuery();
+	      
+	         if(rs.next()) {
+	            
+	            gvo = new GameVO();
+	            
+	            gvo.setG_code(rs.getString(1));
+	            gvo.setG_name(rs.getString(2));
+	            gvo.setG_content(rs.getString(3));
+	            gvo.setG_img_1(rs.getString(4));
+	            gvo.setG_coin(rs.getInt(5));
+	            gvo.setG_qty(rs.getInt(6));
+	            
+	            OptVO ovo = new OptVO();
+	            ovo.setOpt_name(rs.getString(7));
+	            ovo.setOptinfono(rs.getInt(8));
+	            ovo.setImgfile(rs.getString(9));
+	            ovo.setOpt_qty(rs.getInt(10));
+	            ovo.setOpt_price(rs.getInt(11));
+	            ovo.setOpt_sale_price(rs.getInt(12));
+	            
+	            gvo.setOptvo(ovo);
+	         } // end of if(rs.next())-------------------
+	      } finally {
+	         close();
+	      }
+	      return gvo;
+	   }// end of public GameVO selectOrder(String optno) throws SQLException 
+
+
+	   @Override
+	   public Map<String, String> selectSumPricePoint(String oqty, String optno) throws SQLException {
+	      
+	      Map<String, String> sumMap = new HashMap<>();
+
+	      try {
+	         conn = ds.getConnection();
+
+	         String sql = " SELECT NVL(SUM(? * O.opt_sale_price), 0) AS SUMTOTALPRICE, "
+	               + "        NVL(SUM(? * G.g_coin), 0) AS SUMTOTALPOINT " + " FROM tbl_game_product G "
+	               + " JOIN TBL_PRODUCT_OPTINFO O " 
+	               + " ON G.g_code = O.fk_g_code "
+	               + " where optinfono = ? ";
+
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setString(1, oqty);
+	         pstmt.setString(2, oqty);
+	         pstmt.setString(3, optno);
+
+	         rs = pstmt.executeQuery();
+	         rs.next();
+
+	         sumMap.put("SUMTOTALPRICE", rs.getString("SUMTOTALPRICE"));
+	         sumMap.put("SUMTOTALPOINT", rs.getString("SUMTOTALPOINT"));
+
+	      } finally {
+	         close();
+	      }
+
+	      return sumMap;
+	   }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

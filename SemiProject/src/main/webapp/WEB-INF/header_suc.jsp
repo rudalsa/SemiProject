@@ -48,8 +48,8 @@
 </head>
 
 
-<%--style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;" --%>
-<body>
+<%-- --%>
+<body style="background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-image: url('<%= ctxPath %>/img/index_bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 <!-- background-repeat: no-repeat;를 적용하면 배경 이미지가 한 번만 표시됩니다: -->
 
 <nav class="navbar navbar-expand-lg mx-auto mt-3 bg-dark fixed-top" id="scrollNavbar" style=" width: 97%;  background-color: black; height: 75px">
@@ -115,7 +115,7 @@
 	<ul class="navbar-nav ml-auto">
 	
 		<li class="nav-item active">
-	      <a class="nav-link d-flex align-items-center text-nowrap" href="mainShop.bz">
+	      <a class="nav-link d-flex align-items-center text-nowrap" href="<%= ctxPath %>/mainShop.bz">
 	        <img src="<%= ctxPath %>/img/newshop/games_cod-mw.svg" alt="상점" style="width: 40px; height: 40px">
 	        <span class="ml-3" style="color:white; font-weight:bold;">상점</span>
 	      </a>
@@ -144,6 +144,7 @@
 	    			  </a>	
 		              <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: black; text-align:center;">
 		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/member/memberList.bz">회원관리</a>
+		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/shop/orderList.bz">주문관리</a>
 		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath %>/shop/admin/productRegister.bz">제품추가</a>
 		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/login/logout.bz">로그아웃</a>
 		              </div>
@@ -156,7 +157,8 @@
 	    			  </a>	
 		              <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: black; text-align:center;">
 		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/member/memberEdit.bz">계정관리</a>
-		                  <a class="dropdown-item text-white font-weight-bold" href="#">장바구니</a>
+ 		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/buy/cartList.bz">장바구니</a>
+                          <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/buy/orderList.bz">구매내역보기</a>
 		                  <a class="dropdown-item text-white font-weight-bold" href="<%= ctxPath%>/login/logout.bz">로그아웃</a>
 		              </div>
 		          </c:otherwise>
@@ -168,3 +170,6 @@
 	
 	</div>
 </nav>
+
+
+

@@ -22,6 +22,16 @@ public class MainShopAction extends AbstractController {
 	         
 	         request.setAttribute("gameList", gameList);
 	         
+	     	 MainpageDAO mpdao = new MainPage_imple();
+	    	
+	     	 List<MainsdVO> sdList = mpdao.sdimageSelectAll();
+		     request.setAttribute("sdList", sdList);
+		         
+		     List<VideoSetVO> videoList = mpdao.videoimageSelectAll();
+		     request.setAttribute("videoList", videoList);
+	         
+	         
+	         
 	         super.setRedirect(false);
 	         super.setViewPage("/WEB-INF/shop/mainShop.jsp");
 	         
